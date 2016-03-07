@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h3>Hi ${user}, welcome to the Chipping Sodbury On-the-Hill message boards!</h3>
+<div>
+<div> <img src=''cid:identifier1234''> </div>
+Your email address is <a href="mailto:${user}">${user}</a>.
+
+
+</div>
+</body>
+</html>
