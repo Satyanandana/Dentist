@@ -55,6 +55,31 @@ public class PatientTeethStatus implements Serializable {
 	public void setLastModified(DateTime lastModified) {
 		this.lastModified = lastModified;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((TeethStatusPK == null) ? 0 : TeethStatusPK.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PatientTeethStatus other = (PatientTeethStatus) obj;
+		if (TeethStatusPK == null) {
+			if (other.TeethStatusPK != null)
+				return false;
+		} else if (!TeethStatusPK.equals(other.TeethStatusPK))
+			return false;
+		return true;
+	}
 	
 	
 

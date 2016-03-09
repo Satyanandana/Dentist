@@ -31,7 +31,6 @@ public class UserAuthentication implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long userID;
 	@Column(nullable = false, unique = true, updatable = false)
-	@Type(type = "encryptedString")
 	private String userEmail;
 	@Column(nullable = false)
 	@Type(type = "encryptedString")
@@ -178,5 +177,6 @@ public class UserAuthentication implements Serializable {
 			return false;
 		return true;
 	}
-
+	
+	
 }

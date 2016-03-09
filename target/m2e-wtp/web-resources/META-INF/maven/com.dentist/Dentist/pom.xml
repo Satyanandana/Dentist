@@ -9,7 +9,7 @@
 	<packaging>war</packaging>
 
 	<name>Dentist</name>
-	<description>Versed Web Application</description>
+	<description>Dentist Web Application</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

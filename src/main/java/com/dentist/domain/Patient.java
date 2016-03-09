@@ -19,6 +19,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 @Entity
 @Table(name = "Patient_Details")
@@ -42,11 +43,10 @@ public class Patient implements Serializable {
 	private String middleName;
 	@Column(nullable=false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-	private DateTime dateOfBirth;
+	private LocalDate dateOfBirth;
 	@Column(nullable=false)
 	private long phoneNumber;
 	@Column(unique=true,nullable=false)
-	@Type(type = "encryptedString")
 	private String email;
 	@Embedded
 	private Address homeAddress;
@@ -123,11 +123,11 @@ public class Patient implements Serializable {
 		this.middleName = middleName;
 	}
 
-	public DateTime getDateOfBirth() {
+	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(DateTime dateOfBirth) {
+	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
@@ -218,5 +218,29 @@ public class Patient implements Serializable {
 	public void setPatientTeeth(List<PatientTeethStatus> patientTeeth) {
 		this.patientTeeth = patientTeeth;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (userID ^ (userID >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Patient other = (Patient) obj;
+		if (userID != other.userID)
+			return false;
+		return true;
+	}
+	
+	
 	
 }

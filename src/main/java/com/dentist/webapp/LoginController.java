@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,7 +33,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.dentist.dao.UserDaoInterface;
 import com.dentist.domain.AccountStatus;
+import com.dentist.domain.Patient;
 import com.dentist.domain.Role;
 import com.dentist.domain.UserAuthentication;
 import com.dentist.service.CustomUserDetails;
@@ -100,7 +104,7 @@ public class LoginController {
 		  emailStructure.setSubject("Welcome");
 		  emailStructure.addRecipient("srikanthvarma.vadapalli@gmail.com");
 		  emailStructure.addAttachment("welcome.vm", file);
-		  emailSender.sendEmail(emailStructure);
+		//  emailSender.sendEmail(emailStructure);
 		 
 
 		return "login";
@@ -121,12 +125,27 @@ public class LoginController {
 		user3.setVerifyKey("empty");
 		user3.setUserIp("192.168.225.225");
 
-		userServiceInterface.setUserAuthenticationInfo(user3);
+	//	userServiceInterface.setUserAuthenticationInfo(user3);
 		logger.info(user3.getUserEmail());
 
-		UserAuthentication user = userServiceInterface.UserAuthenticationInfoById(1);
+	
+		Patient patient = new Patient();
+		patient.setUserID(user3.getUserID());
+		patient.setUserAuth(user3);
+		patient.setEmail(user3.getUserEmail());
+		patient.setDateOfBirth(new LocalDate());
+		patient.setPhoneNumber(6178491980L);
+		patient.setFirstName("Satyanandana");
+		patient.setLastName("Vadapalli");
+		patient.setMiddleName("Srikanthvarma");
+		
+		userServiceInterface.setPatient(patient);
+		UserAuthentication user = userServiceInterface.getUserAuthenticationInfoById(1);
+		
 
 		logger.info(user.getUserPwd());
+		user.setUserIp("999.999.999.999");
+		userServiceInterface.updateUserAuthenticationInfo(user);
 
 		List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(user.getUserRole().toString());
 		UserDetails userDetails = new CustomUserDetails(user);

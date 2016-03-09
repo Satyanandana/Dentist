@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 @Entity
 @Table(name = "insurances")
@@ -37,7 +38,7 @@ public class Insurance implements Serializable {
 	@Column
 	private String subscriberFullName;
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-	private DateTime dateOfBirth;
+	private LocalDate dateOfBirth;
 	@Enumerated
 	private InsuranceStatus status;
 	@Column(nullable = false)
@@ -96,11 +97,11 @@ public class Insurance implements Serializable {
 		this.subscriberFullName = subscriberFullName;
 	}
 
-	public DateTime getDateOfBirth() {
+	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(DateTime dateOfBirth) {
+	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
@@ -119,5 +120,29 @@ public class Insurance implements Serializable {
 	public void setInsertedDate(DateTime insertedDate) {
 		this.insertedDate = insertedDate;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (insuranceID ^ (insuranceID >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Insurance other = (Insurance) obj;
+		if (insuranceID != other.insuranceID)
+			return false;
+		return true;
+	}
+	
+	
 		
 }

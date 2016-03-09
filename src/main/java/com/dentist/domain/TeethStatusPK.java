@@ -39,5 +39,38 @@ public class TeethStatusPK implements Serializable {
 	public void setTeeth(Teeth teeth) {
 		this.teeth = teeth;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((patient == null) ? 0 : patient.hashCode());
+		result = prime * result + ((teeth == null) ? 0 : teeth.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TeethStatusPK other = (TeethStatusPK) obj;
+		if (patient == null) {
+			if (other.patient != null)
+				return false;
+		} else if (!patient.equals(other.patient))
+			return false;
+		if (teeth == null) {
+			if (other.teeth != null)
+				return false;
+		} else if (!teeth.equals(other.teeth))
+			return false;
+		return true;
+	}
+	
+	
 	
 }

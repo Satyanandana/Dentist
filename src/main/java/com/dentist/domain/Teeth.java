@@ -52,11 +52,27 @@ public class Teeth implements Serializable {
 	public void setDescription(String description) {
 		Description = description;
 	}
-	
-	
-	
-	
-	
-	
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + teethID;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Teeth other = (Teeth) obj;
+		if (teethID != other.teethID)
+			return false;
+		return true;
+	}
+	
 }

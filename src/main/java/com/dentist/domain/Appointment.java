@@ -29,10 +29,10 @@ public class Appointment implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long appointmentID;
 	@ManyToOne
-	@JoinColumn(name = "patientID",nullable=false)
+	@JoinColumn(name = "patientID",nullable=false,updatable=false)
 	private Patient appointmentPatient;
 	@OneToOne
-	@JoinColumn(name="appointmentRequestID",nullable=false)
+	@JoinColumn(name="appointmentRequestID",nullable=false,updatable=false)
 	private AppointmentRequest AppointmentRequest;
 	@Column(nullable=false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
@@ -168,6 +168,30 @@ public class Appointment implements Serializable {
 
 	public void setStatus(AppointmentStatus status) {
 		this.status = status;
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (appointmentID ^ (appointmentID >>> 32));
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Appointment other = (Appointment) obj;
+		if (appointmentID != other.appointmentID)
+			return false;
+		return true;
 	}
 
 	
