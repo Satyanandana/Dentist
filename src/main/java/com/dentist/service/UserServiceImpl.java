@@ -2,6 +2,7 @@ package com.dentist.service;
 
 import java.util.List;
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -132,6 +133,18 @@ public class UserServiceImpl implements UserServiceInterface {
 	public List<ReceivedMessage> getReceivedMessagesByPatientID(long patientID) {
 		return userDaoInterface.getReceivedMessagesByPatientID(patientID);
 	}
+
+	public Object mergeEntity(Object entity) {
+		
+		return userDaoInterface.mergeEntity(entity);
+	}
+
+	public Session getHibernateSession() {
+		// TODO Auto-generated method stub
+		return userDaoInterface.getHibernateSession();
+	}
+
+	
 
 	
 

@@ -29,12 +29,15 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.dentist.dao.UserDaoInterface;
 import com.dentist.domain.AccountStatus;
+import com.dentist.domain.AppointmentRequest;
+import com.dentist.domain.AppointmentRequestStatus;
 import com.dentist.domain.Patient;
 import com.dentist.domain.Role;
 import com.dentist.domain.UserAuthentication;
@@ -125,27 +128,36 @@ public class LoginController {
 		user3.setVerifyKey("empty");
 		user3.setUserIp("192.168.225.225");
 
-	//	userServiceInterface.setUserAuthenticationInfo(user3);
-		logger.info(user3.getUserEmail());
-
+	  //  userServiceInterface.setUserAuthenticationInfo(user3);
+		//logger.info(user3.getUserEmail());
+	  //  UserAuthentication user = userServiceInterface.getUserAuthenticationInfoById(1);
 	
 		Patient patient = new Patient();
-		patient.setUserID(user3.getUserID());
-		patient.setUserAuth(user3);
+		//patient.setUserID(user.getUserID());
+	
 		patient.setEmail(user3.getUserEmail());
 		patient.setDateOfBirth(new LocalDate());
 		patient.setPhoneNumber(6178491980L);
 		patient.setFirstName("Satyanandana");
 		patient.setLastName("Vadapalli");
 		patient.setMiddleName("Srikanthvarma");
+		patient.setUserAuth(user3);
 		
-		userServiceInterface.setPatient(patient);
+		userServiceInterface.setPatient(patient);	
+		
+		Patient patient1 = userServiceInterface.getPatientInfoById(1);
+		patient1.setMiddleName("");
+		userServiceInterface.updatePatient(patient1);
+		
+		AppointmentRequest appointmentRequest = new AppointmentRequest();
+		appointmentRequest.setAppointmentStartTime(new DateTime());
+		appointmentRequest.setRequestInsertedTime(new DateTime());
+		appointmentRequest.setNote("I need an appointment for dental check up");
+		appointmentRequest.setAppointmentPatient(patient1);
+		appointmentRequest.setStatus(AppointmentRequestStatus.WAITING_FOR_APPROVAL);
+		
+		userServiceInterface.setAppointmentRequest(appointmentRequest);
 		UserAuthentication user = userServiceInterface.getUserAuthenticationInfoById(1);
-		
-
-		logger.info(user.getUserPwd());
-		user.setUserIp("999.999.999.999");
-		userServiceInterface.updateUserAuthenticationInfo(user);
 
 		List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(user.getUserRole().toString());
 		UserDetails userDetails = new CustomUserDetails(user);

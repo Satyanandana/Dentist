@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -85,7 +86,7 @@ public class UserAuthentication implements Serializable {
 	public void setUserID(long userID) {
 		this.userID = userID;
 	}
-
+	
 	public String getUserEmail() {
 		return userEmail;
 	}

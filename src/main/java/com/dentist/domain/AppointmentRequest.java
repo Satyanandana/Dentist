@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,7 +41,7 @@ public class AppointmentRequest implements Serializable {
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime appointmentStartTime;
 	@Column(nullable=false)
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	private AppointmentRequestStatus status;
 	@OneToOne
 	@JoinColumn(name="appointmentID",nullable=true)

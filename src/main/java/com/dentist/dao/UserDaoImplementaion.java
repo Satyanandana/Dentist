@@ -24,7 +24,7 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 /* 
  * DAO methods on UserAuthentication.class
  */
-	@Transactional(propagation=Propagation.REQUIRED)
+	
 	public void setUserAuthenticationInfo(UserAuthentication userAuthentication) {
 		persist(userAuthentication);
 	}
@@ -33,7 +33,6 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 		update(userAuthentication);
 	}
 
-	@Transactional(propagation=Propagation.REQUIRED)
 	public UserAuthentication getUserAuthenticationInfoById(long id) {
 		Criteria criteria = getSession().createCriteria(UserAuthentication.class).add(Restrictions.idEq(id));
 		return (UserAuthentication) criteria.uniqueResult();
@@ -177,6 +176,13 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 	public List<ReceivedMessage> getReceivedMessagesByPatientID(long patientID) {
 		Criteria criteria = getSession().createCriteria(ReceivedMessage.class).add(Restrictions.eq("receiver.userID", patientID));
 		return   (List<ReceivedMessage>) criteria.list();
+	}
+
+	
+
+	public Object mergeEntity(Object entity) {
+		
+		return merge(entity);
 	}
 
 	public Session getHibernateSession() {

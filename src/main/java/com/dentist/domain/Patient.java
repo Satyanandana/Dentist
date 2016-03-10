@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -31,9 +32,10 @@ public class Patient implements Serializable {
 	private static final long serialVersionUID = 3633053765941562590L;
 	@Id
 	private long userID;
-	@JoinColumn(name = "userID")
+
 	@OneToOne
 	@MapsId
+	@JoinColumn(name = "userID")
 	private UserAuthentication userAuth;
 	@Column(nullable=false)
 	private String firstName;
@@ -83,141 +85,217 @@ public class Patient implements Serializable {
 
 	}
 
+	
+	
 	public long getUserID() {
-		return userID;
+		if(this.userAuth!=null && this.userAuth.getUserID()!=0){
+			return this.userAuth.getUserID();
+		}
+		else{
+			return userID;
+		}
+		
 	}
+
+
 
 	public void setUserID(long userID) {
 		this.userID = userID;
 	}
 
+
+
 	public UserAuthentication getUserAuth() {
 		return userAuth;
 	}
+
+
 
 	public void setUserAuth(UserAuthentication userAuth) {
 		this.userAuth = userAuth;
 	}
 
+
+
 	public String getFirstName() {
 		return firstName;
 	}
+
+
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
+
+
 	public String getLastName() {
 		return lastName;
 	}
+
+
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
+
+
 	public String getMiddleName() {
 		return middleName;
 	}
+
+
 
 	public void setMiddleName(String middleName) {
 		this.middleName = middleName;
 	}
 
+
+
 	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
+
+
 
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+
+
 	public long getPhoneNumber() {
 		return phoneNumber;
 	}
+
+
 
 	public void setPhoneNumber(long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
+
+
 	public String getEmail() {
 		return email;
 	}
+
+
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+
+
 	public Address getHomeAddress() {
 		return homeAddress;
 	}
+
+
 
 	public void setHomeAddress(Address homeAddress) {
 		this.homeAddress = homeAddress;
 	}
 
+
+
 	public EmergencyContact getEmergencyContact() {
 		return EmergencyContact;
 	}
+
+
 
 	public void setEmergencyContact(EmergencyContact emergencyContact) {
 		EmergencyContact = emergencyContact;
 	}
 
+
+
 	public List<SentMessage> getSentMessages() {
 		return sentMessages;
 	}
+
+
 
 	public void setSentMessages(List<SentMessage> sentMessages) {
 		this.sentMessages = sentMessages;
 	}
 
+
+
 	public List<ReceivedMessage> getReceivedMessages() {
 		return receivedMessages;
 	}
+
+
 
 	public void setReceivedMessages(List<ReceivedMessage> receivedMessages) {
 		this.receivedMessages = receivedMessages;
 	}
 
+
+
 	public List<Treatment> getTreatments() {
 		return treatments;
 	}
+
+
 
 	public void setTreatments(List<Treatment> treatments) {
 		this.treatments = treatments;
 	}
 
+
+
 	public List<Insurance> getInsurances() {
 		return insurances;
 	}
+
+
 
 	public void setInsurances(List<Insurance> insurances) {
 		this.insurances = insurances;
 	}
 
+
+
 	public List<AppointmentRequest> getAppointmentRequests() {
 		return appointmentRequests;
 	}
+
+
 
 	public void setAppointmentRequests(List<AppointmentRequest> appointmentRequests) {
 		this.appointmentRequests = appointmentRequests;
 	}
 
+
+
 	public List<Appointment> getAppointments() {
 		return appointments;
 	}
+
+
 
 	public void setAppointments(List<Appointment> appointments) {
 		this.appointments = appointments;
 	}
 
+
+
 	public List<PatientTeethStatus> getPatientTeeth() {
 		return patientTeeth;
 	}
 
+
+
 	public void setPatientTeeth(List<PatientTeethStatus> patientTeeth) {
 		this.patientTeeth = patientTeeth;
 	}
+
+
 
 	@Override
 	public int hashCode() {

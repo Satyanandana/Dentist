@@ -13,8 +13,8 @@ import com.dentist.domain.SentMessage;
 import com.dentist.domain.UserAuthentication;
 
 public interface UserDaoInterface {
-	
 	public Session getHibernateSession();
+	public Object mergeEntity(Object entity);
 
 	/* DAO methods on UserAuthentication.class */
 	public void setUserAuthenticationInfo(UserAuthentication userAuthentication);
@@ -57,5 +57,7 @@ public interface UserDaoInterface {
 	public void updateReceivedMessage(ReceivedMessage receivedMessage);
 	public ReceivedMessage getReceivedMessageByID(long receivedMessageID);
 	public List<ReceivedMessage> getReceivedMessagesByPatientID(long patientID);
+
+	
 	
 }

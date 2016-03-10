@@ -2,6 +2,8 @@ package com.dentist.service;
 
 import java.util.List;
 
+import org.hibernate.Session;
+
 import com.dentist.domain.Appointment;
 import com.dentist.domain.AppointmentRequest;
 import com.dentist.domain.Insurance;
@@ -11,6 +13,10 @@ import com.dentist.domain.SentMessage;
 import com.dentist.domain.UserAuthentication;
 
 public interface UserServiceInterface {
+	
+	public Session getHibernateSession();
+	
+	public Object mergeEntity(Object entity);
 
 	/* DAO methods on UserAuthentication.class */
 	public void setUserAuthenticationInfo(UserAuthentication userAuthentication);

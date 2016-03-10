@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -50,7 +51,7 @@ public class Treatment implements Serializable {
 	@Column
 	private BigDecimal amountExpected;
 	@Column(nullable=false)
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	private TreatmentStatus status;
 
 	public Treatment() {

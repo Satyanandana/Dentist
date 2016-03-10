@@ -1,7 +1,5 @@
 package com.dentist.dao;
 
-
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-@Transactional
 public class DbDao {
 
 	@Autowired
@@ -35,8 +32,8 @@ public class DbDao {
 		getSession().save(entity);
 	}
 	
-	public void merge(Object entity) {
-		getSession().merge(entity);
+	public Object merge(Object entity) {
+		return getSession().merge(entity);
 	}
 
 }
