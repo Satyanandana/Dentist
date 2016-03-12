@@ -30,10 +30,10 @@ public class GoogleServerToServer {
 					.setServiceAccountScopes(OuthScopes).build();
 
 		} catch (GeneralSecurityException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return credential;
@@ -53,10 +53,10 @@ public class GoogleServerToServer {
 			service = new Calendar.Builder(httpTransport, jsonFactory, null).setApplicationName(appName)
 					.setHttpRequestInitializer(credential).build();
 		} catch (GeneralSecurityException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 

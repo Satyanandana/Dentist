@@ -1,0 +1,52 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SignUp</title>
+</head>
+<body>
+<h2>Sign up Form</h2>
+  <c:url value="/signup/process" var="signUpUrl"/>
+    <form:form action="${signUpUrl}" method="POST" modelAttribute="patient">
+        <table>
+            <tr>
+                <td><label for="Firstname">FirstName: </label> </td>
+                <td><form:input path="firstName" id="firstname"/></td>
+            </tr>
+          <tr>
+                <td><label for="lastName">LastName: </label> </td>
+                <td><form:input path="lastName" id="lastName"/></td>
+            </tr>
+             <tr>
+                <td><label for=middleName>middleName: </label> </td>
+                <td><form:input path="middleName" id="middleName"/></td>
+            </tr>
+             <tr>
+                <td><label for=dateOfBirth>dateOfBirth: </label> </td>
+              <td>  <%-- <form:input  path="dateOfBirth" id="dateOfBirth"/> --%>
+                <input type="date" name="dob" />
+                </td>
+            </tr>
+            <tr>
+            <td><label for=useremail>useremail: </label> </td>
+                <td><form:input path="userAuth.userEmail" id="useremail"/></td>
+            </tr>
+            <tr>
+             <td><label for=userepassword>password: </label> </td>
+                <td><form:input path="userAuth.userPwd" id="userpassword"/>
+                   <input type="hidden" 	name="${_csrf.parameterName}"	value="${_csrf.token}"/>
+                </td>
+                
+            </tr>              
+                        <tr>
+                    <td colspan="2" align="center"><input type="submit" value="Register" /></td>
+                </tr>   
+        </table>
+    </form:form>
+</body>
+</body>
+</html>

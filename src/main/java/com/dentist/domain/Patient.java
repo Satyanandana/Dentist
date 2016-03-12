@@ -15,12 +15,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "Patient_Details")
@@ -44,6 +43,7 @@ public class Patient implements Serializable {
 	@Column(nullable=false)
 	private String middleName;
 	@Column(nullable=false)
+	@DateTimeFormat(pattern = "MM-dd-yyyy")
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate dateOfBirth;
 	@Column(nullable=false)

@@ -2,17 +2,23 @@ package com.dentist.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.hibernate.Session;
+import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dentist.dao.UserDaoInterface;
+import com.dentist.domain.AccountStatus;
 import com.dentist.domain.Appointment;
 import com.dentist.domain.AppointmentRequest;
 import com.dentist.domain.Insurance;
 import com.dentist.domain.Patient;
 import com.dentist.domain.ReceivedMessage;
+import com.dentist.domain.Role;
 import com.dentist.domain.SentMessage;
 import com.dentist.domain.UserAuthentication;
 
@@ -21,6 +27,8 @@ import com.dentist.domain.UserAuthentication;
 public class UserServiceImpl implements UserServiceInterface {
 	@Autowired
 	private UserDaoInterface userDaoInterface;
+	@Autowired
+	private PooledPBEStringEncryptor encryptor;
 
 	public void setUserAuthenticationInfo(UserAuthentication userAuthentication) {
 		userDaoInterface.setUserAuthenticationInfo(userAuthentication);		
@@ -140,8 +148,34 @@ public class UserServiceImpl implements UserServiceInterface {
 	}
 
 	public Session getHibernateSession() {
-		// TODO Auto-generated method stub
+		
 		return userDaoInterface.getHibernateSession();
+	}
+
+	public Patient signUp(Patient patient,HttpServletRequest request) {
+		Patient patientCreated = null;
+		UserAuthentication userAuth= getUserAuthenticationInfoByEmail(patient.getUserAuth().getUserEmail());
+		if(userAuth == null){
+			userAuth = patient.getUserAuth();
+			userAuth.setAccountStatus(AccountStatus.NOT_ACTIVATED_YET);
+			userAuth.setCreationTime(new DateTime());
+			userAuth.setLastLoginTime(new DateTime());
+			userAuth.setUserRole(Role.USER_ROLE);
+			 String ipAddress = request.getHeader("X-FORWARDED-FOR");  
+			   if (ipAddress == null) {  
+				   ipAddress = request.getRemoteAddr();  
+			   }
+			userAuth.setUserIp(ipAddress);
+			String verifyKey = encryptor.encrypt(userAuth.getUserEmail()+userAuth.getCreationTime());
+			userAuth.setVerifyKey(verifyKey);
+			
+			
+			patient.setEmail(userAuth.getUserEmail());
+			patient.setUserAuth(userAuth);
+			patientCreated = patient;
+			
+		}
+		return patientCreated;
 	}
 
 	

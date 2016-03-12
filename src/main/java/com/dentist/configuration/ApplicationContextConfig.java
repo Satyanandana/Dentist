@@ -125,7 +125,6 @@ public class ApplicationContextConfig {
 		try {
 			props.load(resource.getInputStream());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return props;
