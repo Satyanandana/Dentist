@@ -40,6 +40,7 @@ public class SessionHandler {
 		while (i.hasNext()) {
 			SessionInformation si = i.next();
 			si.expireNow();
+						
 		}
 		sessionRegistry.registerNewSession(request.getSession().getId(), auth.getPrincipal());
 		logger.info("added user to the spring session registry");
@@ -51,14 +52,14 @@ public class SessionHandler {
 		cookieUserId.setMaxAge(24 * 60 * 60);  // 24 hours.
 		cookieUserId.setComment("www.kangdentalnewton.com");
 		cookieUserId.setHttpOnly(true);
-		cookieUserId.setPath("/");
+		cookieUserId.setPath("/Dentist/");
 	//  uncomment the below lines during production
 	//	cookieUserId.setDomain("https://www.kangdentalnewton.com");
 	//	cookieUserId.setSecure(true);
 		response.addCookie(cookieUserId);
         logger.info("add user to the cookie");
 		successHandler.onAuthenticationSuccess(request, response, auth);
-		logger.info("Redirecting to where the request came from  "+request.getPathInfo());
+		logger.info("Redirecting to where the request came from  "+request.getPathTranslated());
 	}
 
 }

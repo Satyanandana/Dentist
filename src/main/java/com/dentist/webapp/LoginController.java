@@ -30,6 +30,8 @@ import com.dentist.util.CalendarEventHandler;
 import com.dentist.util.EmailGenerator;
 import com.dentist.util.EmailStructure;
 import com.dentist.util.EmailTemplate;
+import com.dentist.util.IpAddressGeoLocation;
+import com.dentist.util.ServerLocation;
 import com.dentist.webapp.SessionHandler;
 import com.dentist.service.UserServiceInterface;
 import com.dentist.service.WebUtility;
@@ -60,6 +62,8 @@ public class LoginController {
 	private EmailStructure emailStructure;
 	@Autowired
 	private PooledPBEStringEncryptor encryptor;
+	@Autowired
+	private IpAddressGeoLocation geoLocation;
 
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -97,8 +101,9 @@ public class LoginController {
 		}else if(userSession){
 			logger.info("Redirecting to /");
 			return "redirect:/";
-		} 
+		}
 		
+	   		
 		logger.info("To login page .... ");
 		model.addAttribute("serverTime",new DateTime().toString());
 		return "login";
@@ -106,7 +111,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/process", method = RequestMethod.POST)
-	public String Customlogin(HttpServletRequest request, HttpServletResponse response,Locale locale,Model model,@RequestParam String email,@RequestParam String password,Device device)
+	public String Customlogin(HttpServletRequest request, HttpServletResponse response,Locale locale,Model model,@RequestParam String email,@RequestParam String password)
 			throws IOException, ServletException {
 		logger.info("processing post requset to /login/process and athuenticate the user if email and password are valid credentials");
 		boolean valid = false;
@@ -115,11 +120,10 @@ public class LoginController {
 		
 		if(validEmail && validPassword){
 			valid = true;
-			logger.info("Invalid email and/or password");
+			logger.info("valid email and password");
 		}
 		
 		if(valid){
-			logger.info("valid email and password.");
 			logger.info("Checking whether a user exists with the given password");
 		UserAuthentication userAuth = userServiceInterface.getUserAuthenticationInfoByEmail(email);
 		if (userAuth != null) {
@@ -127,12 +131,23 @@ public class LoginController {
 				logger.info("valid user credentials");
 				logger.info("adding user to spring session registry");
 				SessionHandler.handleSession(sessionRegistry, successHandler, request, response, userAuth, encryptor);
+				// get the location of user with IP address
+				
+				ServerLocation serverLocation = geoLocation.getLocation(WebUtility.getIpAddress(request));  
+				   logger.info(serverLocation.getCountryCode());
+				   logger.info(serverLocation.getCountryName());
+				   logger.info(serverLocation.getRegionCode());
+				   logger.info(serverLocation.getRegionName());
+				   logger.info(serverLocation.getCity());
+				   logger.info(serverLocation.getLatitude());
+				   logger.info(serverLocation.getLongitude());
 				
 				// Prepare and send last login info email
 				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("device",WebUtility.getDevice(device));
 				map.put("ipAddress",WebUtility.getIpAddress(request));
-				map.put("location", locale.getDisplayCountry());
+				map.put("location",serverLocation);
+				
+				
 				String body = emailSender.prepareBody(EmailTemplate.LAST_LOGIN_EMAIL, map);
 				emailStructure.setBody(body);
 				emailStructure.setSenderEmail("gtsatyansv@gmail.com");

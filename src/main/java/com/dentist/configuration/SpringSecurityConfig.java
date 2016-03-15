@@ -20,7 +20,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/resources/**", "/signup/*", "/about", "/login/*").permitAll().anyRequest()
 				.authenticated().and().formLogin().loginPage("/login/form").permitAll()
 
-				.and().logout().deleteCookies("JSESSIONID","USER").permitAll().and().sessionManagement().maximumSessions(1)
+				.and().logout().deleteCookies("JSESSIONID","USER").invalidateHttpSession(true).permitAll().and().sessionManagement().maximumSessions(1)
 				.maxSessionsPreventsLogin(true).expiredUrl("/accessDenied").sessionRegistry(sessionRegistry);
 
 	}

@@ -24,6 +24,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
@@ -36,6 +37,7 @@ import com.dentist.util.GoogleServerToServer;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
+import com.maxmind.geoip.LookupService;
 
 @Configuration
 @ComponentScan(basePackages = "com.dentist.*")
@@ -46,6 +48,8 @@ public class ApplicationContextConfig {
 	private ServletContext sevletContext;
 	@Autowired
 	private Environment environment;
+	@Autowired
+	private ResourceLoader resourceLoader;
 
 	@Bean
 	public SessionRegistry sessionRegistry() {
@@ -169,11 +173,12 @@ public class ApplicationContextConfig {
 	}
 
 	@Bean(name = "googleCredential")
-	public GoogleCredential getGoogleCredential() {
+	public GoogleCredential getGoogleCredential() throws IOException {
 		String serverAccountEmail = environment.getRequiredProperty("google.servertoserver.account.email");
 		ArrayList<String> OuthScopes = new ArrayList<String>();
 		OuthScopes.add(CalendarScopes.CALENDAR);
-		File privateKeyFileP12 = new File(environment.getRequiredProperty("google.servertoserver.p12file"));
+		File privateKeyFileP12 = resourceLoader.getResource("classpath:DentalAppointmentCalander-9292a1aa991e.p12").getFile();
+		//File privateKeyFileP12 = new File(environment.getRequiredProperty("google.servertoserver.p12file"));
 		GoogleCredential credential = GoogleServerToServer.getGoogleCredential(serverAccountEmail, privateKeyFileP12,
 				OuthScopes);
 
@@ -182,9 +187,15 @@ public class ApplicationContextConfig {
 
 	@Bean(name = "googleCalendar")
 	public Calendar getCalendar() throws GeneralSecurityException, IOException {
-
 		Calendar calendar = GoogleServerToServer.getCalendar(getGoogleCredential(), "dentalappointmentcalander");
 		return calendar;
 	}
+	
+	@Bean(name="lookupService")
+	public LookupService getGeoLocation() throws IOException{
+		Resource geoLiteDatabaseFile = resourceLoader.getResource("classpath:GeoLiteCity.dat");
+		LookupService lookup = new LookupService(geoLiteDatabaseFile.getFile(),LookupService.GEOIP_MEMORY_CACHE);
+		return lookup;
+		}
 
 }
