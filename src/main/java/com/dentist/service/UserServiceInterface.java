@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.Session;
+import org.springframework.ui.Model;
+
 import com.dentist.domain.Appointment;
 import com.dentist.domain.AppointmentRequest;
 import com.dentist.domain.Insurance;
@@ -24,7 +26,7 @@ public interface UserServiceInterface {
 	
 	/* Utility service method to handle signup and return Patient object*/
 	
-	public Patient signUp(Patient patient,HttpServletRequest request);
+	public Patient signUp(Patient patient,HttpServletRequest request,Model model);
 	
 	
 

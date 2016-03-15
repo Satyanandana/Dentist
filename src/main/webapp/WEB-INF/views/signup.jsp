@@ -12,6 +12,12 @@
 <h2>Sign up Form</h2>
   <c:url value="/signup/process" var="signUpUrl"/>
     <form:form action="${signUpUrl}" method="POST" modelAttribute="patient">
+    <p> ${errorEmail} </p>
+    <p> ${errorPassword} </p>
+    <p> ${errorFirstName} </p>
+    <p> ${errorPhoneNumber} </p>
+    
+    <p></p>
         <table>
             <tr>
                 <td><label for="Firstname">FirstName: </label> </td>
@@ -32,8 +38,12 @@
                 </td>
             </tr>
             <tr>
-            <td><label for=useremail>useremail: </label> </td>
-                <td><form:input path="userAuth.userEmail" id="useremail"/></td>
+            <td><label for=useremail>user email: </label> </td>
+                <td><form:input path="userAuth.userEmail" id="userEmail"/></td>
+            </tr>
+             <tr>
+            <td><label for=useremail>phone number </label> </td>
+                <td><form:input path="phoneNumber" id="phoneNumber"/></td>
             </tr>
             <tr>
              <td><label for=userepassword>password: </label> </td>

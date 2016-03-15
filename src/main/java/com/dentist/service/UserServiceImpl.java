@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import com.dentist.dao.UserDaoInterface;
 import com.dentist.domain.AccountStatus;
@@ -152,7 +153,7 @@ public class UserServiceImpl implements UserServiceInterface {
 		return userDaoInterface.getHibernateSession();
 	}
 
-	public Patient signUp(Patient patient,HttpServletRequest request) {
+	public Patient signUp(Patient patient,HttpServletRequest request,Model model) {
 		Patient patientCreated = null;
 		UserAuthentication userAuth= getUserAuthenticationInfoByEmail(patient.getUserAuth().getUserEmail());
 		if(userAuth == null){
@@ -161,10 +162,7 @@ public class UserServiceImpl implements UserServiceInterface {
 			userAuth.setCreationTime(new DateTime());
 			userAuth.setLastLoginTime(new DateTime());
 			userAuth.setUserRole(Role.USER_ROLE);
-			 String ipAddress = request.getHeader("X-FORWARDED-FOR");  
-			   if (ipAddress == null) {  
-				   ipAddress = request.getRemoteAddr();  
-			   }
+			 String ipAddress = WebUtility.getIpAddress(request);
 			userAuth.setUserIp(ipAddress);
 			String verifyKey = encryptor.encrypt(userAuth.getUserEmail()+userAuth.getCreationTime());
 			userAuth.setVerifyKey(verifyKey);
@@ -174,6 +172,8 @@ public class UserServiceImpl implements UserServiceInterface {
 			patient.setUserAuth(userAuth);
 			patientCreated = patient;
 			
+		}else{
+			model.addAttribute("errorEmail", "Another account exists with this email.Try another email");
 		}
 		return patientCreated;
 	}
