@@ -93,7 +93,7 @@ public class LoginController {
 							}
 						
 					
-					return null;
+					return null; 
 				
 			}else{
 				logger.info("unable to add the user to spring session w.r.t cookie data");

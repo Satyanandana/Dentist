@@ -34,6 +34,7 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if(!auth.getPrincipal().equals("anonymousUser")){
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
 
 		logger.info("handling get request to /home   " + user.getUserEmail());
@@ -43,6 +44,7 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is " + locale.toString());
 
 		// BasicProfile user1= userServiceInterface.findUserById(2);
+		}
 
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
