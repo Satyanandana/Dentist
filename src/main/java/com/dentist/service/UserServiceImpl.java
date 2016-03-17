@@ -161,7 +161,7 @@ public class UserServiceImpl implements UserServiceInterface {
 			userAuth.setAccountStatus(AccountStatus.NOT_ACTIVATED_YET);
 			userAuth.setCreationTime(new DateTime());
 			userAuth.setLastLoginTime(new DateTime());
-			userAuth.setUserRole(Role.USER_ROLE);
+			userAuth.setUserRole(Role.ROLE_USER);
 			 String ipAddress = WebUtility.getIpAddress(request);
 			userAuth.setUserIp(ipAddress);
 			String verifyKey = encryptor.encrypt(userAuth.getUserEmail()+userAuth.getCreationTime());

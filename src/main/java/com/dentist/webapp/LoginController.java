@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
