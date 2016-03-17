@@ -1,5 +1,13 @@
 package com.dentist.util;
-
+/**
+* 
+*
+* @author  Satyanandana Srikanthvarma Vadapalli
+* @email srikanthvarma.vadapalli@gmail.com
+* @version 1.0
+* @since   Mar 17, 20161:10:28 AM
+*       
+*/
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

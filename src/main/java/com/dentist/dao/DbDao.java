@@ -1,5 +1,13 @@
 package com.dentist.dao;
-
+/**
+* 
+*
+* @author  Satyanandana Srikanthvarma Vadapalli
+* @email srikanthvarma.vadapalli@gmail.com
+* @version 1.0
+* @since   Mar 17, 20161:10:28 AM
+*       
+*/
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,13 @@
 package com.dentist.util;
-
+/**
+* 
+*
+* @author  Satyanandana Srikanthvarma Vadapalli
+* @email srikanthvarma.vadapalli@gmail.com
+* @version 1.0
+* @since   Mar 17, 20161:10:28 AM
+*       
+*/
 public enum EmailTemplate {
 	WELCOME_EMAIL("welcomeemail.vm"),
 	VERIFY_ACCOUNT_EMAIL("verifyaccountemail.vm"),

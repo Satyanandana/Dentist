@@ -2,7 +2,7 @@ package com.dentist.webapp;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
+
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dentist.domain.Patient;
 import com.dentist.service.CustomUserDetails;
 import com.dentist.service.UserServiceInterface;
-
+/**
+* 
+*
+* @author  Satyanandana Srikanthvarma Vadapalli
+* @email srikanthvarma.vadapalli@gmail.com
+* @version 1.0
+* @since   Mar 17, 20161:10:28 AM
+*       
+*/
 @RestController
 @RequestMapping("/patient")
 public class PatientInfoController {
@@ -32,7 +40,7 @@ public class PatientInfoController {
 	@RequestMapping(value = "/info", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> getPersonalInfo(Model model){
 		logger.debug("processing request to get personal info");
-		Map<String, Object> info = new TreeMap<String, Object>();
+		Map<String, Object> info = new HashMap<String, Object>();
 		Patient patient =null;
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if(!auth.getPrincipal().equals("anonymousUser")){
