@@ -1,4 +1,7 @@
 package com.dentist.domain;
+
+import java.io.Serializable;
+
 /**
 * 
 *

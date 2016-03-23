@@ -64,7 +64,15 @@ public class UserServiceImpl implements UserServiceInterface {
 	}
 
 	public Patient getPatientInfoById(long patientID) {
-		return userDaoInterface.getPatientInfoById(patientID);
+		Patient patient =  userDaoInterface.getPatientInfoById(patientID);
+		patient.getAppointmentRequests().size();
+		patient.getAppointments().size();
+		patient.getReceivedMessages().size();
+		patient.getSentMessages().size();
+		patient.getInsurances().size();
+		patient.getTreatments().size();
+		patient.getPatientTeeth().size();
+		return patient;
 	}
 
 	public Patient getPatientInfoByEmail(String patientEmail) {

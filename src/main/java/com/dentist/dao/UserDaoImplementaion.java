@@ -55,7 +55,7 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 /*
  *  DAO methods on Patient.class 
  */
-	@Transactional(propagation=Propagation.REQUIRED)
+	
 	public void setPatient(Patient patient) {
 		persist(patient);
 	}

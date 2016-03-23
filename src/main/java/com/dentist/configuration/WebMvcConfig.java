@@ -1,4 +1,9 @@
 package com.dentist.configuration;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 /**
 * 
 *
@@ -11,6 +16,11 @@ package com.dentist.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -18,8 +28,12 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import com.dentist.util.CustomJodaDateTimeSerializer;
+import com.dentist.util.CustomJodaLocalDateSerializer;
+
 @Configuration
 @EnableWebMvc
+@EnableTransactionManagement
 @ComponentScan(basePackages = { "com.dentist.webapp" })
 
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
@@ -68,6 +82,16 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
+	}
+	
+	@Override
+	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
+		builder.indentOutput(true)
+		.serializerByType(LocalDate.class, new CustomJodaLocalDateSerializer())
+		.serializerByType(DateTime.class, new CustomJodaDateTimeSerializer());;
+		converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
+		
 	}
 
 }

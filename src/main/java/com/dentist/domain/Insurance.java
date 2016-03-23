@@ -20,10 +20,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "insurances")
@@ -35,6 +39,9 @@ public class Insurance implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long insuranceID;
+	@Transient
+	private long patientID;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "patientID",nullable=false)
 	private Patient insurancePatient;
@@ -64,6 +71,14 @@ public class Insurance implements Serializable {
 
 	public void setInsuranceID(long insuranceID) {
 		this.insuranceID = insuranceID;
+	}
+    
+	@JsonGetter
+	public long getPatientID() {
+		if(this.insurancePatient!=null){
+			this.patientID = this.insurancePatient.getUserID();
+		}
+		return patientID;
 	}
 
 	public Patient getInsurancePatient() {

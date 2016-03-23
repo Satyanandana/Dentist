@@ -18,9 +18,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
+
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "recieved_messages")
@@ -33,6 +37,9 @@ public class ReceivedMessage implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long messageID;
+	@Transient
+	private long receiverID;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "receiverID", nullable = false)
 	private Patient receiver;
@@ -51,6 +58,14 @@ public class ReceivedMessage implements Serializable {
 
 	public void setMessageID(long messageID) {
 		this.messageID = messageID;
+	}
+    
+	@JsonGetter
+	public long getReceiverID() {
+		if(this.receiver!=null){
+			this.receiverID = receiver.getUserID();
+		}
+		return receiverID;
 	}
 
 	public Patient getReceiver() {

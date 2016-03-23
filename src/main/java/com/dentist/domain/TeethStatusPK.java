@@ -13,6 +13,10 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Embeddable
 public class TeethStatusPK implements Serializable {
@@ -20,7 +24,9 @@ public class TeethStatusPK implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -1955230820541889286L;
-	
+	@Transient
+	private long patientID;
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="patientID",nullable=false)
 	private Patient patient;
@@ -31,6 +37,15 @@ public class TeethStatusPK implements Serializable {
 	public TeethStatusPK() {
 		
 	}
+
+	@JsonGetter
+	public long getPatientID() {
+		if(this.patient!=null){
+			this.patientID = this.patient.getUserID();
+		}
+		return patientID;
+	}
+
 
 	public Patient getPatient() {
 		return patient;

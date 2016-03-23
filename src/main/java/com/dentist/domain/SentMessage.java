@@ -18,9 +18,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "sent_messages")
@@ -34,6 +37,9 @@ public class SentMessage implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long messageID;
+	@Transient
+	private long senderID;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "senderID", nullable = false)
 	private Patient sender;
@@ -52,6 +58,14 @@ public class SentMessage implements Serializable {
 
 	public void setMessageID(long messageID) {
 		this.messageID = messageID;
+	}
+
+	
+	public long getSenderID() {
+		if(this.sender != null){
+			this.senderID = sender.getUserID();
+		}
+		return senderID;
 	}
 
 	public Patient getSender() {

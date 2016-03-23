@@ -21,9 +21,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
+
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="appointmentrequests")
@@ -36,6 +40,9 @@ public class AppointmentRequest implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long appointmentRequestID;
+	@Transient
+	private long patientID;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "patientID",nullable=false)
 	private Patient appointmentPatient;
@@ -66,7 +73,15 @@ public class AppointmentRequest implements Serializable {
 	public void setAppointmentRequestID(long appointmentRequestID) {
 		this.appointmentRequestID = appointmentRequestID;
 	}
-
+    
+	@JsonGetter
+	public long getPatientID() {
+		if(this.appointmentPatient!=null){
+			this.patientID = this.appointmentPatient.getUserID();
+		}
+		return patientID;
+	}
+	
 	public Patient getAppointmentPatient() {
 		return appointmentPatient;
 	}

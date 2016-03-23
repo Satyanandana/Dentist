@@ -29,6 +29,8 @@ import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Patient_Details")
 
@@ -39,7 +41,7 @@ public class Patient implements Serializable {
 	private static final long serialVersionUID = 3633053765941562590L;
 	@Id
 	private long userID;
-
+    @JsonIgnore
 	@OneToOne
 	@MapsId
 	@JoinColumn(name = "userID")
@@ -68,23 +70,30 @@ public class Patient implements Serializable {
 		  })
 	private EmergencyContact EmergencyContact;
 
+	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sender")
 	private List<SentMessage> sentMessages = new ArrayList<SentMessage>();
 
+	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver")
 	private List<ReceivedMessage> receivedMessages = new ArrayList<ReceivedMessage>();
 
+	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
 	private List<Treatment> treatments = new ArrayList<Treatment>();
 
+	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "insurancePatient")
 	private List<Insurance> insurances = new ArrayList<Insurance>();
+	
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "appointmentPatient")
 	private List<AppointmentRequest> appointmentRequests = new ArrayList<AppointmentRequest>();
 
+	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "appointmentPatient")
 	private List<Appointment> appointments = new ArrayList<Appointment>();
+	
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "TeethStatusPK.patient")
 	private List<PatientTeethStatus> patientTeeth = new ArrayList<PatientTeethStatus>();
