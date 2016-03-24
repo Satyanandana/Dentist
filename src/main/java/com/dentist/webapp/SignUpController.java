@@ -77,15 +77,15 @@ public class SignUpController {
 	 */
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
 	public String signUpForm(HttpServletRequest request, HttpServletResponse response,Model model,@CookieValue(name="USER",required=false) String userCookie) {
-		logger.info("Checking for the user in session");
+		logger.debug("Checking for the user in session");
 		boolean userSession = (request.getSession().getAttribute("user")!= null);
-		logger.info("User is in the session :" + userSession);
+		logger.debug("User is in the session :" + userSession);
 		if(userCookie != null && !userSession){
-		logger.info("check user in the cookie");
+		logger.debug("check user in the cookie");
 		  String userEmail  = encryptor.decrypt(userCookie);
 		  UserAuthentication userAuth = userServiceInterface.getUserAuthenticationInfoByEmail(userEmail);
 			if (userAuth != null) {
-				logger.info("adding the user to spring session registry w.r.t cookie data");
+				logger.debug("adding the user to spring session registry w.r.t cookie data");
 				    
 						
 							try {
@@ -102,17 +102,17 @@ public class SignUpController {
 					return null;
 				
 			}else{
-				logger.info("unable to add the user to spring session w.r.t cookie data");
+				logger.debug("unable to add the user to spring session w.r.t cookie data");
 			}
 		}else if(userSession){
-			logger.info("Redirecting to /");
+			logger.debug("Redirecting to /");
 			return "redirect:/";
 		} 
 		
 		//Required for spring form model attribute		
 		Patient patient = new Patient();
 		model.addAttribute("patient", patient);
-		logger.info("To signup page ");
+		logger.debug("To signup page ");
 		return "signup";
 
 	}
@@ -138,15 +138,16 @@ public class SignUpController {
 			patient.setDateOfBirth(dateOfBirth);
 		}
 		else{
+			model.addAttribute("errorDate", "Please select a valid date");
 			valid = false;
 		}
 		
        if(valid){
-    	   logger.info("Request parameters are valid.Checking for existing account with given email...");
+    	   logger.debug("Request parameters are valid.Checking for existing account with given email...");
 		Patient patientCreated = userServiceInterface.signUp(patient, request,model);
 		if(patientCreated!=null){
 			userServiceInterface.setPatient(patientCreated);
-			logger.info("new user account created successfully");
+			logger.debug("new user account created successfully");
 			
 			// Prepare and send Welcome Email
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -175,14 +176,14 @@ public class SignUpController {
 			UserAuthentication userAuth = userServiceInterface.getUserAuthenticationInfoByEmail(patient.getEmail());
 			SessionHandler.handleSession(sessionRegistry, successHandler, request, response, userAuth, encryptor);
 		
-		    logger.info("add user to spring session");
+		    
 			// Wait until the emails are sent
 	    /*    while (!(sent1.isDone() && sent2.isDone())) {
 	            logger.info("waiting to send email ...");
 	            Thread.sleep(10); //10-millisecond pause between each check
 	        }*/
 			
-			logger.info("Sent welcome and account verification emails");
+			logger.debug("Sent welcome and account verification emails");
 			return null;
 		}
        }

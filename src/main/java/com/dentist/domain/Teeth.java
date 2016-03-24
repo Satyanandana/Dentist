@@ -26,7 +26,6 @@ public class Teeth implements Serializable {
 	 */
 	private static final long serialVersionUID = 6175288134531677286L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int teethID;
 	@Column(nullable=false)
 	private String teethName;

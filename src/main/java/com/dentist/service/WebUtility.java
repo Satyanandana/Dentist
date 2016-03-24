@@ -19,17 +19,19 @@ public class WebUtility {
 	public static LocalDate getLocalDatefromHtmlDate(String monthDateYear) {
 		int[] array1 = new int[3];
 		LocalDate localdate = null;
+		boolean valid = false;
 		int i = 0;
-		if (monthDateYear != null) {
-			String[] array = monthDateYear.split("[-/]");
+		if (monthDateYear != null && monthDateYear.matches("([0-9]{4})[-/\\\\](0?[1-9]|[1][012])[-/\\\\](0?[1-9]|[12][0-9]|3[01])")) {
+			String[] array = monthDateYear.split("[-/\\\\]");
 			for (String part : array) {
 				if (part != null) {
 					array1[i] = Integer.parseInt(part);
 				}
 				i++;
 			}
+			valid = true;
 		}
-		if (array1 != null && array1[1]<=12 && array1[2]<=31 ) {
+		if (valid) {
 			localdate = new LocalDate(array1[0], array1[1], array1[2]);
 		}
 		return localdate;

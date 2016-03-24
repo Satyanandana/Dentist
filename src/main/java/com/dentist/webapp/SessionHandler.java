@@ -51,11 +51,11 @@ public class SessionHandler {
 						
 		}
 		sessionRegistry.registerNewSession(request.getSession().getId(), auth.getPrincipal());
-		logger.info("added user to the spring session registry");
+		logger.debug("added user to the spring session registry");
 		SecurityContextHolder.getContext().setAuthentication(auth);
-		logger.info("added user to the spring security context holder");
+		logger.debug("added user to the spring security context holder");
 		request.getSession().setAttribute("user", user.getUserEmail());
-		logger.info("add user to the http servlet session");
+		logger.debug("add user to the http servlet session");
 		Cookie cookieUserId  = new Cookie("USER",encryptor.encrypt(user.getUserEmail()));
 		cookieUserId.setMaxAge(24 * 60 * 60);  // 24 hours.
 		cookieUserId.setComment("www.kangdentalnewton.com");
@@ -65,9 +65,9 @@ public class SessionHandler {
 	//	cookieUserId.setDomain("https://www.kangdentalnewton.com");
 	//	cookieUserId.setSecure(true);
 		response.addCookie(cookieUserId);
-        logger.info("add user to the cookie");
+        logger.debug("added user to the cookie");
 		successHandler.onAuthenticationSuccess(request, response, auth);
-		logger.info("Redirecting to where the request came from  "+request.getPathTranslated());
+		logger.debug("Redirecting to where the request came from  "+request.getPathTranslated());
 	}
 
 }

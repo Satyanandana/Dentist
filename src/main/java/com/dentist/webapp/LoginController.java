@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.dentist.domain.AccountStatus;
 import com.dentist.domain.UserAuthentication;
 import com.dentist.util.CalendarEventHandler;
 import com.dentist.util.EmailGenerator;
@@ -88,6 +89,7 @@ public class LoginController {
 		  String userEmail  = encryptor.decrypt(userCookie);
 		  UserAuthentication userAuth = userServiceInterface.getUserAuthenticationInfoByEmail(userEmail);
 			if (userAuth != null) {
+				if(userAuth.getAccountStatus().equals(AccountStatus.ACTIVE)){
 				logger.info("adding the user to spring session registry w.r.t cookie data");
 				  
 						
@@ -103,7 +105,7 @@ public class LoginController {
 						
 					
 					return null; 
-				
+				}
 			}else{
 				logger.info("unable to add the user to spring session w.r.t cookie data");
 			}
@@ -124,12 +126,14 @@ public class LoginController {
 			throws IOException, ServletException {
 		logger.info("processing post requset to /login/process and athuenticate the user if email and password are valid credentials");
 		boolean valid = false;
-		boolean validEmail = ServerSideValidations.validateEmail(email, model,"emailError", "Invalid email address");
-        boolean validPassword = ServerSideValidations.validatePassword(password, model, "passwordError", "Invalid password");
+		boolean validEmail = ServerSideValidations.validateEmail(email, model,"errorEmail", "Invalid email address");
+        boolean validPassword = ServerSideValidations.validatePassword(password, model, "errorPassword", "Invalid password");
 		
 		if(validEmail && validPassword){
 			valid = true;
-			logger.info("valid email and password");
+			logger.debug("valid email and password");
+		}else{
+			model.addAttribute("error", "Either email Id or the password is wrong");
 		}
 		
 		if(valid){
@@ -137,12 +141,13 @@ public class LoginController {
 		UserAuthentication userAuth = userServiceInterface.getUserAuthenticationInfoByEmail(email);
 		if (userAuth != null) {
 			if (userAuth.getUserPwd().equals(password)) {
-				logger.info("valid user credentials");
-				logger.info("adding user to spring session registry");
+				if(userAuth.getAccountStatus().equals(AccountStatus.ACTIVE)){
+				logger.debug("valid user credentials");
+				logger.debug("adding user to spring session registry");
 				SessionHandler.handleSession(sessionRegistry, successHandler, request, response, userAuth, encryptor);
 				// get the location of user with IP address
-				
-				ServerLocation serverLocation = geoLocation.getLocation(WebUtility.getIpAddress(request));  
+				String IpAddress = WebUtility.getIpAddress(request);
+				ServerLocation serverLocation = geoLocation.getLocation(IpAddress);  
 				   logger.info(serverLocation.getCountryCode());
 				   logger.info(serverLocation.getCountryName());
 				   logger.info(serverLocation.getRegionCode());
@@ -153,7 +158,7 @@ public class LoginController {
 				
 				// Prepare and send last login info email
 				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("ipAddress",WebUtility.getIpAddress(request));
+				map.put("ipAddress",IpAddress);
 				map.put("location",serverLocation);
 				
 				
@@ -165,8 +170,29 @@ public class LoginController {
 			 // emailStructure.addAttachment("welcome.vm", file);
 		     // Future<Boolean> sent1 =  emailSender.sendEmail(emailStructure);
 				return null;
+				}else if(userAuth.getAccountStatus().equals(AccountStatus.NOT_ACTIVATED_YET)){
+					model.addAttribute("error", "Please verify your email Id by clicking on the link that we sent to your email");
+					// Prepare and send email for verifying email
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("verifyKey",userAuth.getVerifyKey());
+										
+					String body = emailSender.prepareBody(EmailTemplate.VERIFY_ACCOUNT_EMAIL, map);
+					emailStructure.setBody(body);
+					emailStructure.setSenderEmail("gtsatyansv@gmail.com");
+					emailStructure.setSubject("Last login info");
+					emailStructure.addRecipient(userAuth.getUserEmail());
+				 // emailStructure.addAttachment("welcome.vm", file);
+			     // Future<Boolean> sent1 =  emailSender.sendEmail(emailStructure);
+					
+				}else if(userAuth.getAccountStatus().equals(AccountStatus.BLOCKED)){
+					model.addAttribute("error", "Your account has been blocked.Please contact the admin");
+				}
+			}else{
+				model.addAttribute("error", "Either email Id or the password is wrong");
 			}
-		} 
+		} else{
+			model.addAttribute("error", "Either email Id or the password is wrong");
+		}
 		}
 		model.addAttribute("serverTime",new DateTime().toString());
 		return "login";

@@ -189,7 +189,7 @@ public class UserServiceImpl implements UserServiceInterface {
 			patientCreated = patient;
 			
 		}else{
-			model.addAttribute("errorEmail", "Another account exists with this email.Try another email");
+			model.addAttribute("error", "Another account exists with this email.Try another email");
 		}
 		return patientCreated;
 	}
