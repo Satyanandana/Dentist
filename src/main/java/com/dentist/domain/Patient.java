@@ -57,7 +57,8 @@ public class Patient implements Serializable {
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate dateOfBirth;
 	@Column(nullable=false)
-	private long phoneNumber;
+	//@Type(type = "encryptedString")
+	private String phoneNumber;
 	@Column(unique=true,nullable=false)
 	private String email;
 	@Embedded
@@ -182,13 +183,13 @@ public class Patient implements Serializable {
 
 
 
-	public long getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
 
 
-	public void setPhoneNumber(long phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 

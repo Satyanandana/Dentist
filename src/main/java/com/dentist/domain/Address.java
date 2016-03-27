@@ -18,15 +18,20 @@ public class Address implements Serializable {
 
 	private static final long serialVersionUID = 7797213038067009978L;
 	@Column(name = "address1")
+	//@Type(type = "encryptedString")
 	private String address1;
 	@Column(name = "address2")
+	//@Type(type = "encryptedString")
 	private String address2;
 	@Column(name = "city")
+	//@Type(type = "encryptedString")
 	private String city;
 	@Column(name = "state")
+	//@Type(type = "encryptedString")
 	private String state;
 	@Column(name = "zipcode")
-	private int zipcode;
+	//@Type(type = "encryptedString")
+	private String zipcode;
 
 	public String getAddress1() {
 		return address1;
@@ -60,11 +65,11 @@ public class Address implements Serializable {
 		this.state = state;
 	}
 
-	public int getZipcode() {
+	public String getZipcode() {
 		return zipcode;
 	}
 
-	public void setZipcode(int zipcode) {
+	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
 	}
 

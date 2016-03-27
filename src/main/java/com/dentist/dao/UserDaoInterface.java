@@ -18,6 +18,7 @@ import com.dentist.domain.Insurance;
 import com.dentist.domain.Patient;
 import com.dentist.domain.ReceivedMessage;
 import com.dentist.domain.SentMessage;
+import com.dentist.domain.Treatment;
 import com.dentist.domain.UserAuthentication;
 
 public interface UserDaoInterface {
@@ -65,6 +66,13 @@ public interface UserDaoInterface {
 	public void updateReceivedMessage(ReceivedMessage receivedMessage);
 	public ReceivedMessage getReceivedMessageByID(long receivedMessageID);
 	public List<ReceivedMessage> getReceivedMessagesByPatientID(long patientID);
+	
+	/* DAO methods on Treatment.class */
+	public void setTreatment(Treatment treatment);
+	public void updateTreatment(Treatment treatment);
+	public Treatment getTreatmentByID(long treatmentID);
+	public List<Treatment> getTreatmentsByPatientID(long userID);
+	public List<Treatment> getTreatmentsByPatientIDandTeethID(long patientID,int teethID);
 
 	
 	

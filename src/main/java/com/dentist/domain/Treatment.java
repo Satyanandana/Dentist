@@ -26,6 +26,7 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -46,21 +47,21 @@ public class Treatment implements Serializable {
 	private long patientID;
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "patientID", nullable = false)
+	@JoinColumn(name = "patientID", nullable = false,updatable=false)
 	private Patient patient;
 	@OneToOne
-	@JoinColumn(name = "teethID", nullable = false)
+	@JoinColumn(name = "teethID", nullable = false,updatable=false)
 	private Teeth teeth;
 	@Column(nullable=false)
-	@Type(type = "encryptedString")
+	//@Type(type = "encryptedString")
 	private String note;
 	@Column(nullable=false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime treatmentInsertedTime;
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-	private DateTime treatmentDoneTime;
+	private LocalDate treatmentDoneTime;
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-	private DateTime treatmentExpectedTime;
+	private LocalDate treatmentExpectedTime;
 	@Column
 	private BigDecimal amountPaid;
 	@Column
@@ -121,19 +122,19 @@ public class Treatment implements Serializable {
 		this.treatmentInsertedTime = treatmentInsertedTime;
 	}
 
-	public DateTime getTreatmentDoneTime() {
+	public LocalDate getTreatmentDoneTime() {
 		return treatmentDoneTime;
 	}
 
-	public void setTreatmentDoneTime(DateTime treatmentDoneTime) {
+	public void setTreatmentDoneTime(LocalDate treatmentDoneTime) {
 		this.treatmentDoneTime = treatmentDoneTime;
 	}
 
-	public DateTime getTreatmentExpectedTime() {
+	public LocalDate getTreatmentExpectedTime() {
 		return treatmentExpectedTime;
 	}
 
-	public void setTreatmentExpectedTime(DateTime treatmentExpectedTime) {
+	public void setTreatmentExpectedTime(LocalDate treatmentExpectedTime) {
 		this.treatmentExpectedTime = treatmentExpectedTime;
 	}
 

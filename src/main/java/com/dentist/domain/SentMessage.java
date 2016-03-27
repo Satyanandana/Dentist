@@ -43,8 +43,10 @@ public class SentMessage implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "senderID", nullable = false)
 	private Patient sender;
-	@Column
+	@Column(nullable=false)
+	// @Type(type = "encryptedString")
 	private String msg;
+	@Column(nullable=false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime sentTime;
 

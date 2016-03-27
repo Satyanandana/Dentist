@@ -21,10 +21,13 @@ public class EmergencyContact implements Serializable {
 	private static final long serialVersionUID = -3266512225087243884L;
 	
 	@Column
+	//@Type(type = "encryptedString")
 	private String name;
 	@Column
-	private long phoneNumber;
+	//@Type(type = "encryptedString")
+	private String phoneNumber;
 	@Column
+	//@Type(type = "encryptedString")
 	private String relation;
 	
 	public EmergencyContact() {
@@ -39,11 +42,11 @@ public class EmergencyContact implements Serializable {
 		this.name = name;
 	}
 
-	public long getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(long number) {
+	public void setPhoneNumber(String number) {
 		this.phoneNumber = number;
 	}
 

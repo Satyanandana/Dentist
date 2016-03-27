@@ -12,7 +12,7 @@ package com.dentist.domain;
 /* Never change the order of elements after going into production*/
 public enum TeethStatus {
 	EXTRACTED("Extracted"), 
-	GOOD("Good");
+	NORMAL("Normal");
 	
 	private String status;
 

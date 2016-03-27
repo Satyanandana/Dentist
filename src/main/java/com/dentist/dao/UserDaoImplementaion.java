@@ -15,15 +15,13 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.dentist.domain.Appointment;
 import com.dentist.domain.AppointmentRequest;
 import com.dentist.domain.Insurance;
 import com.dentist.domain.Patient;
 import com.dentist.domain.ReceivedMessage;
 import com.dentist.domain.SentMessage;
+import com.dentist.domain.Treatment;
 import com.dentist.domain.UserAuthentication;
 
 @Repository
@@ -165,7 +163,7 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 	}
 
 /*
- *  DAO methods on SentMessage.class 
+ *  DAO methods on ReceivedMessage.class 
  */
 	public void setReceivedMessage(ReceivedMessage receivedMessage) {
 		persist(receivedMessage);
@@ -185,7 +183,43 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 		Criteria criteria = getSession().createCriteria(ReceivedMessage.class).add(Restrictions.eq("receiver.userID", patientID));
 		return   (List<ReceivedMessage>) criteria.list();
 	}
+	
+/*
+ *  DAO methods on Treatment.class 
+ */
+	
+	@Override
+	public void setTreatment(Treatment treatment) {
+		persist(treatment);		
+	}
 
+	@Override
+	public void updateTreatment(Treatment treatment) {
+		update(treatment);		
+	}
+
+	@Override
+	public Treatment getTreatmentByID(long treatmentID) {
+		Criteria criteria = getSession().createCriteria(Treatment.class).add(Restrictions.idEq(treatmentID));
+		return (Treatment) criteria.uniqueResult();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Treatment> getTreatmentsByPatientID(long patientID) {
+		Criteria criteria = getSession().createCriteria(Treatment.class).add(Restrictions.eq("patient.userID", patientID));
+		return   (List<Treatment>) criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Treatment> getTreatmentsByPatientIDandTeethID(long patientID, int teethID) {
+		Criteria criteria = getSession().createCriteria(Treatment.class).add(Restrictions.eq("patient.userID", patientID))
+				                                                        .add(Restrictions.eq("teeth.teethID", teethID));
+		return   (List<Treatment>) criteria.list();
+	}
+	
+	
 	
 
 	public Object mergeEntity(Object entity) {
@@ -197,6 +231,10 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 		
 		return getSession();
 	}
+
+	
+
+	
 
 
 	

@@ -12,7 +12,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.hibernate.Session;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,7 @@ import com.dentist.domain.Patient;
 import com.dentist.domain.ReceivedMessage;
 import com.dentist.domain.Role;
 import com.dentist.domain.SentMessage;
+import com.dentist.domain.Treatment;
 import com.dentist.domain.UserAuthentication;
 
 @Service
@@ -39,6 +39,9 @@ public class UserServiceImpl implements UserServiceInterface {
 	@Autowired
 	private PooledPBEStringEncryptor encryptor;
 
+/* 
+ * DAO methods on UserAuthentication.class
+ */
 	public void setUserAuthenticationInfo(UserAuthentication userAuthentication) {
 		userDaoInterface.setUserAuthenticationInfo(userAuthentication);		
 	}
@@ -55,6 +58,9 @@ public class UserServiceImpl implements UserServiceInterface {
 			return userDaoInterface.getUserAuthenticationInfoByEmail(email);
 	}
 
+/* 
+ * DAO methods on Patient.class
+ */
 	public void setPatient(Patient patient) {
 		userDaoInterface.setPatient(patient);
 	}
@@ -65,13 +71,7 @@ public class UserServiceImpl implements UserServiceInterface {
 
 	public Patient getPatientInfoById(long patientID) {
 		Patient patient =  userDaoInterface.getPatientInfoById(patientID);
-		patient.getAppointmentRequests().size();
-		patient.getAppointments().size();
-		patient.getReceivedMessages().size();
-		patient.getSentMessages().size();
-		patient.getInsurances().size();
-		patient.getTreatments().size();
-		patient.getPatientTeeth().size();
+		
 		return patient;
 	}
 
@@ -79,6 +79,9 @@ public class UserServiceImpl implements UserServiceInterface {
 		return userDaoInterface.getPatientInfoByEmail(patientEmail);
 	}
 
+/* 
+ * DAO methods on AppointmentRequest.class
+ */
 	public void setAppointmentRequest(AppointmentRequest request) {
 		userDaoInterface.setAppointmentRequest(request);
 	}
@@ -95,6 +98,9 @@ public class UserServiceImpl implements UserServiceInterface {
 		return userDaoInterface.getAppointmentRequestsByPatientID(patientID);
 	}
 
+/* 
+ * DAO methods on Appointment.class
+ */
 	public void setAppointment(Appointment appointment) {
 		userDaoInterface.setAppointment(appointment);
 	}
@@ -111,6 +117,9 @@ public class UserServiceImpl implements UserServiceInterface {
 		return userDaoInterface.getAppointmentsByPatientID(patientID);
 	}
 
+/* 
+ * DAO methods on Insurance.class
+ */
 	public void setInsurance(Insurance insurance) {
 		userDaoInterface.setInsurance(insurance);
 	}
@@ -126,6 +135,10 @@ public class UserServiceImpl implements UserServiceInterface {
 	public List<Insurance> getInsurancesByPatientID(long patientID) {
 		return userDaoInterface.getInsurancesByPatientID(patientID);
 	}
+	
+/* 
+ * DAO methods on SentMessage.class
+ */
 
 	public void setSentMessage(SentMessage sentMessage) {
 		userDaoInterface.setSentMessage(sentMessage);
@@ -143,6 +156,9 @@ public class UserServiceImpl implements UserServiceInterface {
 		return userDaoInterface.getSentMessagesByPatientID(patientID);
 	}
 
+/* 
+ * DAO methods on ReceivedMessage.class
+ */
 	public void setReceivedMessage(ReceivedMessage receivedMessage) {
 		userDaoInterface.setReceivedMessage(receivedMessage);
 	}
@@ -158,16 +174,37 @@ public class UserServiceImpl implements UserServiceInterface {
 	public List<ReceivedMessage> getReceivedMessagesByPatientID(long patientID) {
 		return userDaoInterface.getReceivedMessagesByPatientID(patientID);
 	}
+	
 
-	public Object mergeEntity(Object entity) {
-		
-		return userDaoInterface.mergeEntity(entity);
+/* 
+ * DAO methods on Treatment.class
+ */
+	@Override
+	public void setTreatment(Treatment treatment) {
+		 userDaoInterface.setTreatment(treatment);
 	}
 
-	public Session getHibernateSession() {
-		
-		return userDaoInterface.getHibernateSession();
+	@Override
+	public void updateTreatment(Treatment treatment) {
+		userDaoInterface.updateTreatment(treatment);
 	}
+
+	@Override
+	public Treatment getTreatmentByID(long treatmentID) {
+		return userDaoInterface.getTreatmentByID(treatmentID);
+	}
+	
+	@Override
+	public List<Treatment> getTreatmentsByPatientID(long userID) {
+		return  userDaoInterface.getTreatmentsByPatientID(userID);
+	}
+
+	@Override
+	public List<Treatment> getTreatmentsByPatientIDandTeethID(long patientID, int teethID) {
+	    return userDaoInterface.getTreatmentsByPatientIDandTeethID(patientID, teethID);
+	}
+
+	
 
 	public Patient signUp(Patient patient,HttpServletRequest request,Model model) {
 		Patient patientCreated = null;
@@ -193,9 +230,5 @@ public class UserServiceImpl implements UserServiceInterface {
 		}
 		return patientCreated;
 	}
-
-	
-
-	
 
 }

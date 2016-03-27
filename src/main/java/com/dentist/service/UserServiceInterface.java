@@ -12,7 +12,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.hibernate.Session;
 import org.springframework.ui.Model;
 
 import com.dentist.domain.Appointment;
@@ -21,23 +20,16 @@ import com.dentist.domain.Insurance;
 import com.dentist.domain.Patient;
 import com.dentist.domain.ReceivedMessage;
 import com.dentist.domain.SentMessage;
+import com.dentist.domain.Treatment;
 import com.dentist.domain.UserAuthentication;
 
 public interface UserServiceInterface {
 	
-	public Session getHibernateSession();
-	
-	public Object mergeEntity(Object entity);
-	
-	
-	
-	
+		
 	/* Utility service method to handle signup and return Patient object*/
 	
 	public Patient signUp(Patient patient,HttpServletRequest request,Model model);
 	
-	
-
 	/* Call DAO methods on UserAuthentication.class */
 	
 	public void setUserAuthenticationInfo(UserAuthentication userAuthentication);
@@ -80,5 +72,12 @@ public interface UserServiceInterface {
 	public void updateReceivedMessage(ReceivedMessage receivedMessage);
 	public ReceivedMessage getReceivedMessageByID(long receivedMessageID);
 	public List<ReceivedMessage> getReceivedMessagesByPatientID(long patientID);
+
+	/* DAO methods on Treatment.class */
+	public void setTreatment(Treatment treatment);
+	public void updateTreatment(Treatment treatment);
+	public Treatment getTreatmentByID(long treatmentID);
+	public List<Treatment> getTreatmentsByPatientID(long userID);
+	public List<Treatment> getTreatmentsByPatientIDandTeethID(long patientID,int teethID);
 
 }

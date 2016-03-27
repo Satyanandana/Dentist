@@ -41,10 +41,12 @@ public class ReceivedMessage implements Serializable {
 	private long receiverID;
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "receiverID", nullable = false)
+	@JoinColumn(name = "receiverID", nullable = false,updatable=false)
 	private Patient receiver;
-	@Column
+	@Column(nullable=false)
+	// @Type(type = "encryptedString")
 	private String msg;
+	@Column(nullable=false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime receivedTime;
 

@@ -43,18 +43,23 @@ public class Insurance implements Serializable {
 	private long patientID;
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "patientID",nullable=false)
+	@JoinColumn(name = "patientID",nullable=false,updatable=false)
 	private Patient insurancePatient;
 	@Column(nullable = false)
-	private long insuranceProviderID;
+	//@Type(type = "encryptedString")
+	private String insuranceProviderID;
 	@Column(nullable = false)
+	//@Type(type = "encryptedString")
 	private String insuranceProviderName;
 	@Column(nullable = false)
-	private long subscriberID;
-	@Column
+	//@Type(type = "encryptedString")
+	private String subscriberID;
+	@Column(nullable = false)
+	//@Type(type = "encryptedString")
 	private String subscriberFullName;
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate dateOfBirth;
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private InsuranceStatus status;
 	@Column(nullable = false)
@@ -89,11 +94,11 @@ public class Insurance implements Serializable {
 		this.insurancePatient = insurancePatient;
 	}
 
-	public long getInsuranceProviderID() {
+	public String getInsuranceProviderID() {
 		return insuranceProviderID;
 	}
 
-	public void setInsuranceProviderID(long insuranceProviderID) {
+	public void setInsuranceProviderID(String insuranceProviderID) {
 		this.insuranceProviderID = insuranceProviderID;
 	}
 
@@ -105,11 +110,11 @@ public class Insurance implements Serializable {
 		this.insuranceProviderName = insuranceProviderName;
 	}
 
-	public long getSubscriberID() {
+	public String getSubscriberID() {
 		return subscriberID;
 	}
 
-	public void setSubscriberID(long subscriberID) {
+	public void setSubscriberID(String subscriberID) {
 		this.subscriberID = subscriberID;
 	}
 

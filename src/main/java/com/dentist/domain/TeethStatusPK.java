@@ -28,10 +28,10 @@ public class TeethStatusPK implements Serializable {
 	private long patientID;
 	@JsonIgnore
 	@OneToOne
-	@JoinColumn(name="patientID",nullable=false)
+	@JoinColumn(name="patientID",nullable=false,updatable=false)
 	private Patient patient;
 	@OneToOne
-	@JoinColumn(name="teethID",nullable=false)
+	@JoinColumn(name="teethID",nullable=false,updatable=false)
 	private Teeth teeth;
 	
 	public TeethStatusPK() {

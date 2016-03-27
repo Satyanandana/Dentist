@@ -44,14 +44,14 @@ public class AppointmentRequest implements Serializable {
 	private long patientID;
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "patientID",nullable=false)
+	@JoinColumn(name = "patientID",nullable=false,updatable=false)
 	private Patient appointmentPatient;
 	@Column(nullable=false)
-	@Type(type = "encryptedString")
+	// @Type(type = "encryptedString")
 	private String note;
 	@Column(nullable=false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-	private DateTime requestedInsertedTime;
+	private DateTime requestInsertedTime;
 	@Column(nullable=false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime appointmentStartTime;
@@ -99,11 +99,11 @@ public class AppointmentRequest implements Serializable {
 	}
 
 	public DateTime getRequestInsertedTime() {
-		return requestedInsertedTime;
+		return requestInsertedTime;
 	}
 
 	public void setRequestInsertedTime(DateTime requestInsertedTime) {
-		this.requestedInsertedTime = requestInsertedTime;
+		this.requestInsertedTime = requestInsertedTime;
 	}
 
 	public DateTime getAppointmentStartTime() {

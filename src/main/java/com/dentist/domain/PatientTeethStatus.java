@@ -13,6 +13,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
@@ -30,7 +31,7 @@ public class PatientTeethStatus implements Serializable {
 	@EmbeddedId
 	private TeethStatusPK TeethStatusPK;
 	@Column(nullable=false)
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	private TeethStatus teethStatus;
 	@Column(nullable=false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")

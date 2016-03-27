@@ -61,7 +61,7 @@ public class Appointment implements Serializable {
 	@Column(nullable=false)
 	private String actualCalEventID;
 	@Column(nullable=false)
-	@Type(type = "encryptedString")
+	//@Type(type = "encryptedString")
 	private String note;
 	@Column
 	private BigDecimal expectedAmount;
