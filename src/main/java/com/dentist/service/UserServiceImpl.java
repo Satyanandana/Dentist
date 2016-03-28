@@ -1,4 +1,5 @@
 package com.dentist.service;
+import java.util.HashMap;
 /**
 * 
 *
@@ -9,12 +10,14 @@ package com.dentist.service;
 *       
 */
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -25,15 +28,21 @@ import com.dentist.domain.Appointment;
 import com.dentist.domain.AppointmentRequest;
 import com.dentist.domain.Insurance;
 import com.dentist.domain.Patient;
+import com.dentist.domain.PatientTeethStatus;
 import com.dentist.domain.ReceivedMessage;
 import com.dentist.domain.Role;
 import com.dentist.domain.SentMessage;
+import com.dentist.domain.Teeth;
+import com.dentist.domain.TeethStatus;
+import com.dentist.domain.TeethStatusPK;
 import com.dentist.domain.Treatment;
 import com.dentist.domain.UserAuthentication;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserServiceInterface {
+	@Autowired
+	private ApplicationContext context;
 	@Autowired
 	private UserDaoInterface userDaoInterface;
 	@Autowired
@@ -205,7 +214,65 @@ public class UserServiceImpl implements UserServiceInterface {
 	}
 
 	
+/* 
+ * DAO methods on PatientTeethStatus.class
+ */	
+	@Override
+	public void setPatientTeethStatus(PatientTeethStatus patientTeethStatus) {
+		userDaoInterface.setPatientTeethStatus(patientTeethStatus);		
+	}
 
+	@Override
+	public void updatePatientTeethStatus(PatientTeethStatus patientTeethStatus) {
+		userDaoInterface.updatePatientTeethStatus(patientTeethStatus);
+	}
+
+	@Override
+	public PatientTeethStatus getPatientTeethStatusByPatientIDandTeethID(long patientID, int teethID) {
+		return userDaoInterface.getPatientTeethStatusByPatientIDandTeethID(patientID, teethID);
+	}
+
+	@Override
+	public List<PatientTeethStatus> getPatientTeethStatusByPatientID(long patientID) {
+		List<PatientTeethStatus> patientTeethStatuses = userDaoInterface.getPatientTeethStatusByPatientID(patientID);
+		
+		return patientTeethStatuses;
+	}
+	
+	@Override
+	public Map<Integer, String> getPatientTeethStatusMapByPatientID(long patientID) {
+		List<PatientTeethStatus> patientTeethStatuses = getPatientTeethStatusByPatientID(patientID);
+		PatientTeethStatus[] arrayOfPatientTeethStatus = new PatientTeethStatus[32];
+		Map<Integer,String> teethStatuses = new HashMap<Integer, String>();
+		if(patientTeethStatuses.size()<32){
+						
+			for(PatientTeethStatus item:patientTeethStatuses){
+				arrayOfPatientTeethStatus[item.getTeethStatusPK().getTeeth().getTeethID()-1] = item;
+			}
+			int i =1;
+			for(PatientTeethStatus teeth:arrayOfPatientTeethStatus){
+				if(teeth==null){
+					teethStatuses.put(i,TeethStatus.NORMAL.getStatus());
+				}else{
+					teethStatuses.put(i,teeth.getTeethStatus().getStatus());
+				}
+				i++;
+			}
+		}
+		return teethStatuses;
+	}
+
+/*
+ * DAO methods on Teeth.class 
+ */
+ 
+    public Teeth getTeethByID(int teethID) {
+		return userDaoInterface.getTeethByID(teethID);
+	}
+
+/*
+ *  user sign up mechanism
+ */
 	public Patient signUp(Patient patient,HttpServletRequest request,Model model) {
 		Patient patientCreated = null;
 		UserAuthentication userAuth= getUserAuthenticationInfoByEmail(patient.getUserAuth().getUserEmail());
@@ -230,5 +297,7 @@ public class UserServiceImpl implements UserServiceInterface {
 		}
 		return patientCreated;
 	}
+
+	
 
 }

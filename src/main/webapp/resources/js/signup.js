@@ -1,9 +1,7 @@
 /**
  * 
  */
-$(document).ready(function(){
-	var loginForm = $("#signupForm");
-	loginForm.submit(function(event){
+function submitsignUP(event){
 		event.preventDefault();
 		
 		console.log("I am in ajax call");
@@ -21,6 +19,12 @@ $(document).ready(function(){
 			
 		});
 		
-	});
+	}
+$(document).ready(function(){
+	
+	
+	
+	var loginForm = $("#signupForm");
+	loginForm.submit(submitsignUP);
 	
 });

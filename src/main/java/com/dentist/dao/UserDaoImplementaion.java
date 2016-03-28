@@ -19,8 +19,10 @@ import com.dentist.domain.Appointment;
 import com.dentist.domain.AppointmentRequest;
 import com.dentist.domain.Insurance;
 import com.dentist.domain.Patient;
+import com.dentist.domain.PatientTeethStatus;
 import com.dentist.domain.ReceivedMessage;
 import com.dentist.domain.SentMessage;
+import com.dentist.domain.Teeth;
 import com.dentist.domain.Treatment;
 import com.dentist.domain.UserAuthentication;
 
@@ -220,6 +222,41 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 	}
 	
 	
+/*
+ *  DAO methods on PatientTeethStatus.class 
+ */	
+	@Override
+	public void setPatientTeethStatus(PatientTeethStatus patientTeethStatus) {
+		persist(patientTeethStatus);		
+	}
+
+	@Override
+	public void updatePatientTeethStatus(PatientTeethStatus patientTeethStatus) {
+		update(patientTeethStatus);		
+	}
+
+	@Override
+	public PatientTeethStatus getPatientTeethStatusByPatientIDandTeethID(long patientID, int teethID) {
+		Criteria criteria = getSession().createCriteria(PatientTeethStatus.class).add(Restrictions.eq("TeethStatusPK.patient.userID", patientID))
+                .add(Restrictions.eq("TeethStatusPK.teeth.teethID", teethID));
+       return    (PatientTeethStatus) criteria.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<PatientTeethStatus> getPatientTeethStatusByPatientID(long patientID) {
+	   Criteria criteria = getSession().createCriteria(PatientTeethStatus.class).add(Restrictions.eq("TeethStatusPK.patient.userID", patientID));   
+       return    (List<PatientTeethStatus>) criteria.list();
+	}
+	
+/*
+ *  DAO methods on Teeth.class 
+ */		
+	@Override
+	public Teeth getTeethByID(int teethID) {
+		Criteria criteria = getSession().createCriteria(Teeth.class).add(Restrictions.idEq(teethID));
+		return (Teeth) criteria.uniqueResult();
+	}
 	
 
 	public Object mergeEntity(Object entity) {
@@ -231,6 +268,10 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 		
 		return getSession();
 	}
+
+	
+
+	
 
 	
 

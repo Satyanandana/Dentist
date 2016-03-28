@@ -16,8 +16,10 @@ import com.dentist.domain.Appointment;
 import com.dentist.domain.AppointmentRequest;
 import com.dentist.domain.Insurance;
 import com.dentist.domain.Patient;
+import com.dentist.domain.PatientTeethStatus;
 import com.dentist.domain.ReceivedMessage;
 import com.dentist.domain.SentMessage;
+import com.dentist.domain.Teeth;
 import com.dentist.domain.Treatment;
 import com.dentist.domain.UserAuthentication;
 
@@ -74,6 +76,13 @@ public interface UserDaoInterface {
 	public List<Treatment> getTreatmentsByPatientID(long userID);
 	public List<Treatment> getTreatmentsByPatientIDandTeethID(long patientID,int teethID);
 
+	/* DAO methods on PatientTeethStatus.class */
+	public void setPatientTeethStatus(PatientTeethStatus patientTeethStatus);
+	public void updatePatientTeethStatus(PatientTeethStatus patientTeethStatus);
+	public PatientTeethStatus getPatientTeethStatusByPatientIDandTeethID(long patientID,int teethID );
+	public List<PatientTeethStatus> getPatientTeethStatusByPatientID(long patientID);
 	
+	/* DAO methods on Teeth.class */
+	public Teeth getTeethByID(int teethID);
 	
 }

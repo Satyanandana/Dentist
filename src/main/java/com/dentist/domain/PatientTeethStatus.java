@@ -19,7 +19,10 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
-
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+@Component
+@Scope("prototype")
 @Entity
 @Table
 public class PatientTeethStatus implements Serializable {

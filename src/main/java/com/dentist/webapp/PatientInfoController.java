@@ -24,6 +24,7 @@ import com.dentist.domain.Appointment;
 import com.dentist.domain.AppointmentRequest;
 import com.dentist.domain.Insurance;
 import com.dentist.domain.Patient;
+import com.dentist.domain.PatientTeethStatus;
 import com.dentist.domain.ReceivedMessage;
 import com.dentist.domain.SentMessage;
 import com.dentist.domain.Treatment;
@@ -41,6 +42,7 @@ import com.dentist.service.UserServiceInterface;
 @RestController
 @RequestMapping("/patient")
 public class PatientInfoController {
+	
 	private static final Logger logger = Logger.getLogger(PatientInfoController.class);
 	@Autowired
 	private UserServiceInterface userServiceInterface;
@@ -169,6 +171,19 @@ public class PatientInfoController {
 		List<Treatment> treatments = userServiceInterface.getTreatmentsByPatientID(user.getUserID());
 				
 		return new ResponseEntity<List<Treatment>>(treatments, HttpStatus.OK);
+	}
+	
+	@Transactional
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value = "/patientteethstatus", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<Integer,String>> getPatientTeethStatus(Model model){
+		logger.debug("processing request to get personal info");
+			
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		Map<Integer,String> patientTeethStatus = userServiceInterface.getPatientTeethStatusMapByPatientID(user.getUserID());
+				
+		return new ResponseEntity<Map<Integer,String>>(patientTeethStatus, HttpStatus.OK);
 	}
 
 }

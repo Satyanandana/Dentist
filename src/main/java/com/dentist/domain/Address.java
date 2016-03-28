@@ -13,6 +13,10 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+@Component
+@Scope("prototype")
 @Embeddable
 public class Address implements Serializable {
 

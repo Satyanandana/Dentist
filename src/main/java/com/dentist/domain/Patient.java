@@ -27,10 +27,13 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
+import org.springframework.context.annotation.Scope;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+@Component
+@Scope("prototype")
 @Entity
 @Table(name = "Patient_Details")
 

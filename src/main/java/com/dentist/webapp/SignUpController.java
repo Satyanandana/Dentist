@@ -129,7 +129,7 @@ public class SignUpController {
             valid  = true;	
         }
         
-        LocalDate dateOfBirth = WebUtility.getLocalDatefromHtmlDate(dob);
+        LocalDate dateOfBirth = WebUtility.getLocalDateFromHtmlDate(dob);
 		if(dateOfBirth!=null){
 			patient.setDateOfBirth(dateOfBirth);
 		}
