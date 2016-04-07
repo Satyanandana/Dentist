@@ -24,6 +24,7 @@ public class EmailStructure {
 	private String subject;
 	private String body;
 	private Map<String, File> attachments = new HashMap<String, File>();
+	private Map<String, File> inlineImages = new HashMap<String, File>();
 
 	public EmailStructure() {
 
@@ -84,6 +85,18 @@ public class EmailStructure {
 
 	public void addAttachment(String name, File attachment) {
 		attachments.put(name, attachment);
+	}
+
+	public Map<String, File> getInlineImages() {
+		return inlineImages;
+	}
+
+	public void setInlineImages(Map<String, File> inlineImages) {
+		this.inlineImages = inlineImages;
+	}
+	
+	public void addInlineImages(String name,File file){
+		this.inlineImages.put(name, file);
 	}
 
 }

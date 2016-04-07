@@ -15,9 +15,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dentist.domain.Appointment;
@@ -40,18 +41,29 @@ import com.dentist.service.UserServiceInterface;
 *       
 */
 @RestController
+@Transactional
 @RequestMapping("/patient")
 public class PatientInfoController {
 	
-	private static final Logger logger = Logger.getLogger(PatientInfoController.class);
+	private static final Logger LOGGER = Logger.getLogger(PatientInfoController.class);
 	@Autowired
 	private UserServiceInterface userServiceInterface;
 	
-	@Transactional
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value = "/info", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, String>> postPatientPersonalinfo(@ModelAttribute Patient patient,@RequestParam(name="dob") String dob){
+		Map<String, String> map = new HashMap<>();
+		   boolean validFirstname = ServerSideValidations.validateName(patient.getFirstName(),null,map, "errorFirstName", "Firstname Should contain only alphabets");
+	        boolean validLastname = ServerSideValidations.validateName(patient.getLastName(),null,map, "errorLastName", "Lasttname Should contain only alphabets");
+	        boolean validMiddlename = ServerSideValidations.validateName(patient.getMiddleName(),null,map, "errorMiddleName", "Middletname Should contain only alphabets");
+		return new ResponseEntity<Map<String,String>>(map, HttpStatus.OK);
+		}
+	
+	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value = "/info", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Patient> getPatientInfo(Model model){
-		logger.debug("processing request to get personal info");
+		LOGGER.debug("processing request to get personal info");
 				
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
@@ -69,11 +81,11 @@ public class PatientInfoController {
 		return new ResponseEntity<Patient>(patient,HttpStatus.OK);	
 	}
 	
-	@Transactional
+	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value = "/personalinfo", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> getPersonalInfo(Model model){
-		logger.debug("processing request to get personal info");
+		LOGGER.debug("processing request to get personal info");
 		Map<String, Object> map = new HashMap<String, Object>();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
@@ -95,11 +107,11 @@ public class PatientInfoController {
 	
 
 	
-	@Transactional
+	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value = "/receivedmessages", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ReceivedMessage>> getPatientsReceivedMessages(Model model){
-		logger.debug("processing request to get personal info");
+		LOGGER.debug("processing request to get personal info");
 			
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
@@ -108,11 +120,11 @@ public class PatientInfoController {
 		return new ResponseEntity<List<ReceivedMessage>>(received, HttpStatus.OK);
 	}
 	
-	@Transactional
+	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value = "/sentmessages", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<SentMessage>> getPatientsSentMessages(Model model){
-		logger.debug("processing request to get personal info");
+		LOGGER.debug("processing request to get personal info");
 			
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
@@ -121,11 +133,11 @@ public class PatientInfoController {
 		return new ResponseEntity<List<SentMessage>>(received, HttpStatus.OK);
 	}
 	
-	@Transactional
+	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value = "/insurances", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Insurance>> getPatientsInsurances(Model model){
-		logger.debug("processing request to get personal info");
+		LOGGER.debug("processing request to get personal info");
 			
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
@@ -134,11 +146,11 @@ public class PatientInfoController {
 		return new ResponseEntity<List<Insurance>>(insurances, HttpStatus.OK);
 	}
 	
-	@Transactional
+	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value = "/appointmentrequests", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AppointmentRequest>> getPatientsAppointmentRequests(Model model){
-		logger.debug("processing request to get personal info");
+		LOGGER.debug("processing request to get personal info");
 			
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
@@ -147,11 +159,11 @@ public class PatientInfoController {
 		return new ResponseEntity<List<AppointmentRequest>>(appointmentRequests, HttpStatus.OK);
 	}
 	
-	@Transactional
+	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value = "/appointments", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Appointment>> getPatientsAppointments(Model model){
-		logger.debug("processing request to get personal info");
+		LOGGER.debug("processing request to get personal info");
 			
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
@@ -160,11 +172,11 @@ public class PatientInfoController {
 		return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
 	}
 	
-	@Transactional
+	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value = "/treatments", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Treatment>> getPatientsTreatments(Model model){
-		logger.debug("processing request to get personal info");
+		LOGGER.debug("processing request to get personal info");
 			
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
@@ -173,11 +185,11 @@ public class PatientInfoController {
 		return new ResponseEntity<List<Treatment>>(treatments, HttpStatus.OK);
 	}
 	
-	@Transactional
+	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value = "/patientteethstatus", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<Integer,String>> getPatientTeethStatus(Model model){
-		logger.debug("processing request to get personal info");
+		LOGGER.debug("processing request to get personal info");
 			
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();

@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
+import org.jasypt.hibernate4.encryptor.HibernatePBEStringEncryptor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,9 +36,9 @@ import com.dentist.service.CustomUserDetails;
 @Service
 public class SessionHandler {
 	
-	private static final Logger logger = Logger.getLogger(SessionHandler.class);
+	private static final Logger LOGGER = Logger.getLogger(SessionHandler.class);
 			
-	public static void handleSession(SessionRegistry sessionRegistry,AuthenticationSuccessHandler successHandler,HttpServletRequest request,HttpServletResponse response,UserAuthentication user,PooledPBEStringEncryptor encryptor) throws IOException, ServletException{
+	public static void handleSession(SessionRegistry sessionRegistry,AuthenticationSuccessHandler successHandler,HttpServletRequest request,HttpServletResponse response,UserAuthentication user,HibernatePBEStringEncryptor encryptor) throws IOException, ServletException{
 		
 		List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(user.getUserRole().toString());
 		UserDetails userDetails = new CustomUserDetails(user);
@@ -50,11 +51,11 @@ public class SessionHandler {
 						
 		}
 		sessionRegistry.registerNewSession(request.getSession().getId(), auth.getPrincipal());
-		logger.debug("added user to the spring session registry");
+		LOGGER.debug("added user to the spring session registry");
 		SecurityContextHolder.getContext().setAuthentication(auth);
-		logger.debug("added user to the spring security context holder");
+		LOGGER.debug("added user to the spring security context holder");
 		request.getSession().setAttribute("user", user.getUserEmail());
-		logger.debug("add user to the http servlet session");
+		LOGGER.debug("add user to the http servlet session");
 		Cookie cookieUserId  = new Cookie("USER",encryptor.encrypt(user.getUserEmail()));
 		cookieUserId.setMaxAge(24 * 60 * 60);  // 24 hours.
 		cookieUserId.setComment("www.kangdentalnewton.com");
@@ -64,9 +65,9 @@ public class SessionHandler {
 	//	cookieUserId.setDomain("https://www.kangdentalnewton.com");
 	//	cookieUserId.setSecure(true);
 		response.addCookie(cookieUserId);
-        logger.debug("added user to the cookie");
+        LOGGER.debug("added user to the cookie");
 		successHandler.onAuthenticationSuccess(request, response, auth);
-		logger.debug("Redirecting to where the request came from  "+request.getPathTranslated());
+		LOGGER.debug("Redirecting to where the request came from  "+request.getPathTranslated());
 	}
 
 }

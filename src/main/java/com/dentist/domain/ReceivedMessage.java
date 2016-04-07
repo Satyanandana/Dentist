@@ -46,7 +46,7 @@ public class ReceivedMessage implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "receiverID", nullable = false,updatable=false)
 	private Patient receiver;
-	@Column(nullable=false)
+	@Column(nullable=false,length=6000)
 	// @Type(type = "encryptedString")
 	private String msg;
 	@Column(nullable=false)

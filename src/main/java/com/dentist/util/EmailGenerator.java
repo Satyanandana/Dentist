@@ -15,6 +15,7 @@ import java.util.concurrent.Future;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,6 +41,7 @@ public class EmailGenerator {
 	@Autowired
 	@Qualifier("velocityEngine")
 	private VelocityEngine velocityEngine;
+	private static final Logger LOGGER = Logger.getLogger(EmailGenerator.class);
 
 	public void setMailSender(JavaMailSender mailSender) {
 		this.emailSender = mailSender;
@@ -76,11 +78,14 @@ public class EmailGenerator {
 						FileSystemResource file = new FileSystemResource(attachment.getValue());
 						message.addAttachment(attachment.getKey(), file);
 					}
+					
+					for (Map.Entry<String, File> inlineImage : emailSructure.getInlineImages().entrySet()) {
+						FileSystemResource file = new FileSystemResource(inlineImage.getValue());
+						message.addAttachment(inlineImage.getKey(), file);
+					}
 
 				} catch (MessagingException e) {
-					System.out.println("Unable to prepare message");
-					e.printStackTrace();
-
+					LOGGER.error("Unable to prepare message",e);
 				}
 
 			}
@@ -91,9 +96,7 @@ public class EmailGenerator {
 				this.emailSender.send(preparator);
 			} catch (MailException e) {
 				sent = false;
-				System.out.println("unable to send email");
-				e.printStackTrace();
-
+				LOGGER.error("unable to send email", e);
 			}
 		}
 

@@ -17,6 +17,7 @@ import java.util.Properties;
 
 import javax.servlet.ServletContext;
 
+import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -35,6 +36,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -51,6 +53,7 @@ import com.maxmind.geoip.LookupService;
 @Configuration
 @ComponentScan(basePackages = "com.dentist.*")
 @EnableTransactionManagement
+@EnableScheduling
 @PropertySource(value = {"classpath:application.properties"})
 public class ApplicationContextConfig {
 	@Autowired
@@ -59,6 +62,7 @@ public class ApplicationContextConfig {
 	private Environment environment;
 	@Autowired
 	private ResourceLoader resourceLoader;
+	private static final Logger LOGGER = Logger.getLogger(ApplicationContextConfig.class);
 
 	@Bean
 	public SessionRegistry sessionRegistry() {
@@ -86,6 +90,7 @@ public class ApplicationContextConfig {
 		encryptorConfig.setProvider(new BouncyCastleProvider());
 		encryptorConfig.setAlgorithm("PBEWITHSHA256AND128BITAES-CBC-BC");
 		encryptorConfig.setPassword("Boston");
+		encryptorConfig.setStringOutputType("hexadecimal");
 		// encryptorConfig.setSaltGenerator(stringFixedSaltGenerator());
 
 		// config.setPasswordEnvName("APP_ENCRYPTION_PASSWORD");
@@ -138,7 +143,7 @@ public class ApplicationContextConfig {
 		try {
 			props.load(resource.getInputStream());
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("application.properties file not found in classpath", e);
 		}
 		return props;
 

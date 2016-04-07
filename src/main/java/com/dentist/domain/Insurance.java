@@ -57,7 +57,7 @@ public class Insurance implements Serializable {
 	@Column(nullable = false)
 	//@Type(type = "encryptedString")
 	private String subscriberID;
-	@Column(nullable = false)
+	@Column(nullable = false,length=500)
 	//@Type(type = "encryptedString")
 	private String subscriberFullName;
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")

@@ -22,7 +22,7 @@ public class IpAddressGeoLocation {
 	@Autowired
 	@Qualifier("lookupService")
 	private LookupService lookUpService;
-	private static final Logger logger = Logger.getLogger(IpAddressGeoLocation.class);
+	private static final Logger LOGGER = Logger.getLogger(IpAddressGeoLocation.class);
 	
 	
 	public IpAddressGeoLocation() {
@@ -47,8 +47,8 @@ public class IpAddressGeoLocation {
 		serviceLocation.setLatitude(String.valueOf(location.latitude));
 		serviceLocation.setLongitude(String.valueOf(location.longitude));
 		}catch(Exception e){
-			logger.info("Unable to get the location for given ip address");
-			e.printStackTrace();
+			LOGGER.info("Unable to get the location for given ip address");
+			LOGGER.error("Invalid Ip Address : "+IPAddress,e);
 		}
 		
 		return serviceLocation;

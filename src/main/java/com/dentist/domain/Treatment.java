@@ -55,7 +55,7 @@ public class Treatment implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "teethID", nullable = false,updatable=false)
 	private Teeth teeth;
-	@Column(nullable=false)
+	@Column(nullable=false,length=6000)
 	//@Type(type = "encryptedString")
 	private String note;
 	@Column(nullable=false)

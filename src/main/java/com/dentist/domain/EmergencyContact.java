@@ -24,13 +24,13 @@ public class EmergencyContact implements Serializable {
 	 */
 	private static final long serialVersionUID = -3266512225087243884L;
 	
-	@Column
+	@Column(length=600)
 	//@Type(type = "encryptedString")
 	private String name;
-	@Column
+	@Column(length=600)
 	//@Type(type = "encryptedString")
 	private String phoneNumber;
-	@Column
+	@Column(length=255)
 	//@Type(type = "encryptedString")
 	private String relation;
 	

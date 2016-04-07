@@ -36,14 +36,15 @@ import com.dentist.service.UserServiceInterface;
 */
 
 @RestController
+@Transactional
 @RequestMapping("/teeth")
 public class PatientTeethController {
 	
-	private static final Logger logger = Logger.getLogger(PatientTeethController.class);
+	private static final Logger LOGGER = Logger.getLogger(PatientTeethController.class);
 	@Autowired
 	private UserServiceInterface userServiceInterface;
 	
-	@Transactional
+	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value = "/{teethID}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> getPatientTeethByID(@PathVariable("teethID") int teethID){
@@ -57,6 +58,27 @@ public class PatientTeethController {
 			if(t.getStatus().equals(TreatmentStatus.PENDING)){
 				color = "Red";
 			}
+		}
+		map.put("teeth",teeth);
+		map.put("treatments", treatments);
+		map.put("color", color);
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK) ;
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/{teethID}/{patientID}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> getPatientTeethByPatientIDandTeethID(@PathVariable("teethID") int teethID,@PathVariable("patientID")long patientID){
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Treatment> treatments = userServiceInterface.getTreatmentsByPatientIDandTeethID(patientID, teethID);
+		Teeth teeth = userServiceInterface.getTeethByID(teethID);
+		String color = "Green";
+		if(treatments!=null){
+		for(Treatment t:treatments){
+			if(t.getStatus().equals(TreatmentStatus.PENDING)){
+				color = "Red";
+			}
+		}
 		}
 		map.put("teeth",teeth);
 		map.put("treatments", treatments);

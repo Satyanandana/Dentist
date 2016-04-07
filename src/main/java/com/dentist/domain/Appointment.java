@@ -63,7 +63,7 @@ public class Appointment implements Serializable {
 	private String fakeCalEventID;
 	@Column(nullable=false)
 	private String actualCalEventID;
-	@Column(nullable=false)
+	@Column(nullable=false,length=6000)
 	//@Type(type = "encryptedString")
 	private String note;
 	@Column

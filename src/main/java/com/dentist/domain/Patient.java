@@ -59,7 +59,7 @@ public class Patient implements Serializable {
 	@DateTimeFormat(pattern = "MM-dd-yyyy")
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate dateOfBirth;
-	@Column(nullable=false)
+	@Column(nullable=false,length=255)
 	//@Type(type = "encryptedString")
 	private String phoneNumber;
 	@Column(unique=true,nullable=false)

@@ -21,10 +21,10 @@ import org.springframework.stereotype.Component;
 public class Address implements Serializable {
 
 	private static final long serialVersionUID = 7797213038067009978L;
-	@Column(name = "address1")
+	@Column(name = "address1",length=3000)
 	//@Type(type = "encryptedString")
 	private String address1;
-	@Column(name = "address2")
+	@Column(name = "address2",length=3000)
 	//@Type(type = "encryptedString")
 	private String address2;
 	@Column(name = "city")

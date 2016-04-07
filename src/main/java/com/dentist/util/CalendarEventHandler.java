@@ -10,6 +10,8 @@ package com.dentist.util;
 */
 import java.io.IOException;
 import java.util.Arrays;
+
+import org.apache.log4j.Logger;
 import org.joda.time.DateTimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,6 +35,7 @@ public class CalendarEventHandler {
 	private Calendar calendar;
 	@Autowired
 	private Environment environment;
+	private static final Logger LOGGER = Logger.getLogger(CalendarEventHandler.class);
 	
 	
 	public CalendarEventHandler() {
@@ -57,7 +60,7 @@ public class CalendarEventHandler {
 				event = calendar.events().insert(getFakeCalendarId(), event).setSendNotifications(true)
 						                                               .execute();
 			} catch (IOException e) {
-				e.printStackTrace();
+				LOGGER.error("unable to insert a fake event", e);
 			}
 		return event;
 	}
@@ -91,7 +94,7 @@ public class CalendarEventHandler {
 			try {
 				event = calendar.events().insert(getActualCalendarId(), event).setSendNotifications(true).execute();
 			} catch (IOException e) {
-				e.printStackTrace();
+				LOGGER.error("unable to insert an event", e);
 			}
 		return event;
 	}

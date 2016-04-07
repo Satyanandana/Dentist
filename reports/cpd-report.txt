@@ -1,0 +1,1081 @@
+Found a 59 line (291 tokens) duplication in the following files: 
+Starting at line 28 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\dao\UserDaoInterface.java
+Starting at line 34 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\UserServiceInterface.java
+
+	public Object mergeEntity(Object entity);
+
+	/* DAO methods on UserAuthentication.class */
+	public void setUserAuthenticationInfo(UserAuthentication userAuthentication);
+	public void updateUserAuthenticationInfo(UserAuthentication userAuthentication);
+	public UserAuthentication getUserAuthenticationInfoById(long id);
+	public UserAuthentication getUserAuthenticationInfoByEmail(String email);
+	
+	/* DAO methods on Patient.class */
+	public void setPatient(Patient patient);
+	public void updatePatient(Patient patient);
+	public Patient getPatientInfoById(long patientID);
+	public Patient getPatientInfoByEmail(String patientEmail);
+	
+	/* DAO methods on AppointmentRequest.class */
+	public void setAppointmentRequest(AppointmentRequest request);
+	public void updateAppointmentRequest(AppointmentRequest request);
+	public AppointmentRequest getAppointmentRequestByID(long appointmentRequestID);
+	public List<AppointmentRequest> getAppointmentRequestsByPatientID(long patientID);
+	
+	/* DAO methods on Appointment.class */
+	public void setAppointment(Appointment appointment);
+	public void updateAppointment(Appointment appointment);
+	public Appointment getAppointmentByID(long appointmentID);
+	public List<Appointment> getAppointmentsByPatientID(long patientID);
+	
+	/* DAO methods on Insurance.class */
+	public void setInsurance(Insurance insurance);
+	public void updateInsurance(Insurance insurance);
+	public Insurance getInsuranceByID(long insuranceID);
+	public List<Insurance> getInsurancesByPatientID(long patientID);
+	
+	/* DAO methods on SentMessage.class */
+	public void setSentMessage(SentMessage sentMessage);
+	public void updateSentMessage(SentMessage sentMessage);
+	public SentMessage getSentMessageByID(long sentMessageID);
+	public List<SentMessage> getSentMessagesByPatientID(long patientID);
+	
+	/* DAO methods on ReceivedMessage.class */
+	public void setReceivedMessage(ReceivedMessage receivedMessage);
+	public void updateReceivedMessage(ReceivedMessage receivedMessage);
+	public ReceivedMessage getReceivedMessageByID(long receivedMessageID);
+	public List<ReceivedMessage> getReceivedMessagesByPatientID(long patientID);
+	
+	/* DAO methods on Treatment.class */
+	public void setTreatment(Treatment treatment);
+	public void updateTreatment(Treatment treatment);
+	public Treatment getTreatmentByID(long treatmentID);
+	public List<Treatment> getTreatmentsByPatientID(long userID);
+	public List<Treatment> getTreatmentsByPatientIDandTeethID(long patientID,int teethID);
+
+	/* DAO methods on PatientTeethStatus.class */
+	public void setPatientTeethStatus(PatientTeethStatus patientTeethStatus);
+	public void updatePatientTeethStatus(PatientTeethStatus patientTeethStatus);
+	public PatientTeethStatus getPatientTeethStatusByPatientIDandTeethID(long patientID,int teethID );
+	public List<PatientTeethStatus> getPatientTeethStatusByPatientID(long patientID);
+	
+	/* DAO methods on Teeth.class */
+	public Teeth getTeethByID(int teethID);
+=====================================================================
+Found a 18 line (82 tokens) duplication in the following files: 
+Starting at line 54 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\TreatmentInfoController.java
+Starting at line 76 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\TreatmentInfoController.java
+
+			List<Treatment> treatments = userServiceInterface.getTreatmentsByPatientIDandTeethID(user.getUserID(), teethID);
+			String color = "Green";
+			if(treatments!=null){
+			for(Treatment t:treatments){
+				if(t.getStatus().equals(TreatmentStatus.PENDING)){
+					color = "Red";
+				}
+			}
+			}
+			map.put(teethID, color);
+		}
+			
+		return new ResponseEntity<Map<Integer, String>>(map, HttpStatus.OK) ;
+	}
+	
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/status/{patientID}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+=====================================================================
+Found a 18 line (81 tokens) duplication in the following files: 
+Starting at line 98 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\ReceivedMessage.java
+Starting at line 98 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\SentMessage.java
+
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (messageID ^ (messageID >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+=====================================================================
+Found a 26 line (79 tokens) duplication in the following files: 
+Starting at line 43 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\TeethStatusPK.java
+Starting at line 86 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Treatment.java
+
+	}
+
+	@JsonGetter
+	public long getPatientID() {
+		if(this.patient!=null){
+			this.patientID = this.patient.getUserID();
+		}
+		return patientID;
+	}
+
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public Teeth getTeeth() {
+		return teeth;
+	}
+
+	public void setTeeth(Teeth teeth) {
+		this.teeth = teeth;
+	}
+=====================================================================
+Found a 8 line (72 tokens) duplication in the following files: 
+Starting at line 88 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\LoginController.java
+Starting at line 101 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\SignUpController.java
+
+		logger.debug("Checking for the user in session");
+		boolean userSession = (request.getSession().getAttribute("user")!= null);
+		logger.debug("User is in the session :" + userSession);
+		if(userCookie != null && !userSession){
+		logger.debug("check user in the cookie");
+		  String userEmail  = encryptor.decrypt(userCookie);
+		  UserAuthentication userAuth = userServiceInterface.getUserAuthenticationInfoByEmail(userEmail);
+			if (userAuth != null) {
+=====================================================================
+Found a 12 line (63 tokens) duplication in the following files: 
+Starting at line 325 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Patient.java
+Starting at line 166 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\UserAuthentication.java
+
+		result = prime * result + (int) (userID ^ (userID >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+=====================================================================
+Found a 9 line (59 tokens) duplication in the following files: 
+Starting at line 24 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 47 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+
+		int i = 0;
+		if (monthDateYear != null && monthDateYear.matches("([0-9]{4})[-/\\\\](0?[1-9]|[1][012])[-/\\\\](0?[1-9]|[12][0-9]|3[01])")) {
+			String[] array = monthDateYear.split("[-/\\\\]");
+			for (String part : array) {
+				if (part != null) {
+					array1[i] = Integer.parseInt(part);
+				}
+				i++;
+			}
+=====================================================================
+Found a 23 line (57 tokens) duplication in the following files: 
+Starting at line 90 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Appointment.java
+Starting at line 78 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\AppointmentRequest.java
+
+	}
+
+	
+    @JsonGetter
+	public long getPatientID() {
+		if(this.appointmentPatient!=null){
+			this.patientID = this.appointmentPatient.getUserID();
+		}
+		return patientID;
+	}
+
+
+	public Patient getAppointmentPatient() {
+		return appointmentPatient;
+	}
+
+
+	public void setAppointmentPatient(Patient appointmentPatient) {
+		this.appointmentPatient = appointmentPatient;
+	}
+
+
+	public AppointmentRequest getAppointmentRequest() {
+=====================================================================
+Found a 17 line (54 tokens) duplication in the following files: 
+Starting at line 96 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\LoginController.java
+Starting at line 108 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\SignUpController.java
+
+				if(userAuth.getAccountStatus().equals(AccountStatus.ACTIVE)){
+				logger.debug("adding the user to spring session registry w.r.t cookie data");
+				  
+						
+							try {
+								SessionHandler.handleSession(sessionRegistry, successHandler, request, response, userAuth, encryptor);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (ServletException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						
+					
+					return null; 
+				}
+=====================================================================
+Found a 13 line (49 tokens) duplication in the following files: 
+Starting at line 206 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Appointment.java
+Starting at line 140 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\AppointmentRequest.java
+Starting at line 160 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Insurance.java
+Starting at line 325 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Patient.java
+Starting at line 104 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\ReceivedMessage.java
+Starting at line 104 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\SentMessage.java
+Starting at line 172 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Treatment.java
+Starting at line 166 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\UserAuthentication.java
+
+		result = prime * result + (int) (appointmentID ^ (appointmentID >>> 32));
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+=====================================================================
+Found a 12 line (48 tokens) duplication in the following files: 
+Starting at line 75 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\PatientTeethStatus.java
+Starting at line 75 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\TeethStatusPK.java
+
+		result = prime * result + ((TeethStatusPK == null) ? 0 : TeethStatusPK.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+=====================================================================
+Found a 10 line (47 tokens) duplication in the following files: 
+Starting at line 74 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientTeethController.java
+Starting at line 54 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\TreatmentInfoController.java
+Starting at line 76 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\TreatmentInfoController.java
+
+		Teeth teeth = userServiceInterface.getTeethByID(teethID);
+		String color = "Green";
+		if(treatments!=null){
+		for(Treatment t:treatments){
+			if(t.getStatus().equals(TreatmentStatus.PENDING)){
+				color = "Red";
+			}
+		}
+		}
+		map.put("teeth",teeth);
+=====================================================================
+Found a 13 line (45 tokens) duplication in the following files: 
+Starting at line 206 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Appointment.java
+Starting at line 140 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\AppointmentRequest.java
+Starting at line 160 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Insurance.java
+Starting at line 325 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Patient.java
+Starting at line 75 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\PatientTeethStatus.java
+Starting at line 104 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\ReceivedMessage.java
+Starting at line 104 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\SentMessage.java
+Starting at line 75 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\TeethStatusPK.java
+Starting at line 172 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Treatment.java
+Starting at line 166 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\UserAuthentication.java
+
+		result = prime * result + (int) (appointmentID ^ (appointmentID >>> 32));
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+=====================================================================
+Found a 7 line (45 tokens) duplication in the following files: 
+Starting at line 60 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientTeethController.java
+Starting at line 81 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientTeethController.java
+
+			}
+		}
+		map.put("teeth",teeth);
+		map.put("treatments", treatments);
+		map.put("color", color);
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK) ;
+	}
+=====================================================================
+Found a 12 line (43 tokens) duplication in the following files: 
+Starting at line 207 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Appointment.java
+Starting at line 141 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\AppointmentRequest.java
+Starting at line 161 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Insurance.java
+Starting at line 326 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Patient.java
+Starting at line 76 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\PatientTeethStatus.java
+Starting at line 105 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\ReceivedMessage.java
+Starting at line 105 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\SentMessage.java
+Starting at line 70 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Teeth.java
+Starting at line 76 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\TeethStatusPK.java
+Starting at line 173 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Treatment.java
+Starting at line 167 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\UserAuthentication.java
+
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+=====================================================================
+Found a 12 line (42 tokens) duplication in the following files: 
+Starting at line 29 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\util\CustomJodaDateTimeSerializer.java
+Starting at line 29 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\util\CustomJodaLocalDateSerializer.java
+
+	public void serialize(DateTime value, JsonGenerator gen, SerializerProvider serializers)
+			throws IOException, JsonProcessingException {
+		
+		if(value==null){
+			gen.writeNull();
+		}else{
+			gen.writeString(format.print(value));
+		}
+		
+	}
+
+}
+=====================================================================
+Found a 4 line (41 tokens) duplication in the following files: 
+Starting at line 45 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\util\CalendarEventHandler.java
+Starting at line 65 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\util\CalendarEventHandler.java
+
+	public Event insertFakeEvent(org.joda.time.DateTime startDate) {
+		org.joda.time.DateTime createdDate = new org.joda.time.DateTime(DateTimeZone.forID("America/New_York"));
+		EventDateTime start = getStartDate(startDate);
+		EventDateTime end = getEndDate(startDate);
+=====================================================================
+Found a 11 line (40 tokens) duplication in the following files: 
+Starting at line 40 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 65 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 78 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 92 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 105 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 119 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 132 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 146 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 159 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+
+		Matcher matcher = pattern.matcher(password);
+		if (matcher.matches() == true) {
+			valid = true;
+		}
+		if (valid == false) {
+			addToModelOrMap(model, map, errorName, error);
+		}
+		return valid;
+	}
+	
+	public static boolean validateConfirmPassword (String password,String confirmpattern, Model model,Map<String, String> map,String errorName,String error) {
+=====================================================================
+Found a 3 line (40 tokens) duplication in the following files: 
+Starting at line 52 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\TreatmentInfoController.java
+Starting at line 74 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\TreatmentInfoController.java
+
+		Map<Integer, String> map = new HashMap<Integer, String>();
+		for(int teethID=1;teethID<=32;teethID++){
+			List<Treatment> treatments = userServiceInterface.getTreatmentsByPatientIDandTeethID(user.getUserID(), teethID);
+=====================================================================
+Found a 17 line (39 tokens) duplication in the following files: 
+Starting at line 61 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\LoginController.java
+Starting at line 60 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\SignUpController.java
+
+	private static final Logger logger = Logger.getLogger(LoginController.class);
+
+	@Autowired
+	ServletContext servletContext;
+	@Autowired
+	private AuthenticationSuccessHandler successHandler;
+	@Autowired
+	private SessionRegistry sessionRegistry;
+	@Autowired
+	private CalendarEventHandler calendarEventHandler;
+	@Autowired
+	private UserServiceInterface userServiceInterface;
+	@Autowired
+	private EmailGenerator emailSender;
+	@Autowired
+	private EmailStructure emailStructure;
+	@Autowired
+=====================================================================
+Found a 5 line (38 tokens) duplication in the following files: 
+Starting at line 35 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\TeethStatusPK.java
+Starting at line 53 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Treatment.java
+
+	@JoinColumn(name="patientID",nullable=false,updatable=false)
+	private Patient patient;
+	@OneToOne
+	@JoinColumn(name="teethID",nullable=false,updatable=false)
+	private Teeth teeth;
+=====================================================================
+Found a 5 line (37 tokens) duplication in the following files: 
+Starting at line 66 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+Starting at line 89 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+
+		logger.debug("processing request to get personal info");
+				
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		Patient patient = userServiceInterface.getPatientInfoById(user.getUserID());
+=====================================================================
+Found a 9 line (37 tokens) duplication in the following files: 
+Starting at line 40 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 65 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 78 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 92 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 105 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 119 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 132 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 146 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 159 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 173 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+
+		Matcher matcher = pattern.matcher(password);
+		if (matcher.matches() == true) {
+			valid = true;
+		}
+		if (valid == false) {
+			addToModelOrMap(model, map, errorName, error);
+		}
+		return valid;
+	}
+=====================================================================
+Found a 10 line (36 tokens) duplication in the following files: 
+Starting at line 197 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Appointment.java
+Starting at line 164 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Treatment.java
+
+	public void setStatus(AppointmentStatus status) {
+		this.status = status;
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (appointmentID ^ (appointmentID >>> 32));
+=====================================================================
+Found a 6 line (36 tokens) duplication in the following files: 
+Starting at line 113 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+Starting at line 126 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+Starting at line 139 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+Starting at line 152 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+Starting at line 165 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+Starting at line 178 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+
+	public ResponseEntity<List<ReceivedMessage>> getPatientsReceivedMessages(Model model){
+		logger.debug("processing request to get personal info");
+			
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		List<ReceivedMessage> received = userServiceInterface.getReceivedMessagesByPatientID(user.getUserID());
+=====================================================================
+Found a 7 line (35 tokens) duplication in the following files: 
+Starting at line 44 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\AppointmentInfoController.java
+Starting at line 45 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\AppointmentRequestInfoController.java
+Starting at line 42 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\InsuranceInfoController.java
+Starting at line 46 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ReceivedMessageController.java
+Starting at line 44 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\SentMessageController.java
+Starting at line 96 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\TreatmentInfoController.java
+
+		return new ResponseEntity<Appointment>(Appointment, HttpStatus.OK);
+		
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/patient/{patientID}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Appointment>> getAppointmentsByPatientID(@PathVariable("patientID")long patientID ){
+=====================================================================
+Found a 7 line (35 tokens) duplication in the following files: 
+Starting at line 37 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ReceivedMessageController.java
+Starting at line 35 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\SentMessageController.java
+
+	private static final Logger logger = Logger.getLogger(ReceivedMessageController.class);
+	@Autowired
+	private UserServiceInterface userServiceInterface;
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/{messageID}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ReceivedMessage> getReceivedMessageByID(@PathVariable("messageID")long messageID ){
+=====================================================================
+Found a 5 line (34 tokens) duplication in the following files: 
+Starting at line 65 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+Starting at line 113 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+Starting at line 126 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+Starting at line 139 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+Starting at line 152 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+Starting at line 165 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+Starting at line 178 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+Starting at line 191 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+
+	public ResponseEntity<Patient> getPatientInfo(Model model){
+		logger.debug("processing request to get personal info");
+				
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+=====================================================================
+Found a 6 line (33 tokens) duplication in the following files: 
+Starting at line 104 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\util\CalendarEventHandler.java
+Starting at line 111 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\util\CalendarEventHandler.java
+
+		DateTime startDateTime = new DateTime(startDate.toDate());
+		EventDateTime start = new EventDateTime().setDateTime(startDateTime).setTimeZone("America/New_York");
+		return start;
+	}
+
+	public EventDateTime getEndDate(org.joda.time.DateTime startDate) {
+=====================================================================
+Found a 9 line (31 tokens) duplication in the following files: 
+Starting at line 57 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\util\CalendarEventHandler.java
+Starting at line 92 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\util\CalendarEventHandler.java
+
+				event = calendar.events().insert(getFakeCalendarId(), event).setSendNotifications(true)
+						                                               .execute();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		return event;
+	}
+	
+	public Event insertActualEvent(org.joda.time.DateTime startDate,String attendeeEmail ) {
+=====================================================================
+Found a 10 line (31 tokens) duplication in the following files: 
+Starting at line 38 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\util\GoogleServerToServer.java
+Starting at line 62 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\util\GoogleServerToServer.java
+
+					.setServiceAccountScopes(OuthScopes).build();
+
+		} catch (GeneralSecurityException e) {
+		
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		return credential;
+=====================================================================
+Found a 5 line (31 tokens) duplication in the following files: 
+Starting at line 170 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\LoginController.java
+Starting at line 184 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\LoginController.java
+
+				String body = emailSender.prepareBody(EmailTemplate.LAST_LOGIN_EMAIL, map);
+				emailStructure.setBody(body);
+				emailStructure.setSenderEmail("gtsatyansv@gmail.com");
+				emailStructure.setSubject("Last login info");
+				emailStructure.addRecipient(userAuth.getUserEmail());
+=====================================================================
+Found a 6 line (30 tokens) duplication in the following files: 
+Starting at line 52 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\AppointmentRequest.java
+Starting at line 58 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Treatment.java
+
+	@Column(nullable=false,length=6000)
+	// @Type(type = "encryptedString")
+	private String note;
+	@Column(nullable=false)
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+	private DateTime requestInsertedTime;
+=====================================================================
+Found a 6 line (30 tokens) duplication in the following files: 
+Starting at line 49 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\ReceivedMessage.java
+Starting at line 49 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\SentMessage.java
+
+	@Column(nullable=false,length=6000)
+	// @Type(type = "encryptedString")
+	private String msg;
+	@Column(nullable=false)
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+	private DateTime receivedTime;
+=====================================================================
+Found a 4 line (30 tokens) duplication in the following files: 
+Starting at line 85 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 88 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 91 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 94 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 97 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 100 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 103 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 106 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 109 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+
+		        ip = request.getHeader("Proxy-Client-IP");  
+		    }  
+		    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
+		        ip = request.getHeader("WL-Proxy-Client-IP");  
+=====================================================================
+Found a 3 line (30 tokens) duplication in the following files: 
+Starting at line 37 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 62 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+
+	public static boolean validatePassword(String password, Model model,Map<String, String> map,String errorName, String error) {
+		Boolean valid = false;
+		Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
+=====================================================================
+Found a 10 line (30 tokens) duplication in the following files: 
+Starting at line 41 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 52 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 66 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 79 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 93 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 106 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 120 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 133 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 147 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 160 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+
+		if (matcher.matches() == true) {
+			valid = true;
+		}
+		if (valid == false) {
+			addToModelOrMap(model, map, errorName, error);
+		}
+		return valid;
+	}
+	
+	public static boolean validateConfirmPassword (String password,String confirmpattern, Model model,Map<String, String> map,String errorName,String error) {
+=====================================================================
+Found a 3 line (30 tokens) duplication in the following files: 
+Starting at line 75 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 88 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 102 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 115 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 129 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 142 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 156 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 170 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+
+	public static boolean validateName(String name, Model model,Map<String, String> map,String errorName, String error) {
+		boolean valid = false;
+		Pattern pattern = Pattern.compile(NAME_PATTERN);
+=====================================================================
+Found a 10 line (29 tokens) duplication in the following files: 
+Starting at line 206 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Appointment.java
+Starting at line 140 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\AppointmentRequest.java
+Starting at line 160 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Insurance.java
+Starting at line 325 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Patient.java
+Starting at line 104 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\ReceivedMessage.java
+Starting at line 104 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\SentMessage.java
+Starting at line 172 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Treatment.java
+Starting at line 166 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\UserAuthentication.java
+Starting at line 70 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\CustomUserDetails.java
+
+		result = prime * result + (int) (appointmentID ^ (appointmentID >>> 32));
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+=====================================================================
+Found a 3 line (29 tokens) duplication in the following files: 
+Starting at line 194 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+Starting at line 50 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\TreatmentInfoController.java
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		Map<Integer,String> patientTeethStatus = userServiceInterface.getPatientTeethStatusMapByPatientID(user.getUserID());
+=====================================================================
+Found a 5 line (29 tokens) duplication in the following files: 
+Starting at line 57 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientTeethController.java
+Starting at line 77 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientTeethController.java
+Starting at line 57 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\TreatmentInfoController.java
+Starting at line 79 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\TreatmentInfoController.java
+
+		for(Treatment t:treatments){
+			if(t.getStatus().equals(TreatmentStatus.PENDING)){
+				color = "Red";
+			}
+		}
+=====================================================================
+Found a 7 line (28 tokens) duplication in the following files: 
+Starting at line 47 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Appointment.java
+Starting at line 46 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\AppointmentRequest.java
+
+	@Transient
+	private long patientID;
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "patientID",nullable=false,updatable=false)
+	private Patient appointmentPatient;
+	@OneToOne
+=====================================================================
+Found a 8 line (28 tokens) duplication in the following files: 
+Starting at line 199 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Appointment.java
+Starting at line 134 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\AppointmentRequest.java
+Starting at line 154 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Insurance.java
+Starting at line 317 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Patient.java
+Starting at line 98 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\ReceivedMessage.java
+Starting at line 98 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\SentMessage.java
+Starting at line 166 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Treatment.java
+
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (appointmentID ^ (appointmentID >>> 32));
+=====================================================================
+Found a 2 line (28 tokens) duplication in the following files: 
+Starting at line 84 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 87 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 90 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 93 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 96 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 99 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 102 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 105 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 108 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 111 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+
+		    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
+		        ip = request.getHeader("Proxy-Client-IP");  
+=====================================================================
+Found a 4 line (28 tokens) duplication in the following files: 
+Starting at line 85 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 88 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 91 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 94 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 97 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 100 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 103 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 106 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 109 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 112 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+
+		        ip = request.getHeader("Proxy-Client-IP");  
+		    }  
+		    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
+		        ip = request.getHeader("WL-Proxy-Client-IP");  
+=====================================================================
+Found a 2 line (27 tokens) duplication in the following files: 
+Starting at line 211 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\dao\UserDaoImplementaion.java
+Starting at line 218 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\dao\UserDaoImplementaion.java
+
+	public List<Treatment> getTreatmentsByPatientID(long patientID) {
+		Criteria criteria = getSession().createCriteria(Treatment.class).add(Restrictions.eq("patient.userID", patientID));
+=====================================================================
+Found a 2 line (27 tokens) duplication in the following files: 
+Starting at line 239 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\dao\UserDaoImplementaion.java
+Starting at line 247 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\dao\UserDaoImplementaion.java
+
+	public PatientTeethStatus getPatientTeethStatusByPatientIDandTeethID(long patientID, int teethID) {
+		Criteria criteria = getSession().createCriteria(PatientTeethStatus.class).add(Restrictions.eq("TeethStatusPK.patient.userID", patientID))
+=====================================================================
+Found a 11 line (27 tokens) duplication in the following files: 
+Starting at line 56 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\ReceivedMessage.java
+Starting at line 56 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\SentMessage.java
+
+	public ReceivedMessage() {
+
+	}
+
+	public long getMessageID() {
+		return messageID;
+	}
+
+	public void setMessageID(long messageID) {
+		this.messageID = messageID;
+	}
+=====================================================================
+Found a 4 line (27 tokens) duplication in the following files: 
+Starting at line 50 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientTeethController.java
+Starting at line 49 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\TreatmentInfoController.java
+
+	public ResponseEntity<Map<String, Object>> getPatientTeethByID(@PathVariable("teethID") int teethID){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		Map<String, Object> map = new HashMap<String, Object>();
+=====================================================================
+Found a 2 line (27 tokens) duplication in the following files: 
+Starting at line 53 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientTeethController.java
+Starting at line 72 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientTeethController.java
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Treatment> treatments = userServiceInterface.getTreatmentsByPatientIDandTeethID(user.getUserID(), teethID);
+=====================================================================
+Found a 3 line (27 tokens) duplication in the following files: 
+Starting at line 41 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ReceivedMessageController.java
+Starting at line 39 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\SentMessageController.java
+Starting at line 91 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\TreatmentInfoController.java
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/{messageID}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ReceivedMessage> getReceivedMessageByID(@PathVariable("messageID")long messageID ){
+=====================================================================
+Found a 9 line (27 tokens) duplication in the following files: 
+Starting at line 52 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+Starting at line 174 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\ServerSideValidations.java
+
+		if (password.equals(confirmpattern)) {
+			valid = true;
+		}
+		if (valid == false) {
+			addToModelOrMap(model, map, errorName, error);
+			
+		}
+		return valid;
+	}
+=====================================================================
+Found a 11 line (26 tokens) duplication in the following files: 
+Starting at line 54 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Address.java
+Starting at line 51 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\util\ServerLocation.java
+
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+=====================================================================
+Found a 6 line (26 tokens) duplication in the following files: 
+Starting at line 47 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Appointment.java
+Starting at line 46 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\AppointmentRequest.java
+Starting at line 45 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Insurance.java
+Starting at line 49 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Treatment.java
+
+	@Transient
+	private long patientID;
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "patientID",nullable=false,updatable=false)
+	private Patient appointmentPatient;
+=====================================================================
+Found a 11 line (26 tokens) duplication in the following files: 
+Starting at line 94 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\AppointmentRequest.java
+Starting at line 110 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Treatment.java
+
+	}
+	
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public DateTime getRequestInsertedTime() {
+=====================================================================
+Found a 7 line (26 tokens) duplication in the following files: 
+Starting at line 69 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\PatientTeethStatus.java
+Starting at line 68 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\TeethStatusPK.java
+Starting at line 159 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\UserAuthentication.java
+
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((TeethStatusPK == null) ? 0 : TeethStatusPK.hashCode());
+=====================================================================
+Found a 11 line (26 tokens) duplication in the following files: 
+Starting at line 82 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\ReceivedMessage.java
+Starting at line 82 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\SentMessage.java
+
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
+	public DateTime getReceivedTime() {
+=====================================================================
+Found a 2 line (26 tokens) duplication in the following files: 
+Starting at line 84 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+Starting at line 114 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\WebUtility.java
+
+		    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
+		        ip = request.getHeader("Proxy-Client-IP");  
+=====================================================================
+Found a 7 line (26 tokens) duplication in the following files: 
+Starting at line 113 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\LoginController.java
+Starting at line 125 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\SignUpController.java
+
+			}else{
+				logger.debug("unable to add the user to spring session w.r.t cookie data");
+			}
+		}else if(userSession){
+			logger.debug("Redirecting to /");
+			return "redirect:/";
+		}
+=====================================================================
+Found a 14 line (25 tokens) duplication in the following files: 
+Starting at line 129 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Appointment.java
+Starting at line 110 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\AppointmentRequest.java
+
+	}
+
+
+	public DateTime getAppointmentStartTime() {
+		return appointmentStartTime;
+	}
+
+
+	public void setAppointmentStartTime(DateTime appointmentStartTime) {
+		this.appointmentStartTime = appointmentStartTime;
+	}
+
+
+	public String getFakeCalEventID() {
+=====================================================================
+Found a 14 line (25 tokens) duplication in the following files: 
+Starting at line 159 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Appointment.java
+Starting at line 94 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\AppointmentRequest.java
+Starting at line 110 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Treatment.java
+
+	}
+
+
+	public String getNote() {
+		return note;
+	}
+
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+
+	public BigDecimal getExpectedAmount() {
+=====================================================================
+Found a 14 line (25 tokens) duplication in the following files: 
+Starting at line 179 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Appointment.java
+Starting at line 142 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Treatment.java
+
+	}
+
+
+	public BigDecimal getAmountPaid() {
+		return amountPaid;
+	}
+
+
+	public void setAmountPaid(BigDecimal amountPaid) {
+		this.amountPaid = amountPaid;
+	}
+
+
+	public AppointmentStatus getStatus() {
+=====================================================================
+Found a 8 line (25 tokens) duplication in the following files: 
+Starting at line 199 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Appointment.java
+Starting at line 134 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\AppointmentRequest.java
+Starting at line 154 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Insurance.java
+Starting at line 317 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Patient.java
+Starting at line 69 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\PatientTeethStatus.java
+Starting at line 98 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\ReceivedMessage.java
+Starting at line 98 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\SentMessage.java
+Starting at line 68 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\TeethStatusPK.java
+Starting at line 166 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Treatment.java
+Starting at line 159 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\UserAuthentication.java
+
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (appointmentID ^ (appointmentID >>> 32));
+=====================================================================
+Found a 11 line (25 tokens) duplication in the following files: 
+Starting at line 130 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Insurance.java
+Starting at line 173 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\Patient.java
+
+	}
+
+	public LocalDate getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public InsuranceStatus getStatus() {
+=====================================================================
+Found a 9 line (25 tokens) duplication in the following files: 
+Starting at line 75 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\PatientTeethStatus.java
+Starting at line 75 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\TeethStatusPK.java
+Starting at line 70 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\service\CustomUserDetails.java
+
+		result = prime * result + ((TeethStatusPK == null) ? 0 : TeethStatusPK.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+=====================================================================
+Found a 2 line (25 tokens) duplication in the following files: 
+Starting at line 68 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\UserAuthentication.java
+Starting at line 82 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\domain\UserAuthentication.java
+
+	public UserAuthentication(String userEmail, String userPwd, String userIp, DateTime creationTime,
+			DateTime lastLoginTime, AccountStatus accountStatus, Role useRole, String verifyKey) {
+=====================================================================
+Found a 2 line (25 tokens) duplication in the following files: 
+Starting at line 190 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+Starting at line 48 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\TreatmentInfoController.java
+
+	@RequestMapping(value = "/patientteethstatus", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<Integer,String>> getPatientTeethStatus(Model model){
+=====================================================================
+Found a 3 line (25 tokens) duplication in the following files: 
+Starting at line 194 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientInfoController.java
+Starting at line 51 of E:\java\DentistPojectWorkspace\Dentist\src\main\java\com\dentist\webapp\PatientTeethController.java
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		Map<Integer,String> patientTeethStatus = userServiceInterface.getPatientTeethStatusMapByPatientID(user.getUserID());

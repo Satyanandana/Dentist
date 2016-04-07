@@ -30,7 +30,7 @@ import com.dentist.service.UserServiceInterface;
 @Controller
 public class HomeController {
 
-	private static final Logger logger = Logger.getLogger(HomeController.class);
+	private static final Logger LOGGER = Logger.getLogger(HomeController.class);
 
 	@Autowired
 	private UserServiceInterface userServiceInterface;
@@ -45,11 +45,11 @@ public class HomeController {
 		if(!auth.getPrincipal().equals("anonymousUser")){
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
 
-		logger.info("handling get request to /home   " + user.getUserEmail());
-		logger.info("handling get request to /home   " + user.getUserRole());
-		logger.info("handling get request to /home   " + user.getUserID());
+		LOGGER.info("handling get request to /home   " + user.getUserEmail());
+		LOGGER.info("handling get request to /home   " + user.getUserRole());
+		LOGGER.info("handling get request to /home   " + user.getUserID());
 
-		logger.info("Welcome home! The client locale is " + locale.toString());
+		LOGGER.info("Welcome home! The client locale is " + locale.toString());
 
 		// BasicProfile user1= userServiceInterface.findUserById(2);
 		}
@@ -72,10 +72,10 @@ public class HomeController {
 		 * SecurityContextHolder.getContext().getAuthentication();
 		 * CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
 		 * 
-		 * logger.info("handling post request to /home" + user.getUser_email());
+		 * LOGGER.info("handling post request to /home" + user.getUser_email());
 		 */
 
-		logger.info("handling post request to /home");
+		LOGGER.info("handling post request to /home");
 
 		return "home";
 	}

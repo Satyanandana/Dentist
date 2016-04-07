@@ -57,7 +57,7 @@ public class UserAuthentication implements Serializable {
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Role userRole;
-	@Column(nullable = false)
+	@Column(nullable = false,length=1000)
 	@Type(type = "encryptedString")
 	private String verifyKey;
 

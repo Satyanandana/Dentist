@@ -1,5 +1,6 @@
 package com.dentist.webapp;
 
+import java.util.Map;
 /**
 * 
 *
@@ -33,7 +34,7 @@ public class ServerSideValidations {
 		}
 	
 	
-	public static boolean validatePassword(String password, Model map,String errorName, String error) {
+	public static boolean validatePassword(String password, Model model,Map<String, String> map,String errorName, String error) {
 		Boolean valid = false;
 		Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
 		Matcher matcher = pattern.matcher(password);
@@ -41,24 +42,24 @@ public class ServerSideValidations {
 			valid = true;
 		}
 		if (valid == false) {
-			map.addAttribute(errorName, error);
+			addToModelOrMap(model, map, errorName, error);
 		}
 		return valid;
 	}
 	
-	public static boolean validateConfirmPassword (String password,String confirmpattern, Model map,String errorName,String error) {
+	public static boolean validateConfirmPassword (String password,String confirmpattern, Model model,Map<String, String> map,String errorName,String error) {
 		Boolean valid = false;
 		if (password.equals(confirmpattern)) {
 			valid = true;
 		}
 		if (valid == false) {
-			map.addAttribute(errorName, error);
+			addToModelOrMap(model, map, errorName, error);
 			
 		}
 		return valid;
 	}
 
-	public static boolean validateEmail(String email, Model map,String errorName, String error) {
+	public static boolean validateEmail(String email, Model model,Map<String, String> map,String errorName, String error) {
 		Boolean valid = false;
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 		Matcher matcher = pattern.matcher(email);
@@ -66,12 +67,12 @@ public class ServerSideValidations {
 			valid = true;
 		}
 		if (valid == false) {
-			map.addAttribute(errorName, error);
+			addToModelOrMap(model, map, errorName, error);
 		}
 		return valid;
 	}
 	
-	public static boolean validateName(String name, Model map,String errorName, String error) {
+	public static boolean validateName(String name, Model model,Map<String, String> map,String errorName, String error) {
 		boolean valid = false;
 		Pattern pattern = Pattern.compile(NAME_PATTERN);
 		Matcher matcher = pattern.matcher(name);
@@ -79,12 +80,12 @@ public class ServerSideValidations {
 			valid = true;
 		}
 		if (valid == false) {
-			map.addAttribute(errorName, error);
+			addToModelOrMap(model, map, errorName, error);
 		}
 		return valid;
 	}
 	
-	public static boolean validAddress(String address, Model map,String errorName, String error) {
+	public static boolean validAddress(String address, Model model,Map<String, String> map,String errorName, String error) {
 		boolean valid = false;
 		
 		Pattern pattern = Pattern.compile(ADDRESS_PATTERN);
@@ -93,12 +94,12 @@ public class ServerSideValidations {
 			valid= true;
 		}
 		if(valid == false) {
-			map.addAttribute(errorName, error);
+			addToModelOrMap(model, map, errorName, error);
 		}
 		return valid;
 	}
 	
-	public static boolean validCity(String city, Model map,String errorName, String error) {
+	public static boolean validCity(String city, Model model,Map<String, String> map,String errorName, String error) {
 		boolean valid = false;
 		Pattern pattern  = Pattern.compile(CITY_PATTERN);
 		Matcher matcher = pattern.matcher(city);
@@ -106,12 +107,12 @@ public class ServerSideValidations {
 			valid = true;
 		}
 		if(valid == false) {
-			map.addAttribute(errorName, error);
+			addToModelOrMap(model, map, errorName, error);
 		}
 		return valid;
 	}
 	
-	public static boolean validZipCode (String zipcode, Model map,String errorName, String error) {
+	public static boolean validZipCode (String zipcode, Model model,Map<String, String> map,String errorName, String error) {
 		
 		boolean valid = false;
 		Pattern pattern = Pattern.compile(ZIPCODE_PATTERN);
@@ -120,12 +121,12 @@ public class ServerSideValidations {
 			valid = true;
 		}
 		if(valid == false) {
-			map.addAttribute(errorName, error);
+			addToModelOrMap(model, map, errorName, error);
 		}
 		return valid;
 	}
 	
-	public static boolean validPhoneNumber (String phoneNumber, Model map,String errorName, String error) {
+	public static boolean validPhoneNumber (String phoneNumber, Model model,Map<String, String> map,String errorName, String error) {
 		boolean valid= false;
 		Pattern pattern = Pattern.compile(PHONENUMBER_PATTERN);
 		Matcher matcher = pattern.matcher(phoneNumber);
@@ -133,12 +134,12 @@ public class ServerSideValidations {
 			valid = true;
 		}
 		if(valid == false) {
-			map.addAttribute(errorName, error);
+			addToModelOrMap(model, map, errorName, error);
 		}
 		return valid;
 	}
 	
- public static boolean validSSN (String ssn, Model map,String errorName, String error) {
+ public static boolean validSSN (String ssn, Model model,Map<String, String> map,String errorName, String error) {
 		
 		boolean valid = false;
 		Pattern pattern = Pattern.compile(SSN_PATTERN);
@@ -147,12 +148,12 @@ public class ServerSideValidations {
 			valid = true;
 		}
 		if(valid == false) {
-			map.addAttribute(errorName, error);
+			addToModelOrMap(model, map, errorName, error);
 		}
 		return valid;
 	}
 	
-	public static boolean validEmployee (String employee, Model map,String errorName, String error) {
+	public static boolean validEmployee (String employee, Model model,Map<String, String> map,String errorName, String error) {
 		boolean valid = false;
 		Pattern pattern = Pattern.compile(EMPLOYEE_PATTERN);
 		Matcher matcher = pattern.matcher(employee);
@@ -160,13 +161,13 @@ public class ServerSideValidations {
 			valid = true;
 		}
 		if (valid == false) {
-			map.addAttribute(errorName, error);
+			addToModelOrMap(model, map, errorName, error);
 		}
 		return valid;
 	}
 	
 	
-	public static boolean validateIncome (String income, Model map,String errorName, String error) {
+	public static boolean validateIncome (String income, Model model,Map<String, String> map,String errorName, String error) {
 		boolean valid = false;
 		Pattern pattern = Pattern.compile(INCOME_PATTERN);
 		Matcher matcher = pattern.matcher(income);
@@ -174,9 +175,18 @@ public class ServerSideValidations {
 			 valid = true;
 		}
 		if(valid == false) {
-			map.addAttribute(errorName, error);
+			addToModelOrMap(model, map, errorName, error);
 		}
 		return valid;
+	}
+	
+	private static void addToModelOrMap(Model model,Map<String, String> map,String errorName,String error){
+		if(model!=null){
+			model.addAttribute(errorName, error);
+		}
+		if(map!=null){
+			map.put(errorName, error);
+		}
 	}
 		
 }

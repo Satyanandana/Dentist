@@ -32,8 +32,7 @@ INSERT INTO teeth (teethID, Description, teethName) VALUES (31, "Lower Left Late
 INSERT INTO teeth (teethID, Description, teethName) VALUES (32, "Lower Left Central", "LLCe");
 
 
-
-INSERT INTO user_auth (userID,accountStatus,creationTime,lastLoginTime,userEmail,userIp,userPwd,userRole,verifyKey)  VALUES (1,"ACTIVE","2016-03-24 00:41:33","2016-03-24 00:41:33","srikanthvarma.vadapalli@gmail.com","0:0:0:0:0:0:0:1","0KR85HFJNh4eq5AVapYzNRQvL9QgerMrvdy97CdvrBk=","ROLE_USER","i/Pz2YCzpUvLhOFmxztRAJmQ/ckp2mkqsXEr4DNU0BUHPWjZwOuQa+FefLZ7QvbkuZ7u91qDslSWLVSuQL+onTUeKVG+vJSfm8IOIEixI5NbhS4emCnmXHNNwZssO9XfrFMcktFyEcBvjToYOsc30Zb9NLVXaPYeS6uaYhSS1L4=") ;
+INSERT INTO user_auth (userID,accountStatus,creationTime,lastLoginTime,userEmail,userIp,userPwd,userRole,verifyKey)  VALUES (1,"ACTIVE","2016-03-24 00:41:33","2016-03-24 00:41:33","srikanthvarma.vadapalli@gmail.com","0:0:0:0:0:0:0:1","922DA5CDBB4974B30FD2ACEA8A8AB7ECE546AF560E23AC5F53871430BE686388","ROLE_USER","5771097CF379F9CA0FCCD69F71C011E0DBB1BD6D5738301EE7513A366E90A189A06F49D808D8C09DDEDB2E7393DED1B71B8B16252F9F0C269F3D66D2E5698A6A390903A165FC63393DB806033805B352E4A86F860035E2646C19B7E0F398786B8AADEA460EA117E545A3825E53A385CDF319862C33162CDD238514362A7416375182235C95E6E486F504C79BC7D5E258186EC6E4A3EF3AA0E560D03194B373C1D1074689BFEDF6E12608D2F4FA86294B87D9D1D843E82207695F130CE8A32382") ;
 INSERT INTO patient_details (userID, emergencyContactName, emergencyContactNumber, emergencyContactRelation, dateOfBirth, email, firstName, address1, address2, city, state, zipcode, lastName, middleName, phoneNumber) VALUES ("1", "Hima Sindhu", "6174895892", "Sister", "1989-03-01", "srikanthvarma.vadapalli@gmail.com", "Satyanandana", "30 Franklin street", "unit 228", "Malden", "MA", "01248", "Vadapalli", "Srikanthvarma", "6178491980");
 
 INSERT INTO recieved_messages (msg, receivedTime, receiverID) VALUES ("First message", "2016-02-10 00:00:00", "1");

@@ -49,7 +49,7 @@ public class AppointmentRequest implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "patientID",nullable=false,updatable=false)
 	private Patient appointmentPatient;
-	@Column(nullable=false)
+	@Column(nullable=false,length=6000)
 	// @Type(type = "encryptedString")
 	private String note;
 	@Column(nullable=false)

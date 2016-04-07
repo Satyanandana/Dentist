@@ -41,6 +41,12 @@
 				</td>
 			</tr>
 			<tr>
+				<td><label for=date>date: </label></td>
+				<td>
+					<input type="text" pattern="\d{1,2}/\d{1,2}/\d{4}" class="datepicker" name="date" value="" />
+				</td>
+			</tr>
+			<tr>
 				<td><label for=useremail>user email: </label></td>
 				<td><form:input path="userAuth.userEmail" id="userEmail" /></td>
 			</tr>
