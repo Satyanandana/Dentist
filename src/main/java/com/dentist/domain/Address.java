@@ -1,4 +1,5 @@
 package com.dentist.domain;
+
 /**
 * 
 *
@@ -15,26 +16,27 @@ import javax.persistence.Embeddable;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
 @Component
 @Scope("prototype")
 @Embeddable
 public class Address implements Serializable {
 
 	private static final long serialVersionUID = 7797213038067009978L;
-	@Column(name = "address1",length=3000)
-	//@Type(type = "encryptedString")
+	@Column(name = "address1", length = 3000)
+	// @Type(type = "encryptedString")
 	private String address1;
-	@Column(name = "address2",length=3000)
-	//@Type(type = "encryptedString")
+	@Column(name = "address2", length = 3000)
+	// @Type(type = "encryptedString")
 	private String address2;
 	@Column(name = "city")
-	//@Type(type = "encryptedString")
+	// @Type(type = "encryptedString")
 	private String city;
 	@Column(name = "state")
-	//@Type(type = "encryptedString")
+	// @Type(type = "encryptedString")
 	private String state;
 	@Column(name = "zipcode")
-	//@Type(type = "encryptedString")
+	// @Type(type = "encryptedString")
 	private String zipcode;
 
 	public String getAddress1() {

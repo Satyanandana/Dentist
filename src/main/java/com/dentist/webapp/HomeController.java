@@ -1,4 +1,5 @@
 package com.dentist.webapp;
+
 /**
 * 
 *
@@ -42,16 +43,16 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if(!auth.getPrincipal().equals("anonymousUser")){
-		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		if (!auth.getPrincipal().equals("anonymousUser")) {
+			CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
 
-		LOGGER.info("handling get request to /home   " + user.getUserEmail());
-		LOGGER.info("handling get request to /home   " + user.getUserRole());
-		LOGGER.info("handling get request to /home   " + user.getUserID());
+			LOGGER.info("handling get request to /home   " + user.getUserEmail());
+			LOGGER.info("handling get request to /home   " + user.getUserRole());
+			LOGGER.info("handling get request to /home   " + user.getUserID());
 
-		LOGGER.info("Welcome home! The client locale is " + locale.toString());
+			LOGGER.info("Welcome home! The client locale is " + locale.toString());
 
-		// BasicProfile user1= userServiceInterface.findUserById(2);
+			// BasicProfile user1= userServiceInterface.findUserById(2);
 		}
 
 		Date date = new Date();

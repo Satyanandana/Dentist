@@ -1,4 +1,5 @@
 package com.dentist.domain;
+
 /**
 * 
 *
@@ -17,25 +18,26 @@ import javax.persistence.Table;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
 @Component
 @Scope("prototype")
 @Entity
 @Table
 public class Teeth implements Serializable {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6175288134531677286L;
 	@Id
 	private int teethID;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String teethName;
 	@Column
 	private String Description;
-	
+
 	public Teeth() {
-		
+
 	}
 
 	public int getTeethID() {
@@ -83,5 +85,5 @@ public class Teeth implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 }

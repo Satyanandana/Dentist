@@ -1,18 +1,16 @@
 package com.dentist.domain;
 
 /**
-* 
-*
-* @author  Satyanandana Srikanthvarma Vadapalli
-* @email srikanthvarma.vadapalli@gmail.com
-* @version 1.0
-* @since   Mar 17, 20161:10:28 AM
-*       
-*/
+ * 
+ *
+ * @author Satyanandana Srikanthvarma Vadapalli
+ * @email srikanthvarma.vadapalli@gmail.com
+ * @version 1.0
+ * @since Mar 17, 20161:10:28 AM
+ * 
+ */
 
-/* Never change the order of elements after going into production*/
+/* Never change the order of elements after going into production */
 public enum AccountStatus {
-	NOT_ACTIVATED_YET,
-	ACTIVE,
-	BLOCKED;
+	NOT_ACTIVATED_YET, ACTIVE, BLOCKED;
 }

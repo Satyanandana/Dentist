@@ -1,4 +1,5 @@
 package com.dentist.domain;
+
 /**
 * 
 *
@@ -32,6 +33,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Component
 @Scope("prototype")
 @Entity
@@ -50,15 +52,15 @@ public class Treatment implements Serializable {
 	private long patientID;
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "patientID", nullable = false,updatable=false)
+	@JoinColumn(name = "patientID", nullable = false, updatable = false)
 	private Patient patient;
 	@OneToOne
-	@JoinColumn(name = "teethID", nullable = false,updatable=false)
+	@JoinColumn(name = "teethID", nullable = false, updatable = false)
 	private Teeth teeth;
-	@Column(nullable=false,length=6000)
-	//@Type(type = "encryptedString")
+	@Column(nullable = false, length = 6000)
+	// @Type(type = "encryptedString")
 	private String note;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime treatmentInsertedTime;
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
@@ -69,7 +71,7 @@ public class Treatment implements Serializable {
 	private BigDecimal amountPaid;
 	@Column
 	private BigDecimal amountExpected;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private TreatmentStatus status;
 
@@ -87,7 +89,7 @@ public class Treatment implements Serializable {
 
 	@JsonGetter
 	public long getPatientID() {
-		if(this.patient!=null){
+		if (this.patient != null) {
 			this.patientID = this.patient.getUserID();
 		}
 		return patientID;
@@ -116,7 +118,7 @@ public class Treatment implements Serializable {
 	public void setNote(String note) {
 		this.note = note;
 	}
-    
+
 	public DateTime getTreatmentInsertedTime() {
 		return treatmentInsertedTime;
 	}
@@ -186,7 +188,5 @@ public class Treatment implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
 }

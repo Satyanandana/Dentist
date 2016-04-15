@@ -1,4 +1,5 @@
 package com.dentist.webapp;
+
 /**
 * 
 *
@@ -18,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.hibernate4.encryptor.HibernatePBEStringEncryptor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -33,13 +33,16 @@ import org.springframework.stereotype.Service;
 
 import com.dentist.domain.UserAuthentication;
 import com.dentist.service.CustomUserDetails;
+
 @Service
 public class SessionHandler {
-	
+
 	private static final Logger LOGGER = Logger.getLogger(SessionHandler.class);
-			
-	public static void handleSession(SessionRegistry sessionRegistry,AuthenticationSuccessHandler successHandler,HttpServletRequest request,HttpServletResponse response,UserAuthentication user,HibernatePBEStringEncryptor encryptor) throws IOException, ServletException{
-		
+
+	public static void handleSession(SessionRegistry sessionRegistry, AuthenticationSuccessHandler successHandler,
+			HttpServletRequest request, HttpServletResponse response, UserAuthentication user,
+			HibernatePBEStringEncryptor encryptor) throws IOException, ServletException {
+
 		List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(user.getUserRole().toString());
 		UserDetails userDetails = new CustomUserDetails(user);
 
@@ -48,7 +51,7 @@ public class SessionHandler {
 		while (i.hasNext()) {
 			SessionInformation si = i.next();
 			si.expireNow();
-						
+
 		}
 		sessionRegistry.registerNewSession(request.getSession().getId(), auth.getPrincipal());
 		LOGGER.debug("added user to the spring session registry");
@@ -56,18 +59,18 @@ public class SessionHandler {
 		LOGGER.debug("added user to the spring security context holder");
 		request.getSession().setAttribute("user", user.getUserEmail());
 		LOGGER.debug("add user to the http servlet session");
-		Cookie cookieUserId  = new Cookie("USER",encryptor.encrypt(user.getUserEmail()));
-		cookieUserId.setMaxAge(24 * 60 * 60);  // 24 hours.
+		Cookie cookieUserId = new Cookie("USER", encryptor.encrypt(user.getUserEmail()));
+		cookieUserId.setMaxAge(24 * 60 * 60); // 24 hours.
 		cookieUserId.setComment("www.kangdentalnewton.com");
 		cookieUserId.setHttpOnly(true);
 		cookieUserId.setPath("/Dentist/");
-	//  uncomment the below lines during production
-	//	cookieUserId.setDomain("https://www.kangdentalnewton.com");
-	//	cookieUserId.setSecure(true);
+		// uncomment the below lines during production
+		// cookieUserId.setDomain("https://www.kangdentalnewton.com");
+		// cookieUserId.setSecure(true);
 		response.addCookie(cookieUserId);
-        LOGGER.debug("added user to the cookie");
+		LOGGER.debug("added user to the cookie");
 		successHandler.onAuthenticationSuccess(request, response, auth);
-		LOGGER.debug("Redirecting to where the request came from  "+request.getPathTranslated());
+		LOGGER.debug("Redirecting to where the request came from  " + request.getPathTranslated());
 	}
 
 }

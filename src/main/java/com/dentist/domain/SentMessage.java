@@ -1,4 +1,5 @@
 package com.dentist.domain;
+
 /**
 * 
 *
@@ -26,6 +27,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Component
 @Scope("prototype")
 @Entity
@@ -46,10 +48,10 @@ public class SentMessage implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "senderID", nullable = false)
 	private Patient sender;
-	@Column(nullable=false,length=6000)
+	@Column(nullable = false, length = 6000)
 	// @Type(type = "encryptedString")
 	private String msg;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime sentTime;
 
@@ -65,9 +67,8 @@ public class SentMessage implements Serializable {
 		this.messageID = messageID;
 	}
 
-	
 	public long getSenderID() {
-		if(this.sender != null){
+		if (this.sender != null) {
 			this.senderID = sender.getUserID();
 		}
 		return senderID;
@@ -118,7 +119,5 @@ public class SentMessage implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
 }

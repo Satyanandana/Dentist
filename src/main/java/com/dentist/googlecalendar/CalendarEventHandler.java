@@ -1,13 +1,14 @@
-package com.dentist.util;
+package com.dentist.googlecalendar;
+
 /**
-* 
-*
-* @author  Satyanandana Srikanthvarma Vadapalli
-* @email srikanthvarma.vadapalli@gmail.com
-* @version 1.0
-* @since   Mar 17, 20161:10:28 AM
-*       
-*/
+ * 
+ *
+ * @author  Satyanandana Srikanthvarma Vadapalli
+ * @email srikanthvarma.vadapalli@gmail.com
+ * @version 1.0
+ * @since   Mar 17, 20161:10:28 AM
+ *       
+ */
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -36,8 +37,7 @@ public class CalendarEventHandler {
 	@Autowired
 	private Environment environment;
 	private static final Logger LOGGER = Logger.getLogger(CalendarEventHandler.class);
-	
-	
+
 	public CalendarEventHandler() {
 	}
 
@@ -49,58 +49,43 @@ public class CalendarEventHandler {
 		org.joda.time.DateTime createdDate = new org.joda.time.DateTime(DateTimeZone.forID("America/New_York"));
 		EventDateTime start = getStartDate(startDate);
 		EventDateTime end = getEndDate(startDate);
-		Event event = new Event().setSummary(getFakeEventSummary())
-				.setLocation(getEventLocation())
-				.setDescription(getFakeEventDescription())
-				.setCreated(new DateTime(createdDate.toDate()))
-				.setStart(start)
-				.setEnd(end);
-		
-			try {
-				event = calendar.events().insert(getFakeCalendarId(), event).setSendNotifications(true)
-						                                               .execute();
-			} catch (IOException e) {
-				LOGGER.error("unable to insert a fake event", e);
-			}
+		Event event = new Event().setSummary(getFakeEventSummary()).setLocation(getEventLocation())
+				.setDescription(getFakeEventDescription()).setCreated(new DateTime(createdDate.toDate()))
+				.setStart(start).setEnd(end);
+
+		try {
+			event = calendar.events().insert(getFakeCalendarId(), event).setSendNotifications(true).execute();
+		} catch (IOException e) {
+			LOGGER.error("unable to insert a fake event", e);
+		}
 		return event;
 	}
-	
-	public Event insertActualEvent(org.joda.time.DateTime startDate,String attendeeEmail ) {
+
+	public Event insertActualEvent(org.joda.time.DateTime startDate, String attendeeEmail) {
 		org.joda.time.DateTime createdDate = new org.joda.time.DateTime(DateTimeZone.forID("America/New_York"));
 		EventDateTime start = getStartDate(startDate);
 		EventDateTime end = getEndDate(startDate);
-		EventReminder[] reminderOverrides = new EventReminder[] { 
-				new EventReminder().setMethod("email").setMinutes(60),
+		EventReminder[] reminderOverrides = new EventReminder[] { new EventReminder().setMethod("email").setMinutes(60),
 				new EventReminder().setMethod("popup").setMinutes(60),
 				new EventReminder().setMethod("email").setMinutes(24 * 60),
 				new EventReminder().setMethod("popup").setMinutes(24 * 60),
 				new EventReminder().setMethod("popup").setMinutes(10) };
 		Event.Reminders reminders = new Event.Reminders().setUseDefault(false)
 				.setOverrides(Arrays.asList(reminderOverrides));
-		
-		EventAttendee[] attendees = new EventAttendee[] { new EventAttendee().setEmail(attendeeEmail)};
-		
-		
-		
-		Event event = new Event().setSummary(getActualEventSummary())
-				                 .setAttendees(Arrays.asList(attendees))
-				                 .setLocation(getEventLocation())
-				                 .setDescription(getActualEventDescription())
-				                 .setCreated(new DateTime(createdDate.toDate()))
-				                 .setReminders(reminders)
-				                 .setStart(start)
-				                 .setEnd(end);
-		    System.out.println(getActualCalendarId());
-			try {
-				event = calendar.events().insert(getActualCalendarId(), event).setSendNotifications(true).execute();
-			} catch (IOException e) {
-				LOGGER.error("unable to insert an event", e);
-			}
+
+		EventAttendee[] attendees = new EventAttendee[] { new EventAttendee().setEmail(attendeeEmail) };
+
+		Event event = new Event().setSummary(getActualEventSummary()).setAttendees(Arrays.asList(attendees))
+				.setLocation(getEventLocation()).setDescription(getActualEventDescription())
+				.setCreated(new DateTime(createdDate.toDate())).setReminders(reminders).setStart(start).setEnd(end);
+		System.out.println(getActualCalendarId());
+		try {
+			event = calendar.events().insert(getActualCalendarId(), event).setSendNotifications(true).execute();
+		} catch (IOException e) {
+			LOGGER.error("unable to insert an event", e);
+		}
 		return event;
 	}
-	
-
-	
 
 	public EventDateTime getStartDate(org.joda.time.DateTime startDate) {
 
@@ -117,37 +102,35 @@ public class CalendarEventHandler {
 	}
 
 	public String getFakeCalendarId() {
-		return  environment.getRequiredProperty("google.fake.calendarid").trim();
+		return environment.getRequiredProperty("google.fake.calendarid").trim();
 	}
 
 	public String getActualCalendarId() {
-		return  environment.getRequiredProperty("google.actual.calendarid").trim();
+		return environment.getRequiredProperty("google.actual.calendarid").trim();
 	}
 
 	public String getFakeEventSummary() {
-		return  environment.getRequiredProperty("google.calendar.fakeevent.summary").trim();
+		return environment.getRequiredProperty("google.calendar.fakeevent.summary").trim();
 	}
 
 	public String getActualEventSummary() {
-		return  environment.getRequiredProperty("google.calendar.actualevent.summary").trim();
+		return environment.getRequiredProperty("google.calendar.actualevent.summary").trim();
 	}
 
 	public String getEventLocation() {
-		return  environment.getRequiredProperty("google.calendar.event.location").trim();
+		return environment.getRequiredProperty("google.calendar.event.location").trim();
 	}
 
 	public String getFakeEventDescription() {
-		return  environment.getRequiredProperty("google.calendar.fakeevent.description").trim();
+		return environment.getRequiredProperty("google.calendar.fakeevent.description").trim();
 	}
 
 	public String getActualEventDescription() {
-		return  environment.getRequiredProperty("google.calendar.actualevent.description").trim();
+		return environment.getRequiredProperty("google.calendar.actualevent.description").trim();
 	}
 
 	public String getWebsiteDomain() {
-		return  environment.getRequiredProperty("website.domain").trim();
+		return environment.getRequiredProperty("website.domain").trim();
 	}
-	
-	
 
 }

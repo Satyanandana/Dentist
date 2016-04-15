@@ -1,14 +1,14 @@
 package com.dentist.configuration;
 
 /**
-* 
-*
-* @author  Satyanandana Srikanthvarma Vadapalli
-* @email srikanthvarma.vadapalli@gmail.com
-* @version 1.0
-* @since   Mar 17, 20161:10:28 AM
-*       
-*/
+ * 
+ *
+ * @author  Satyanandana Srikanthvarma Vadapalli
+ * @email srikanthvarma.vadapalli@gmail.com
+ * @version 1.0
+ * @since   Mar 17, 20161:10:28 AM
+ *       
+ */
 import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -44,7 +44,7 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
 
-import com.dentist.util.GoogleServerToServer;
+import com.dentist.googlecalendar.GoogleServerToServer;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
@@ -54,7 +54,7 @@ import com.maxmind.geoip.LookupService;
 @ComponentScan(basePackages = "com.dentist.*")
 @EnableTransactionManagement
 @EnableScheduling
-@PropertySource(value = {"classpath:application.properties"})
+@PropertySource(value = { "classpath:application.properties" })
 public class ApplicationContextConfig {
 	@Autowired
 	private ServletContext sevletContext;
@@ -90,7 +90,8 @@ public class ApplicationContextConfig {
 		encryptorConfig.setProvider(new BouncyCastleProvider());
 		encryptorConfig.setAlgorithm("PBEWITHSHA256AND128BITAES-CBC-BC");
 		encryptorConfig.setPassword("Boston");
-		encryptorConfig.setStringOutputType("hexadecimal");
+		// encryptorConfig.setStringOutputType("hexadecimal");
+
 		// encryptorConfig.setSaltGenerator(stringFixedSaltGenerator());
 
 		// config.setPasswordEnvName("APP_ENCRYPTION_PASSWORD");
@@ -191,8 +192,10 @@ public class ApplicationContextConfig {
 		String serverAccountEmail = environment.getRequiredProperty("google.servertoserver.account.email");
 		ArrayList<String> OuthScopes = new ArrayList<String>();
 		OuthScopes.add(CalendarScopes.CALENDAR);
-		File privateKeyFileP12 = resourceLoader.getResource("classpath:DentalAppointmentCalander-9292a1aa991e.p12").getFile();
-		//File privateKeyFileP12 = new File(environment.getRequiredProperty("google.servertoserver.p12file"));
+		File privateKeyFileP12 = resourceLoader.getResource("classpath:DentalAppointmentCalander-9292a1aa991e.p12")
+				.getFile();
+		// File privateKeyFileP12 = new
+		// File(environment.getRequiredProperty("google.servertoserver.p12file"));
 		GoogleCredential credential = GoogleServerToServer.getGoogleCredential(serverAccountEmail, privateKeyFileP12,
 				OuthScopes);
 
@@ -204,12 +207,12 @@ public class ApplicationContextConfig {
 		Calendar calendar = GoogleServerToServer.getCalendar(getGoogleCredential(), "dentalappointmentcalander");
 		return calendar;
 	}
-	
-	@Bean(name="lookupService")
-	public LookupService getGeoLocation() throws IOException{
+
+	@Bean(name = "lookupService")
+	public LookupService getGeoLocation() throws IOException {
 		Resource geoLiteDatabaseFile = resourceLoader.getResource("classpath:GeoLiteCity.dat");
-		LookupService lookup = new LookupService(geoLiteDatabaseFile.getFile(),LookupService.GEOIP_MEMORY_CACHE);
+		LookupService lookup = new LookupService(geoLiteDatabaseFile.getFile(), LookupService.GEOIP_MEMORY_CACHE);
 		return lookup;
-		}
+	}
 
 }

@@ -1,4 +1,5 @@
 package com.dentist.domain;
+
 /**
 * 
 *
@@ -15,6 +16,7 @@ import javax.persistence.Embeddable;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
 @Component
 @Scope("prototype")
 @Embeddable
@@ -23,19 +25,19 @@ public class EmergencyContact implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -3266512225087243884L;
-	
-	@Column(length=600)
-	//@Type(type = "encryptedString")
+
+	@Column(length = 600)
+	// @Type(type = "encryptedString")
 	private String name;
-	@Column(length=600)
-	//@Type(type = "encryptedString")
+	@Column(length = 600)
+	// @Type(type = "encryptedString")
 	private String phoneNumber;
-	@Column(length=255)
-	//@Type(type = "encryptedString")
+	@Column(length = 255)
+	// @Type(type = "encryptedString")
 	private String relation;
-	
+
 	public EmergencyContact() {
-		
+
 	}
 
 	public String getName() {
@@ -61,6 +63,5 @@ public class EmergencyContact implements Serializable {
 	public void setRelation(String relation) {
 		this.relation = relation;
 	}
-		
-	
+
 }

@@ -1,4 +1,5 @@
 package com.dentist.domain;
+
 /**
 * 
 *
@@ -21,6 +22,7 @@ import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
 @Component
 @Scope("prototype")
 @Entity
@@ -30,18 +32,18 @@ public class PatientTeethStatus implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 7658490316069224796L;
-	
+
 	@EmbeddedId
 	private TeethStatusPK TeethStatusPK;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private TeethStatus teethStatus;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime lastModified;
-	
+
 	public PatientTeethStatus() {
-		
+
 	}
 
 	public TeethStatusPK getTeethStatusPK() {
@@ -92,7 +94,5 @@ public class PatientTeethStatus implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
 }

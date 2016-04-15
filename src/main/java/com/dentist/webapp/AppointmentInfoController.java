@@ -17,40 +17,40 @@ import com.dentist.domain.Appointment;
 import com.dentist.service.UserServiceInterface;
 
 /**
-* 
-*
-* @author  Satyanandana Srikanthvarma Vadapalli
-* @email srikanthvarma.vadapalli@gmail.com
-* @version 1.0
-* @since   Mar 27, 20161:39:33 PM
-* @git 
-*      
-*/
+ * 
+ *
+ * @author Satyanandana Srikanthvarma Vadapalli
+ * @email srikanthvarma.vadapalli@gmail.com
+ * @version 1.0
+ * @since Mar 27, 20161:39:33 PM
+ * @git
+ * 
+ */
 
 @RestController
 @Transactional
 @RequestMapping("/appointments")
 public class AppointmentInfoController {
-	
+
 	private static final Logger LOGGER = Logger.getLogger(AppointmentInfoController.class);
 	@Autowired
 	private UserServiceInterface userServiceInterface;
-	
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/{appointmentID}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Appointment> getAppointmentByID(@PathVariable("AppointmentID")long AppointmentID ){
+	@RequestMapping(value = "/{appointmentID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Appointment> getAppointmentByID(@PathVariable("AppointmentID") long AppointmentID) {
 		LOGGER.info("processing get request to /appointments/{appointmentID}");
 		Appointment Appointment = userServiceInterface.getAppointmentByID(AppointmentID);
 		return new ResponseEntity<Appointment>(Appointment, HttpStatus.OK);
-		
+
 	}
-	
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/patient/{patientID}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Appointment>> getAppointmentsByPatientID(@PathVariable("patientID")long patientID ){
+	@RequestMapping(value = "/patient/{patientID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Appointment>> getAppointmentsByPatientID(@PathVariable("patientID") long patientID) {
 		LOGGER.info("processing get request to /appointments/patient/{patientID}");
 		List<Appointment> appointments = userServiceInterface.getAppointmentsByPatientID(patientID);
 		return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
 	}
-	
+
 }

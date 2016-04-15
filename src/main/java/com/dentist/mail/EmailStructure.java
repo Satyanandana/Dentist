@@ -1,4 +1,5 @@
-package com.dentist.util;
+package com.dentist.mail;
+
 /**
 * 
 *
@@ -94,8 +95,8 @@ public class EmailStructure {
 	public void setInlineImages(Map<String, File> inlineImages) {
 		this.inlineImages = inlineImages;
 	}
-	
-	public void addInlineImages(String name,File file){
+
+	public void addInlineImages(String name, File file) {
 		this.inlineImages.put(name, file);
 	}
 

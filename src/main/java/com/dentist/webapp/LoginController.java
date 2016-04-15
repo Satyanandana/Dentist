@@ -1,13 +1,14 @@
 package com.dentist.webapp;
+
 /**
-* 
-*
-* @author  Satyanandana Srikanthvarma Vadapalli
-* @email srikanthvarma.vadapalli@gmail.com
-* @version 1.0
-* @since   Mar 17, 20161:10:28 AM
-*       
-*/
+ * 
+ *
+ * @author  Satyanandana Srikanthvarma Vadapalli
+ * @email srikanthvarma.vadapalli@gmail.com
+ * @version 1.0
+ * @since   Mar 17, 20161:10:28 AM
+ *       
+ */
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
@@ -18,13 +19,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.hibernate4.encryptor.HibernatePBEStringEncryptor;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mobile.device.Device;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -38,16 +40,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dentist.domain.AccountStatus;
+import com.dentist.domain.Patient;
 import com.dentist.domain.UserAuthentication;
-import com.dentist.util.CalendarEventHandler;
-import com.dentist.util.EmailGenerator;
-import com.dentist.util.EmailStructure;
-import com.dentist.util.EmailTemplate;
-import com.dentist.util.IpAddressGeoLocation;
-import com.dentist.util.ServerLocation;
+import com.dentist.mail.EmailGenerator;
+import com.dentist.mail.EmailStructure;
+import com.dentist.mail.EmailTemplate;
+import com.dentist.geolocation.IpAddressGeoLocation;
+import com.dentist.geolocation.ServerLocation;
+import com.dentist.util.UrlSafeEncryption;
 import com.dentist.webapp.SessionHandler;
 import com.dentist.service.UserServiceInterface;
-import com.dentist.service.WebUtility;
+import com.dentist.util.WebUtility;
 
 /**
  * Handles requests for the application home page.
@@ -67,8 +70,6 @@ public class LoginController {
 	@Autowired
 	private SessionRegistry sessionRegistry;
 	@Autowired
-	private CalendarEventHandler calendarEventHandler;
-	@Autowired
 	private UserServiceInterface userServiceInterface;
 	@Autowired
 	private EmailGenerator emailSender;
@@ -83,134 +84,145 @@ public class LoginController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
-	public String loginForm(HttpServletRequest request, HttpServletResponse response,Model model,@CookieValue(name="USER",required=false) String userCookie,@RequestParam(name="action",defaultValue = "login") String action) {
+	public String loginForm(HttpServletRequest request, HttpServletResponse response, Model model,
+			@CookieValue(name = "USER", required = false) String userCookie,
+			@RequestParam(name = "action", defaultValue = "login") String action) {
 		LOGGER.info("processing get request to /login/form");
 		LOGGER.debug("Checking for the user in session");
-		boolean userSession = (request.getSession().getAttribute("user")!= null);
+		boolean userSession = (request.getSession().getAttribute("user") != null);
 		LOGGER.debug("User is in the session :" + userSession);
-		if(userCookie != null && !userSession){
-		LOGGER.debug("check user in the cookie");
-		  String userEmail  = encryptor.decrypt(userCookie);
-		  UserAuthentication userAuth = userServiceInterface.getUserAuthenticationInfoByEmail(userEmail);
+		if (userCookie != null && !userSession) {
+			LOGGER.debug("check user in the cookie");
+			String userEmail = encryptor.decrypt(userCookie);
+			UserAuthentication userAuth = userServiceInterface.getUserAuthenticationInfoByEmail(userEmail);
 			if (userAuth != null) {
-				if(userAuth.getAccountStatus().equals(AccountStatus.ACTIVE)){
-				LOGGER.debug("adding the user to spring session registry w.r.t cookie data");
-				  
-						
-							try {
-								SessionHandler.handleSession(sessionRegistry, successHandler, request, response, userAuth, encryptor);
-							} catch (IOException e) {
-								LOGGER.error("",e);
-							} catch (ServletException e) {
-								LOGGER.error("",e);
-							}
-						
-					
-					return null; 
+				if (userAuth.getAccountStatus().equals(AccountStatus.ACTIVE)) {
+					LOGGER.debug("adding the user to spring session registry w.r.t cookie data");
+
+					try {
+						SessionHandler.handleSession(sessionRegistry, successHandler, request, response, userAuth,
+								encryptor);
+					} catch (IOException e) {
+						LOGGER.error("", e);
+					} catch (ServletException e) {
+						LOGGER.error("", e);
+					}
+
+					return null;
 				}
-			}else{
+			} else {
 				LOGGER.debug("unable to add the user to spring session w.r.t cookie data");
 			}
-		}else if(userSession){
+		} else if (userSession) {
 			LOGGER.debug("Redirecting to /");
 			return "redirect:/";
 		}
-		
-	   		
+
 		LOGGER.debug("To login page .... ");
 		model.addAttribute("action", action);
-		model.addAttribute("serverTime",new DateTime().toString());
+		model.addAttribute("serverTime", new DateTime().toString());
 		return "login";
 
 	}
 
 	@RequestMapping(value = "/process", method = RequestMethod.POST)
-	public String Customlogin(HttpServletRequest request, HttpServletResponse response,Locale locale,Model model,@RequestParam String email,@RequestParam String password)
+	public String Customlogin(HttpServletRequest request, HttpServletResponse response, Device device, Locale locale,
+			Model model, @RequestParam String email, @RequestParam String password)
 			throws IOException, ServletException {
-		LOGGER.info("processing post requset to /login/process and athuenticate the user if email and password are valid credentials");
+		LOGGER.info(
+				"processing post requset to /login/process and athuenticate the user if email and password are valid credentials");
 		boolean valid = false;
-		boolean validEmail = ServerSideValidations.validateEmail(email, model,null,"errorEmail", "Invalid email address");
-        boolean validPassword = ServerSideValidations.validatePassword(password, model,null, "errorPassword", "Invalid password");
-		
-		if(validEmail && validPassword){
+		boolean validEmail = ServerSideValidations.validateEmail(email, model, null, "errorEmail",
+				"Invalid email address");
+		boolean validPassword = ServerSideValidations.validatePassword(password, model, null, "errorPassword",
+				"Invalid password");
+
+		if (validEmail && validPassword) {
 			valid = true;
 			LOGGER.debug("valid email and password");
-		}else{
+		} else {
 			model.addAttribute("error", "Either email Id or the password is wrong");
 		}
-		
-		if(valid){
+
+		if (valid) {
 			LOGGER.debug("Checking whether a user exists with the given password");
-		UserAuthentication userAuth = userServiceInterface.getUserAuthenticationInfoByEmail(email);
-		if (userAuth != null) {
-			if (userAuth.getUserPwd().equals(password)) {
-				if(userAuth.getAccountStatus().equals(AccountStatus.ACTIVE)){
-				LOGGER.debug("valid user credentials");
-				LOGGER.debug("adding user to spring session registry");
-				SessionHandler.handleSession(sessionRegistry, successHandler, request, response, userAuth, encryptor);
-				// get the location of user with IP address
-				String IpAddress = WebUtility.getIpAddress(request);
-				ServerLocation serverLocation = geoLocation.getLocation(IpAddress);  
-				   LOGGER.info(serverLocation.getCountryCode());
-				   LOGGER.info(serverLocation.getCountryName());
-				   LOGGER.info(serverLocation.getRegionCode());
-				   LOGGER.info(serverLocation.getRegionName());
-				   LOGGER.info(serverLocation.getCity());
-				   LOGGER.info(serverLocation.getLatitude());
-				   LOGGER.info(serverLocation.getLongitude());
-				
-				// Prepare and send last login info email
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("ipAddress",IpAddress);
-				map.put("location",serverLocation);
-				
-				
-				String body = emailSender.prepareBody(EmailTemplate.LAST_LOGIN_EMAIL, map);
-				emailStructure.setBody(body);
-				emailStructure.setSenderEmail("gtsatyansv@gmail.com");
-				emailStructure.setSubject("Last login info");
-				emailStructure.addRecipient(userAuth.getUserEmail());
-			 // emailStructure.addAttachment("welcome.vm", file);
-		     // Future<Boolean> sent1 =  emailSender.sendEmail(emailStructure);
-				return null;
-				}else if(userAuth.getAccountStatus().equals(AccountStatus.NOT_ACTIVATED_YET)){
-					model.addAttribute("error", "Please verify your email Id by clicking on the link that we sent to your email");
-					// Prepare and send email for verifying email
-					Map<String, Object> map = new HashMap<String, Object>();
-					map.put("verifyKey",userAuth.getVerifyKey());
-										
-					String body = emailSender.prepareBody(EmailTemplate.VERIFY_ACCOUNT_EMAIL, map);
-					emailStructure.setBody(body);
-					emailStructure.setSenderEmail("gtsatyansv@gmail.com");
-					emailStructure.setSubject("Last login info");
-					emailStructure.addRecipient(userAuth.getUserEmail());
-				 // emailStructure.addAttachment("welcome.vm", file);
-			     // Future<Boolean> sent1 =  emailSender.sendEmail(emailStructure);
-					
-				}else if(userAuth.getAccountStatus().equals(AccountStatus.BLOCKED)){
-					model.addAttribute("error", "Your account has been blocked.Please contact the admin");
+			UserAuthentication userAuth = userServiceInterface.getUserAuthenticationInfoByEmail(email);
+			if (userAuth != null) {
+				if (userAuth.getUserPwd().equals(password)) {
+					if (userAuth.getAccountStatus().equals(AccountStatus.ACTIVE)) {
+						LOGGER.debug("valid user credentials");
+						LOGGER.debug("adding user to spring session registry");
+						SessionHandler.handleSession(sessionRegistry, successHandler, request, response, userAuth,
+								encryptor);
+						// get the location of user with IP address
+						String IpAddress = WebUtility.getIpAddress(request);
+						// uncomment the below line in production
+						// ServerLocation serverLocation =
+						// geoLocation.getLocation(IpAddress);
+						// Comment the below line in production
+						ServerLocation serverLocation = geoLocation.getLocation("65.96.159.13");
+
+						if (serverLocation != null) {
+							Patient patient = userServiceInterface.getPatientInfoByEmail(email);
+
+							// Prepare and send last login info email
+							Map<String, Object> map = new HashMap<String, Object>();
+							map.put("user", patient.getFirstName() + " " + patient.getLastName());
+							map.put("time",
+									new DateTime().toString(DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss z")));
+							map.put("device", WebUtility.getDevice(device));
+							map.put("ipAddress", IpAddress);
+							map.put("location", serverLocation);
+
+							String body = emailSender.prepareBody(EmailTemplate.LAST_LOGIN_EMAIL, map);
+							emailStructure.setBody(body);
+							emailStructure.setSenderEmail("gtsatyansv@gmail.com");
+							emailStructure.setSubject("Last login info");
+							emailStructure.addRecipient(userAuth.getUserEmail());
+							emailSender.sendEmail(emailStructure);
+						}
+
+						return null;
+					} else if (userAuth.getAccountStatus().equals(AccountStatus.NOT_ACTIVATED_YET)) {
+						model.addAttribute("error",
+								"Please verify your email Id by clicking on the link that we sent to your email");
+						// Prepare and send email for verifying email
+						Map<String, Object> map = new HashMap<String, Object>();
+						map.put("verifyKey", userAuth.getVerifyKey());
+
+						String body = emailSender.prepareBody(EmailTemplate.VERIFY_ACCOUNT_EMAIL, map);
+						emailStructure.setBody(body);
+						emailStructure.setSenderEmail("gtsatyansv@gmail.com");
+						emailStructure.setSubject("Last login info");
+						emailStructure.addRecipient(userAuth.getUserEmail());
+						emailSender.sendEmail(emailStructure);
+
+					} else if (userAuth.getAccountStatus().equals(AccountStatus.BLOCKED)) {
+						model.addAttribute("error", "Your account has been blocked.Please contact the admin");
+					}
+				} else {
+					model.addAttribute("error", "Either email Id or the password is wrong");
 				}
-			}else{
+			} else {
 				model.addAttribute("error", "Either email Id or the password is wrong");
 			}
-		} else{
-			model.addAttribute("error", "Either email Id or the password is wrong");
 		}
-		}
-		model.addAttribute("serverTime",new DateTime().toString());
+		model.addAttribute("serverTime", new DateTime().toString());
 		return "login";
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value = "/forgotpassword", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String,String>> getForgetPassword(Model model,@RequestParam(name="email") String email){
-		 Map<String,String> map = new HashMap<String, String>();
-		 boolean validEmail = ServerSideValidations.validateEmail(email, null,map,"errorEmail", "Invalid email address");
-	       
-		if(validEmail){
+	@RequestMapping(value = "/forgotpassword", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, String>> getForgetPassword(Model model,
+			@RequestParam(name = "email") String email) {
+		Map<String, String> map = new HashMap<String, String>();
+		boolean validEmail = ServerSideValidations.validateEmail(email, null, map, "errorEmail",
+				"Invalid email address");
+
+		if (validEmail) {
 			UserAuthentication userAuth = userServiceInterface.getUserAuthenticationInfoByEmail(email);
-			if(userAuth!=null && userAuth.getUserEmail()!=null){
-				
+			if (userAuth != null && userAuth.getUserEmail() != null) {
+
 				// Prepare and send Welcome Email
 				Map<String, Object> emailMap = new HashMap<String, Object>();
 				emailMap.put("email", userAuth.getUserEmail());
@@ -220,41 +232,42 @@ public class LoginController {
 				emailStructure.setSenderEmail("gtsatyansv@gmail.com");
 				emailStructure.setSubject("Forgot Password");
 				emailStructure.addRecipient(userAuth.getUserEmail());
-			 // emailStructure.addAttachment("welcome.vm", file);
-		     // Future<Boolean> sent1 =  emailSender.sendEmail(emailStructure);
 
-				
+				// emailSender.sendEmail(emailStructure);
+
 				map.put("errorEmail", "We sent your credentials to your email ID.Please check your inbox");
-			}else{
+			} else {
 				map.put("errorEmail", "We dont have an account matching the email ID");
 			}
-		}else{
+		} else {
 			map.put("errorEmail", "Invalid email address");
 		}
-		
-		return new ResponseEntity<Map<String,String>>(map,HttpStatus.OK);
-		
+
+		return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
+
 	}
-	
-	@RequestMapping(value="/verifyemail",method = RequestMethod.GET )
-	public String verifyEmail(Model model,@RequestParam(name="key") String key,@RequestParam(name="id") String id){
-		
-	try{
-	    String decryptEmail = encryptor.decrypt(id.trim());
-	    String decryptKey = encryptor.decrypt(key.trim());
-		UserAuthentication userAuth = userServiceInterface.getUserAuthenticationInfoByEmail(decryptEmail);
-		if(userAuth!=null){
-			String deCryptVerifyKey = encryptor.decrypt(userAuth.getVerifyKey());
-			if(deCryptVerifyKey.equals(decryptKey)){
-				userAuth.setAccountStatus(AccountStatus.ACTIVE);
-				model.addAttribute("success", "Successfully activate your account.Please login");
+
+	@RequestMapping(value = "/verifyemail", method = RequestMethod.GET)
+	public String verifyEmail(Model model, @RequestParam(name = "key") String key,
+			@RequestParam(name = "id") String id) {
+
+		try {
+
+			String decryptKey = encryptor.decrypt(UrlSafeEncryption.decrypt(key.trim()));
+			String decryptEmail = encryptor.decrypt(UrlSafeEncryption.decrypt(id.trim()));
+			UserAuthentication userAuth = userServiceInterface.getUserAuthenticationInfoByEmail(decryptEmail);
+			if (userAuth != null) {
+				String deCryptVerifyKey = userAuth.getVerifyKey();
+				if (deCryptVerifyKey.equals(decryptKey)) {
+					userAuth.setAccountStatus(AccountStatus.ACTIVE);
+					model.addAttribute("success", "Successfully activate your account.Please login");
+				}
 			}
+		} catch (Exception e) {
+			LOGGER.error("", e);
+			model.addAttribute("error", "unable to activate your account.Please try again");
 		}
-	}catch(Exception e){
-		LOGGER.error("",e);
-		model.addAttribute("error", "unable to activate your account.Please try again");
-	}
 		return null;
-		}
+	}
 
 }

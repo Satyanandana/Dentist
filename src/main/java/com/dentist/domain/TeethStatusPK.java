@@ -1,4 +1,5 @@
 package com.dentist.domain;
+
 /**
 * 
 *
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Component
 @Scope("prototype")
 @Embeddable
@@ -32,24 +34,23 @@ public class TeethStatusPK implements Serializable {
 	private long patientID;
 	@JsonIgnore
 	@OneToOne
-	@JoinColumn(name="patientID",nullable=false,updatable=false)
+	@JoinColumn(name = "patientID", nullable = false, updatable = false)
 	private Patient patient;
 	@OneToOne
-	@JoinColumn(name="teethID",nullable=false,updatable=false)
+	@JoinColumn(name = "teethID", nullable = false, updatable = false)
 	private Teeth teeth;
-	
+
 	public TeethStatusPK() {
-		
+
 	}
 
 	@JsonGetter
 	public long getPatientID() {
-		if(this.patient!=null){
+		if (this.patient != null) {
 			this.patientID = this.patient.getUserID();
 		}
 		return patientID;
 	}
-
 
 	public Patient getPatient() {
 		return patient;
@@ -97,7 +98,5 @@ public class TeethStatusPK implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }

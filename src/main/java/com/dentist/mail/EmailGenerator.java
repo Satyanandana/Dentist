@@ -1,4 +1,5 @@
-package com.dentist.util;
+package com.dentist.mail;
+
 /**
 * 
 *
@@ -78,14 +79,14 @@ public class EmailGenerator {
 						FileSystemResource file = new FileSystemResource(attachment.getValue());
 						message.addAttachment(attachment.getKey(), file);
 					}
-					
+
 					for (Map.Entry<String, File> inlineImage : emailSructure.getInlineImages().entrySet()) {
 						FileSystemResource file = new FileSystemResource(inlineImage.getValue());
 						message.addAttachment(inlineImage.getKey(), file);
 					}
 
 				} catch (MessagingException e) {
-					LOGGER.error("Unable to prepare message",e);
+					LOGGER.error("Unable to prepare message", e);
 				}
 
 			}

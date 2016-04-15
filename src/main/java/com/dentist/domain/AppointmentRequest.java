@@ -1,4 +1,5 @@
 package com.dentist.domain;
+
 /**
 * 
 *
@@ -30,12 +31,13 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Component
 @Scope("prototype")
 @Entity
-@Table(name="appointmentrequests")
+@Table(name = "appointmentrequests")
 public class AppointmentRequest implements Serializable {
-	
+
 	/**
 	 * 
 	 */
@@ -47,26 +49,26 @@ public class AppointmentRequest implements Serializable {
 	private long patientID;
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "patientID",nullable=false,updatable=false)
+	@JoinColumn(name = "patientID", nullable = false, updatable = false)
 	private Patient appointmentPatient;
-	@Column(nullable=false,length=6000)
+	@Column(nullable = false, length = 6000)
 	// @Type(type = "encryptedString")
 	private String note;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime requestInsertedTime;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime appointmentStartTime;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private AppointmentRequestStatus status;
 	@OneToOne
-	@JoinColumn(name="appointmentID",nullable=true)
+	@JoinColumn(name = "appointmentID", nullable = true)
 	private Appointment appointment;
-	
+
 	public AppointmentRequest() {
-		
+
 	}
 
 	public long getAppointmentRequestID() {
@@ -76,15 +78,15 @@ public class AppointmentRequest implements Serializable {
 	public void setAppointmentRequestID(long appointmentRequestID) {
 		this.appointmentRequestID = appointmentRequestID;
 	}
-    
+
 	@JsonGetter
 	public long getPatientID() {
-		if(this.appointmentPatient!=null){
+		if (this.appointmentPatient != null) {
 			this.patientID = this.appointmentPatient.getUserID();
 		}
 		return patientID;
 	}
-	
+
 	public Patient getAppointmentPatient() {
 		return appointmentPatient;
 	}
@@ -92,7 +94,7 @@ public class AppointmentRequest implements Serializable {
 	public void setAppointmentPatient(Patient appointmentPatient) {
 		this.appointmentPatient = appointmentPatient;
 	}
-	
+
 	public String getNote() {
 		return note;
 	}
@@ -154,10 +156,5 @@ public class AppointmentRequest implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
 
 }

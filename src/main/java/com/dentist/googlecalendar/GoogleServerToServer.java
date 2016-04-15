@@ -1,13 +1,14 @@
-package com.dentist.util;
+package com.dentist.googlecalendar;
+
 /**
-* 
-*
-* @author  Satyanandana Srikanthvarma Vadapalli
-* @email srikanthvarma.vadapalli@gmail.com
-* @version 1.0
-* @since   Mar 17, 20161:10:28 AM
-*       
-*/
+ * 
+ *
+ * @author  Satyanandana Srikanthvarma Vadapalli
+ * @email srikanthvarma.vadapalli@gmail.com
+ * @version 1.0
+ * @since   Mar 17, 20161:10:28 AM
+ *       
+ */
 import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -31,7 +32,7 @@ public class GoogleServerToServer {
 	 * .p12 extention OuthScope = list of Google OuthScopes of applications for
 	 * Google authentication.
 	 */
-	
+
 	public static GoogleCredential getGoogleCredential(String serverAccountEmail, File privateKeyFileP12,
 			ArrayList<String> outhScopes) {
 		GoogleCredential credential = null;
@@ -43,11 +44,11 @@ public class GoogleServerToServer {
 					.setServiceAccountScopes(outhScopes).build();
 
 		} catch (GeneralSecurityException e) {
-		
-			LOGGER.error("",e);
+
+			LOGGER.error("", e);
 		} catch (IOException e) {
-			
-			LOGGER.error("",e);
+
+			LOGGER.error("", e);
 		}
 		return credential;
 	}
@@ -66,11 +67,11 @@ public class GoogleServerToServer {
 			service = new Calendar.Builder(httpTransport, jsonFactory, null).setApplicationName(appName)
 					.setHttpRequestInitializer(credential).build();
 		} catch (GeneralSecurityException e) {
-			
-			LOGGER.error("",e);
+
+			LOGGER.error("", e);
 		} catch (IOException e) {
-			
-			LOGGER.error("",e);
+
+			LOGGER.error("", e);
 		}
 
 		return service;

@@ -1,4 +1,4 @@
-package com.dentist.util;
+package com.dentist.googlecalendar;
 
 import java.io.IOException;
 
@@ -12,29 +12,29 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 /**
-* 
-*
-* @author  Satyanandana Srikanthvarma Vadapalli
-* @email srikanthvarma.vadapalli@gmail.com
-* @version 1.0
-* @since   Mar 23, 20163:30:37 AM
-* @git 
-*      
-*/
+ * 
+ *
+ * @author Satyanandana Srikanthvarma Vadapalli
+ * @email srikanthvarma.vadapalli@gmail.com
+ * @version 1.0
+ * @since Mar 23, 20163:30:37 AM
+ * @git
+ * 
+ */
 public class CustomJodaLocalDateSerializer extends JsonSerializer<LocalDate> {
 
 	DateTimeFormatter format = DateTimeFormat.forPattern("MM-dd-yyyy");
-	
+
 	@Override
 	public void serialize(LocalDate value, JsonGenerator gen, SerializerProvider serializers)
 			throws IOException, JsonProcessingException {
-		
-		if(value==null){
+
+		if (value == null) {
 			gen.writeNull();
-		}else{
+		} else {
 			gen.writeString(format.print(value));
 		}
-		
+
 	}
 
 }

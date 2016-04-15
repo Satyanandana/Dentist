@@ -25,65 +25,65 @@ import com.dentist.service.CustomUserDetails;
 import com.dentist.service.UserServiceInterface;
 
 /**
-* 
-*
-* @author  Satyanandana Srikanthvarma Vadapalli
-* @email srikanthvarma.vadapalli@gmail.com
-* @version 1.0
-* @since   Mar 27, 20161:39:33 PM
-* @git 
-*      
-*/
+ * 
+ *
+ * @author Satyanandana Srikanthvarma Vadapalli
+ * @email srikanthvarma.vadapalli@gmail.com
+ * @version 1.0
+ * @since Mar 27, 20161:39:33 PM
+ * @git
+ * 
+ */
 
 @RestController
 @Transactional
 @RequestMapping("/teeth")
 public class PatientTeethController {
-	
+
 	private static final Logger LOGGER = Logger.getLogger(PatientTeethController.class);
 	@Autowired
 	private UserServiceInterface userServiceInterface;
-	
-	
+
 	@PreAuthorize("hasRole('ROLE_USER')")
-	@RequestMapping(value = "/{teethID}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> getPatientTeethByID(@PathVariable("teethID") int teethID){
+	@RequestMapping(value = "/{teethID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> getPatientTeethByID(@PathVariable("teethID") int teethID) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Treatment> treatments = userServiceInterface.getTreatmentsByPatientIDandTeethID(user.getUserID(), teethID);
 		Teeth teeth = userServiceInterface.getTeethByID(teethID);
 		String color = "Green";
-		for(Treatment t:treatments){
-			if(t.getStatus().equals(TreatmentStatus.PENDING)){
+		for (Treatment t : treatments) {
+			if (t.getStatus().equals(TreatmentStatus.PENDING)) {
 				color = "Red";
 			}
 		}
-		map.put("teeth",teeth);
+		map.put("teeth", teeth);
 		map.put("treatments", treatments);
 		map.put("color", color);
-		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK) ;
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
-	
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/{teethID}/{patientID}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> getPatientTeethByPatientIDandTeethID(@PathVariable("teethID") int teethID,@PathVariable("patientID")long patientID){
-		
+	@RequestMapping(value = "/{teethID}/{patientID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> getPatientTeethByPatientIDandTeethID(
+			@PathVariable("teethID") int teethID, @PathVariable("patientID") long patientID) {
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Treatment> treatments = userServiceInterface.getTreatmentsByPatientIDandTeethID(patientID, teethID);
 		Teeth teeth = userServiceInterface.getTeethByID(teethID);
 		String color = "Green";
-		if(treatments!=null){
-		for(Treatment t:treatments){
-			if(t.getStatus().equals(TreatmentStatus.PENDING)){
-				color = "Red";
+		if (treatments != null) {
+			for (Treatment t : treatments) {
+				if (t.getStatus().equals(TreatmentStatus.PENDING)) {
+					color = "Red";
+				}
 			}
 		}
-		}
-		map.put("teeth",teeth);
+		map.put("teeth", teeth);
 		map.put("treatments", treatments);
 		map.put("color", color);
-		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK) ;
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
-	
+
 }

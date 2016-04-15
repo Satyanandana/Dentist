@@ -16,38 +16,38 @@ import com.dentist.domain.Insurance;
 import com.dentist.service.UserServiceInterface;
 
 /**
-* 
-*
-* @author  Satyanandana Srikanthvarma Vadapalli
-* @email srikanthvarma.vadapalli@gmail.com
-* @version 1.0
-* @since   Mar 27, 20161:39:33 PM
-* @git 
-*      
-*/
+ * 
+ *
+ * @author Satyanandana Srikanthvarma Vadapalli
+ * @email srikanthvarma.vadapalli@gmail.com
+ * @version 1.0
+ * @since Mar 27, 20161:39:33 PM
+ * @git
+ * 
+ */
 
 @RestController
 @RequestMapping("/insurances")
 public class InsuranceInfoController {
-	
+
 	private static final Logger LOGGER = Logger.getLogger(InsuranceInfoController.class);
 	@Autowired
 	private UserServiceInterface userServiceInterface;
-	
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/{insuranceID}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Insurance> getInsurancesByID(@PathVariable("insuranceID")long insuranceID ){
+	@RequestMapping(value = "/{insuranceID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Insurance> getInsurancesByID(@PathVariable("insuranceID") long insuranceID) {
 		LOGGER.info("processing get request to /insurances/{insuranceID}");
 		Insurance insurance = userServiceInterface.getInsuranceByID(insuranceID);
 		return new ResponseEntity<Insurance>(insurance, HttpStatus.OK);
 	}
-	
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/patient/{patientID}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Insurance>> getInsurancesByPatientID(@PathVariable("patientID")long patientID ){
+	@RequestMapping(value = "/patient/{patientID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Insurance>> getInsurancesByPatientID(@PathVariable("patientID") long patientID) {
 		LOGGER.info("processing get request to /insurances/patient/{patientID}");
 		List<Insurance> insurances = userServiceInterface.getInsurancesByPatientID(patientID);
 		return new ResponseEntity<List<Insurance>>(insurances, HttpStatus.OK);
 	}
-	
+
 }

@@ -1,4 +1,5 @@
 package com.dentist.domain;
+
 /**
 * 
 *
@@ -57,7 +58,7 @@ public class UserAuthentication implements Serializable {
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Role userRole;
-	@Column(nullable = false,length=1000)
+	@Column(nullable = false, length = 1000)
 	@Type(type = "encryptedString")
 	private String verifyKey;
 
@@ -93,7 +94,7 @@ public class UserAuthentication implements Serializable {
 	public void setUserID(long userID) {
 		this.userID = userID;
 	}
-	
+
 	public String getUserEmail() {
 		return userEmail;
 	}
@@ -185,6 +186,5 @@ public class UserAuthentication implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
+
 }

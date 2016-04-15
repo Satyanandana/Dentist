@@ -1,33 +1,38 @@
 package com.dentist.configuration;
+
 import java.util.List;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 /**
-* 
-*
-* @author  Satyanandana Srikanthvarma Vadapalli
-* @email srikanthvarma.vadapalli@gmail.com
-* @version 1.0
-* @since   Mar 17, 20161:10:28 AM
-*       
-*/
+ * 
+ *
+ * @author  Satyanandana Srikanthvarma Vadapalli
+ * @email srikanthvarma.vadapalli@gmail.com
+ * @version 1.0
+ * @since   Mar 17, 20161:10:28 AM
+ *       
+ */
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.mobile.device.DeviceHandlerMethodArgumentResolver;
+import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.dentist.util.CustomJodaDateTimeSerializer;
-import com.dentist.util.CustomJodaLocalDateSerializer;
+import com.dentist.googlecalendar.CustomJodaDateTimeSerializer;
+import com.dentist.googlecalendar.CustomJodaLocalDateSerializer;
 
 @Configuration
 @EnableWebMvc
@@ -72,24 +77,42 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	 */
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resources/**")
-		        .addResourceLocations("/resources/")
-		        .setCachePeriod(60*60*24);
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/").setCachePeriod(60 * 60 * 24);
 	}
 
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
-	
+
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
-		builder.indentOutput(true)
-		.serializerByType(LocalDate.class, new CustomJodaLocalDateSerializer())
-		.serializerByType(DateTime.class, new CustomJodaDateTimeSerializer());;
+		builder.indentOutput(true).serializerByType(LocalDate.class, new CustomJodaLocalDateSerializer())
+				.serializerByType(DateTime.class, new CustomJodaDateTimeSerializer());
+		;
 		converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
-		
+
+	}
+
+	@Bean
+	public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {
+		return new DeviceResolverHandlerInterceptor();
+	}
+
+	@Bean
+	public DeviceHandlerMethodArgumentResolver deviceHandlerMethodArgumentResolver() {
+		return new DeviceHandlerMethodArgumentResolver();
+	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(deviceResolverHandlerInterceptor());
+	}
+
+	@Override
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+		argumentResolvers.add(deviceHandlerMethodArgumentResolver());
 	}
 
 }

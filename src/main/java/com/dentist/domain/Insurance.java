@@ -1,4 +1,5 @@
 package com.dentist.domain;
+
 /**
 * 
 *
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Component
 @Scope("prototype")
 @Entity
@@ -46,19 +48,19 @@ public class Insurance implements Serializable {
 	private long patientID;
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "patientID",nullable=false,updatable=false)
+	@JoinColumn(name = "patientID", nullable = false, updatable = false)
 	private Patient insurancePatient;
 	@Column(nullable = false)
-	//@Type(type = "encryptedString")
+	// @Type(type = "encryptedString")
 	private String insuranceProviderID;
 	@Column(nullable = false)
-	//@Type(type = "encryptedString")
+	// @Type(type = "encryptedString")
 	private String insuranceProviderName;
 	@Column(nullable = false)
-	//@Type(type = "encryptedString")
+	// @Type(type = "encryptedString")
 	private String subscriberID;
-	@Column(nullable = false,length=500)
-	//@Type(type = "encryptedString")
+	@Column(nullable = false, length = 500)
+	// @Type(type = "encryptedString")
 	private String subscriberFullName;
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate dateOfBirth;
@@ -67,8 +69,8 @@ public class Insurance implements Serializable {
 	private InsuranceStatus status;
 	@Column(nullable = false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    private DateTime insertedDate;
-	
+	private DateTime insertedDate;
+
 	public Insurance() {
 
 	}
@@ -80,10 +82,10 @@ public class Insurance implements Serializable {
 	public void setInsuranceID(long insuranceID) {
 		this.insuranceID = insuranceID;
 	}
-    
+
 	@JsonGetter
 	public long getPatientID() {
-		if(this.insurancePatient!=null){
+		if (this.insurancePatient != null) {
 			this.patientID = this.insurancePatient.getUserID();
 		}
 		return patientID;
@@ -174,7 +176,5 @@ public class Insurance implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-		
+
 }
