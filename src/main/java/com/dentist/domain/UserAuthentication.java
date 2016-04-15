@@ -61,6 +61,8 @@ public class UserAuthentication implements Serializable {
 	@Column(nullable = false, length = 1000)
 	@Type(type = "encryptedString")
 	private String verifyKey;
+	@Column(nullable = false)
+	private String prevSessionID;
 
 	public UserAuthentication() {
 
@@ -157,6 +159,14 @@ public class UserAuthentication implements Serializable {
 
 	public void setVerifyKey(String verifyKey) {
 		this.verifyKey = verifyKey;
+	}
+
+	public String getPrevSessionID() {
+		return prevSessionID;
+	}
+
+	public void setPrevSessionID(String prevSessionID) {
+		this.prevSessionID = prevSessionID;
 	}
 
 	@Override

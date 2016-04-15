@@ -55,22 +55,25 @@ public class SessionHandler {
 		}
 		sessionRegistry.registerNewSession(request.getSession().getId(), auth.getPrincipal());
 		LOGGER.debug("added user to the spring session registry");
+		user.setPrevSessionID(request.getSession().getId());
+		LOGGER.debug("updated new sessionID in the database");
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		LOGGER.debug("added user to the spring security context holder");
 		request.getSession().setAttribute("user", user.getUserEmail());
-		LOGGER.debug("add user to the http servlet session");
-		Cookie cookieUserId = new Cookie("USER", encryptor.encrypt(user.getUserEmail()));
+		LOGGER.debug("added user to the http servlet session");
+		Cookie cookieUserId = new Cookie("USER",
+				encryptor.encrypt(user.getUserEmail() + "-" + request.getSession().getId()));
 		cookieUserId.setMaxAge(24 * 60 * 60); // 24 hours.
 		cookieUserId.setComment("www.kangdentalnewton.com");
 		cookieUserId.setHttpOnly(true);
-		cookieUserId.setPath("/Dentist/");
+		cookieUserId.setPath(request.getContextPath() + "/");
 		// uncomment the below lines during production
 		// cookieUserId.setDomain("https://www.kangdentalnewton.com");
 		// cookieUserId.setSecure(true);
 		response.addCookie(cookieUserId);
 		LOGGER.debug("added user to the cookie");
 		successHandler.onAuthenticationSuccess(request, response, auth);
-		LOGGER.debug("Redirecting to where the request came from  " + request.getPathTranslated());
+		LOGGER.debug("Redirecting to where the request came from i.e " + request.getPathTranslated());
 	}
 
 }

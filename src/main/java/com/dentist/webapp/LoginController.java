@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -42,14 +43,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.dentist.domain.AccountStatus;
 import com.dentist.domain.Patient;
 import com.dentist.domain.UserAuthentication;
+import com.dentist.geolocation.IpAddressGeoLocation;
+import com.dentist.geolocation.ServerLocation;
 import com.dentist.mail.EmailGenerator;
 import com.dentist.mail.EmailStructure;
 import com.dentist.mail.EmailTemplate;
-import com.dentist.geolocation.IpAddressGeoLocation;
-import com.dentist.geolocation.ServerLocation;
-import com.dentist.util.UrlSafeEncryption;
-import com.dentist.webapp.SessionHandler;
 import com.dentist.service.UserServiceInterface;
+import com.dentist.util.UrlSafeEncryption;
 import com.dentist.util.WebUtility;
 
 /**
@@ -93,9 +93,12 @@ public class LoginController {
 		LOGGER.debug("User is in the session :" + userSession);
 		if (userCookie != null && !userSession) {
 			LOGGER.debug("check user in the cookie");
-			String userEmail = encryptor.decrypt(userCookie);
+			userCookie = encryptor.decrypt(userCookie);
+			String[] parts = userCookie.split("-");
+			String userEmail = parts[0];
+			String sessionID = parts[1];
 			UserAuthentication userAuth = userServiceInterface.getUserAuthenticationInfoByEmail(userEmail);
-			if (userAuth != null) {
+			if (userAuth != null && userAuth.getPrevSessionID().equals(sessionID)) {
 				if (userAuth.getAccountStatus().equals(AccountStatus.ACTIVE)) {
 					LOGGER.debug("adding the user to spring session registry w.r.t cookie data");
 
