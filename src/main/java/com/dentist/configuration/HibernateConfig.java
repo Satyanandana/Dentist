@@ -27,8 +27,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({ "com.dentist.dao", "com.dentist.domain" })
-@PropertySource(value = { "classpath:application.properties" })
+@ComponentScan({"com.dentist.dao", "com.dentist.domain"})
+@PropertySource(value = {"classpath:application.properties"})
 public class HibernateConfig {
 
 	@Autowired
@@ -41,7 +41,7 @@ public class HibernateConfig {
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
-		sessionFactory.setPackagesToScan(new String[] { "com.dentist.*" });
+		sessionFactory.setPackagesToScan(new String[]{"com.dentist.*"});
 		sessionFactory.setHibernateProperties(hibernateProperties());
 		return sessionFactory;
 	}
@@ -71,8 +71,8 @@ public class HibernateConfig {
 		p.setLogAbandoned(true);
 		p.setRemoveAbandoned(true);
 		p.setDefaultAutoCommit(false);
-		p.setJdbcInterceptors("org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;"
-				+ "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
+		p.setJdbcInterceptors(
+				"org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;" + "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
 		DataSource dataSource = new DataSource();
 		dataSource.setPoolProperties(p);
 
@@ -84,11 +84,9 @@ public class HibernateConfig {
 		properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
 		properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
 		properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
-		properties.put("hibernate.current_session_context_class",
-				environment.getRequiredProperty("hibernate.current_session_context_class"));
-		// properties.put("hibernate.hbm2ddl.auto",
-		// environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
-		// properties.put("hibernate.hbm2ddl.import_files",environment.getRequiredProperty("hibernate.hbm2ddl.import_files"));
+		properties.put("hibernate.current_session_context_class", environment.getRequiredProperty("hibernate.current_session_context_class"));
+		properties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
+		properties.put("hibernate.hbm2ddl.import_files", environment.getRequiredProperty("hibernate.hbm2ddl.import_files"));
 		return properties;
 	}
 

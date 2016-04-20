@@ -68,8 +68,8 @@ public class UserAuthentication implements Serializable {
 
 	}
 
-	public UserAuthentication(String userEmail, String userPwd, String userIp, DateTime creationTime,
-			DateTime lastLoginTime, AccountStatus accountStatus, Role useRole, String verifyKey) {
+	public UserAuthentication(String userEmail, String userPwd, String userIp, DateTime creationTime, DateTime lastLoginTime,
+			AccountStatus accountStatus, Role useRole, String verifyKey) {
 		super();
 		this.userEmail = userEmail;
 		this.userPwd = userPwd;
@@ -82,8 +82,8 @@ public class UserAuthentication implements Serializable {
 	}
 
 	// required for CustomUserDetails object in spring security
-	public UserAuthentication(long userID, String userEmail, String userPwd, String userIp, DateTime creationTime,
-			DateTime lastLoginTime, AccountStatus accountStatus, Role useRole, String verifyKey) {
+	public UserAuthentication(long userID, String userEmail, String userPwd, String userIp, DateTime creationTime, DateTime lastLoginTime,
+			AccountStatus accountStatus, Role useRole, String verifyKey) {
 		this(userEmail, userPwd, userIp, creationTime, lastLoginTime, accountStatus, useRole, verifyKey);
 		this.userID = userID;
 

@@ -36,7 +36,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dentist.domain.Patient;
 import com.dentist.domain.UserAuthentication;
-import com.dentist.googlecalendar.CalendarEventHandler;
 import com.dentist.mail.EmailGenerator;
 import com.dentist.mail.EmailStructure;
 import com.dentist.mail.EmailTemplate;
@@ -62,8 +61,6 @@ public class SignUpController {
 	@Autowired
 	private SessionRegistry sessionRegistry;
 	@Autowired
-	private CalendarEventHandler calendarEventHandler;
-	@Autowired
 	private UserServiceInterface userServiceInterface;
 	@Autowired
 	private EmailGenerator emailSender;
@@ -79,22 +76,6 @@ public class SignUpController {
 	public String signUpForm(HttpServletRequest request, HttpServletResponse response, Model model,
 			@CookieValue(name = "USER", required = false) String userCookie) {
 
-		/*
-		 * // Prepare and send Welcome Email Map<String, Object> map = new
-		 * HashMap<String, Object>(); map.put("user", "Srikanthvarma"); String
-		 * body1 = emailSender.prepareBody(EmailTemplate.WELCOME_EMAIL, map);
-		 * emailStructure.setBody(body1);
-		 * emailStructure.setSenderEmail("gtsatyansv@gmail.com");
-		 * emailStructure.setSubject("Welcome to Dr.Kang Dentistry");
-		 * emailStructure.addRecipient("srikanthvarma.vadapalli@gmail.com");
-		 * 
-		 * String resource = servletContext.getRealPath(
-		 * "/WEB-INF/velocity/emailtemplates/welcome/2.png"); File file = new
-		 * File(resource); emailStructure.addInlineImages("image", file); //
-		 * emailStructure.addAttachment("welcome.vm", file); Future<Boolean>
-		 * sent1 = emailSender.sendEmail(emailStructure);
-		 */
-
 		LOGGER.debug("Checking for the user in session");
 		boolean userSession = (request.getSession().getAttribute("user") != null);
 		LOGGER.debug("User is in the session :" + userSession);
@@ -106,8 +87,8 @@ public class SignUpController {
 				LOGGER.debug("adding the user to spring session registry w.r.t cookie data");
 
 				try {
-					SessionHandler.handleSession(sessionRegistry, successHandler, request, response, userAuth,
-							encryptor);
+					Patient patient = userServiceInterface.getPatientInfoById(userAuth.getUserID());
+					SessionHandler.handleSession(sessionRegistry, successHandler, request, response, userAuth, encryptor, patient);
 				} catch (IOException e) {
 					LOGGER.error("", e);
 				} catch (ServletException e) {
@@ -125,31 +106,30 @@ public class SignUpController {
 		}
 
 		// Required for spring form model attribute
-		Patient patient = new Patient();
-		model.addAttribute("patient", patient);
 		LOGGER.debug("To signup page ");
+		model.addAttribute("patient", new Patient());
+		model.addAttribute("action", "signup");
 		return "signup";
 
 	}
 
 	@RequestMapping(value = "/process", method = RequestMethod.POST)
-	public String postSignUP(HttpServletRequest request, HttpServletResponse response, Model model,
-			@ModelAttribute Patient patient, @RequestParam(name = "dob") String dob)
-			throws IOException, ServletException, InterruptedException {
+	public String postSignUP(HttpServletRequest request, HttpServletResponse response, Model model, @ModelAttribute Patient patient,
+			@RequestParam(name = "dob") String dob) throws IOException, ServletException, InterruptedException {
 
 		boolean valid = false;
-		boolean validEmail = ServerSideValidations.validateEmail(patient.getUserAuth().getUserEmail(), model, null,
-				"errorEmail", "Invalid email address");
-		boolean validPassword = ServerSideValidations.validatePassword(patient.getUserAuth().getUserPwd(), model, null,
-				"errorPassword", "Invalid password");
-		boolean validFirstname = ServerSideValidations.validateName(patient.getFirstName(), model, null,
-				"errorFirstName", "Firstname Should contain only alphabets");
+		boolean validEmail = ServerSideValidations.validateEmail(patient.getUserAuth().getUserEmail(), model, null, "errorEmail",
+				"Invalid email address");
+		boolean validPassword = ServerSideValidations.validatePassword(patient.getUserAuth().getUserPwd(), model, null, "errorPassword",
+				"Invalid password");
+		boolean validFirstname = ServerSideValidations.validateName(patient.getFirstName(), model, null, "errorFirstName",
+				"Firstname Should contain only alphabets");
 		boolean validLastname = ServerSideValidations.validateName(patient.getLastName(), model, null, "errorLastName",
 				"Lasttname Should contain only alphabets");
-		boolean validMiddlename = ServerSideValidations.validateName(patient.getMiddleName(), model, null,
-				"errorMiddleName", "Middletname Should contain only alphabets");
-		boolean validPhoneNumber = ServerSideValidations.validPhoneNumber(String.valueOf(patient.getPhoneNumber()),
-				model, null, "errorPhoneNumber", "Invalid phone number");
+		boolean validMiddlename = ServerSideValidations.validateName(patient.getMiddleName(), model, null, "errorMiddleName",
+				"Middletname Should contain only alphabets");
+		boolean validPhoneNumber = ServerSideValidations.validatePhoneNumber(String.valueOf(patient.getPhoneNumber()), model, null,
+				"errorPhoneNumber", "Invalid phone number");
 
 		if (validEmail && validFirstname && validLastname && validMiddlename && validPassword && validPhoneNumber) {
 			valid = true;
@@ -184,10 +164,8 @@ public class SignUpController {
 				// Prepare and send AccountVerification Email
 				map.clear();
 				map.put("user", patientCreated.getFirstName() + " " + patientCreated.getLastName());
-				map.put("id",
-						UrlSafeEncryption.encrypt(encryptor.encrypt(patientCreated.getUserAuth().getUserEmail())));
-				map.put("key",
-						UrlSafeEncryption.encrypt(encryptor.encrypt(patientCreated.getUserAuth().getVerifyKey())));
+				map.put("id", UrlSafeEncryption.encrypt(encryptor.encrypt(patientCreated.getUserAuth().getUserEmail())));
+				map.put("key", UrlSafeEncryption.encrypt(encryptor.encrypt(patientCreated.getUserAuth().getVerifyKey())));
 				LOGGER.debug(map.get("key"));
 				LOGGER.debug(encryptor.decrypt(UrlSafeEncryption.decrypt((String) map.get("key"))));
 				LOGGER.debug(map.get("id"));
@@ -201,7 +179,8 @@ public class SignUpController {
 				emailSender.sendEmail(emailStructure);
 
 				UserAuthentication userAuth = userServiceInterface.getUserAuthenticationInfoByEmail(patient.getEmail());
-				SessionHandler.handleSession(sessionRegistry, successHandler, request, response, userAuth, encryptor);
+
+				SessionHandler.handleSession(sessionRegistry, successHandler, request, response, userAuth, encryptor, patient);
 
 				// Wait until the emails are sent
 				/*

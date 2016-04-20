@@ -120,6 +120,12 @@ public class UserServiceImpl implements UserServiceInterface {
 		return userDaoInterface.getAppointmentRequestsByPatientID(patientID);
 	}
 
+	@Override
+	public AppointmentRequest getAppointmentRequestByIDandPatientID(long appointmentRequestID, long patientID) {
+		return userDaoInterface.getAppointmentRequestByIDandPatientID(appointmentRequestID, patientID);
+
+	}
+
 	/*
 	 * DAO methods on Appointment.class
 	 */
@@ -136,6 +142,12 @@ public class UserServiceImpl implements UserServiceInterface {
 	@Override
 	public Appointment getAppointmentByID(long appointmentID) {
 		return userDaoInterface.getAppointmentByID(appointmentID);
+	}
+
+	@Override
+	public Appointment getAppointmentByIDandPatientID(long appointmentID, long patientID) {
+
+		return userDaoInterface.getAppointmentByIDandPatientID(appointmentID, patientID);
 	}
 
 	@Override
@@ -159,6 +171,11 @@ public class UserServiceImpl implements UserServiceInterface {
 	@Override
 	public Insurance getInsuranceByID(long insuranceID) {
 		return userDaoInterface.getInsuranceByID(insuranceID);
+	}
+
+	@Override
+	public Insurance getInsuranceByIDandPatientID(long insuranceID, long patientID) {
+		return userDaoInterface.getInsuranceByIDandPatientID(insuranceID, patientID);
 	}
 
 	@Override
@@ -315,6 +332,7 @@ public class UserServiceImpl implements UserServiceInterface {
 			userAuth.setUserIp(ipAddress);
 			String verifyKey = userAuth.getUserEmail() + userAuth.getCreationTime();
 			userAuth.setVerifyKey(verifyKey);
+			userAuth.setPrevSessionID(request.getSession().getId());
 
 			patient.setEmail(userAuth.getUserEmail());
 			patient.setUserAuth(userAuth);

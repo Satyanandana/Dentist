@@ -33,8 +33,7 @@ public class GoogleServerToServer {
 	 * Google authentication.
 	 */
 
-	public static GoogleCredential getGoogleCredential(String serverAccountEmail, File privateKeyFileP12,
-			ArrayList<String> outhScopes) {
+	public static GoogleCredential getGoogleCredential(String serverAccountEmail, File privateKeyFileP12, ArrayList<String> outhScopes) {
 		GoogleCredential credential = null;
 		try {
 			HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
@@ -64,8 +63,8 @@ public class GoogleServerToServer {
 		try {
 			HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 			JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-			service = new Calendar.Builder(httpTransport, jsonFactory, null).setApplicationName(appName)
-					.setHttpRequestInitializer(credential).build();
+			service = new Calendar.Builder(httpTransport, jsonFactory, null).setApplicationName(appName).setHttpRequestInitializer(credential)
+					.build();
 		} catch (GeneralSecurityException e) {
 
 			LOGGER.error("", e);

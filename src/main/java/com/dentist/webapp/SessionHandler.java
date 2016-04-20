@@ -31,6 +31,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Service;
 
+import com.dentist.domain.Patient;
 import com.dentist.domain.UserAuthentication;
 import com.dentist.service.CustomUserDetails;
 
@@ -39,14 +40,15 @@ public class SessionHandler {
 
 	private static final Logger LOGGER = Logger.getLogger(SessionHandler.class);
 
-	public static void handleSession(SessionRegistry sessionRegistry, AuthenticationSuccessHandler successHandler,
-			HttpServletRequest request, HttpServletResponse response, UserAuthentication user,
-			HibernatePBEStringEncryptor encryptor) throws IOException, ServletException {
+	public static void handleSession(SessionRegistry sessionRegistry, AuthenticationSuccessHandler successHandler, HttpServletRequest request,
+			HttpServletResponse response, UserAuthentication user, HibernatePBEStringEncryptor encryptor, Patient patient)
+			throws IOException, ServletException {
 
 		List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(user.getUserRole().toString());
 		UserDetails userDetails = new CustomUserDetails(user);
 
 		Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, user.getUserPwd(), authorities);
+
 		Iterator<SessionInformation> i = sessionRegistry.getAllSessions(auth.getPrincipal(), true).iterator();
 		while (i.hasNext()) {
 			SessionInformation si = i.next();
@@ -60,9 +62,10 @@ public class SessionHandler {
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		LOGGER.debug("added user to the spring security context holder");
 		request.getSession().setAttribute("user", user.getUserEmail());
+		request.getSession().setAttribute("role", user.getUserRole());
+		request.getSession().setAttribute("name", patient.getFirstName() + " " + patient.getLastName());
 		LOGGER.debug("added user to the http servlet session");
-		Cookie cookieUserId = new Cookie("USER",
-				encryptor.encrypt(user.getUserEmail() + "-" + request.getSession().getId()));
+		Cookie cookieUserId = new Cookie("USER", encryptor.encrypt(user.getUserEmail() + "-" + request.getSession().getId()));
 		cookieUserId.setMaxAge(24 * 60 * 60); // 24 hours.
 		cookieUserId.setComment("www.kangdentalnewton.com");
 		cookieUserId.setHttpOnly(true);

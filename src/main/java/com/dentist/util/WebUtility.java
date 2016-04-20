@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-import org.springframework.stereotype.Service;
 import org.springframework.mobile.device.Device;
+import org.springframework.stereotype.Service;
 
 @Service
 public class WebUtility {
@@ -24,8 +24,7 @@ public class WebUtility {
 		LocalDate localdate = null;
 		boolean valid = false;
 		int i = 0;
-		if (monthDateYear != null
-				&& monthDateYear.matches("([0-9]{4})[-/\\\\](0?[1-9]|[1][012])[-/\\\\](0?[1-9]|[12][0-9]|3[01])")) {
+		if (monthDateYear != null && monthDateYear.matches("^(0?[1-9]|[1][012])[-\\\\\\/](0?[1-9]|[12][0-9]|3[01])[-\\\\\\/]([0-9]{4})$")) {
 			String[] array = monthDateYear.split("[-/\\\\]");
 			for (String part : array) {
 				if (part != null) {
@@ -36,7 +35,7 @@ public class WebUtility {
 			valid = true;
 		}
 		if (valid) {
-			localdate = new LocalDate(array1[0], array1[1], array1[2]);
+			localdate = new LocalDate(array1[2], array1[0], array1[1]);
 		}
 		return localdate;
 	}
@@ -48,8 +47,7 @@ public class WebUtility {
 		boolean validTime = false;
 		int hour = 0;
 		int i = 0;
-		if (monthDateYear != null
-				&& monthDateYear.matches("([0-9]{4})[-/\\\\](0?[1-9]|[1][012])[-/\\\\](0?[1-9]|[12][0-9]|3[01])")) {
+		if (monthDateYear != null && monthDateYear.matches("^(0?[1-9]|[1][012])[-\\\\\\/](0?[1-9]|[12][0-9]|3[01])[-\\\\\\/]([0-9]{4})$")) {
 			String[] array = monthDateYear.split("[-/\\\\]");
 			for (String part : array) {
 				if (part != null) {
@@ -64,7 +62,7 @@ public class WebUtility {
 			validTime = true;
 		}
 		if (validDate && validTime) {
-			dateTime = new DateTime(array1[0], array1[1], array1[2], hour, 0);
+			dateTime = new DateTime(array1[2], array1[0], array1[1], hour, 0);
 		}
 		return dateTime;
 	}

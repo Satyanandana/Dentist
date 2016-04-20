@@ -54,7 +54,7 @@ import com.maxmind.geoip.LookupService;
 @ComponentScan(basePackages = "com.dentist.*")
 @EnableTransactionManagement
 @EnableScheduling
-@PropertySource(value = { "classpath:application.properties" })
+@PropertySource(value = {"classpath:application.properties"})
 public class ApplicationContextConfig {
 	@Autowired
 	private ServletContext sevletContext;
@@ -192,12 +192,10 @@ public class ApplicationContextConfig {
 		String serverAccountEmail = environment.getRequiredProperty("google.servertoserver.account.email");
 		ArrayList<String> OuthScopes = new ArrayList<String>();
 		OuthScopes.add(CalendarScopes.CALENDAR);
-		File privateKeyFileP12 = resourceLoader.getResource("classpath:DentalAppointmentCalander-9292a1aa991e.p12")
-				.getFile();
+		File privateKeyFileP12 = resourceLoader.getResource("classpath:DentalAppointmentCalander-9292a1aa991e.p12").getFile();
 		// File privateKeyFileP12 = new
 		// File(environment.getRequiredProperty("google.servertoserver.p12file"));
-		GoogleCredential credential = GoogleServerToServer.getGoogleCredential(serverAccountEmail, privateKeyFileP12,
-				OuthScopes);
+		GoogleCredential credential = GoogleServerToServer.getGoogleCredential(serverAccountEmail, privateKeyFileP12, OuthScopes);
 
 		return credential;
 	}

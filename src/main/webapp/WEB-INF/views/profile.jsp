@@ -1,6 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <html>
+<div id="root">
+<c:url value="/" var="root" />
+</div>
 <head>
 <title>Home</title>
 </head>

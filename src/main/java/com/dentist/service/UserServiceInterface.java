@@ -61,12 +61,16 @@ public interface UserServiceInterface {
 
 	public List<AppointmentRequest> getAppointmentRequestsByPatientID(long patientID);
 
+	public AppointmentRequest getAppointmentRequestByIDandPatientID(long appointmentRequestID, long patientID);
+
 	/* Call DAO methods on Appointment.class */
 	public void setAppointment(Appointment appointment);
 
 	public void updateAppointment(Appointment appointment);
 
 	public Appointment getAppointmentByID(long appointmentID);
+
+	public Appointment getAppointmentByIDandPatientID(long appointmentID, long patientID);
 
 	public List<Appointment> getAppointmentsByPatientID(long patientID);
 
@@ -76,6 +80,8 @@ public interface UserServiceInterface {
 	public void updateInsurance(Insurance insurance);
 
 	public Insurance getInsuranceByID(long insuranceID);
+
+	public Insurance getInsuranceByIDandPatientID(long insuranceID, long patientID);
 
 	public List<Insurance> getInsurancesByPatientID(long patientID);
 

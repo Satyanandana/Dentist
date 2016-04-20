@@ -26,6 +26,7 @@ import org.joda.time.DateTime;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Component
@@ -67,6 +68,7 @@ public class SentMessage implements Serializable {
 		this.messageID = messageID;
 	}
 
+	@JsonGetter
 	public long getSenderID() {
 		if (this.sender != null) {
 			this.senderID = sender.getUserID();

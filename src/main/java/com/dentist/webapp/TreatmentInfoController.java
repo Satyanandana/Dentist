@@ -1,5 +1,6 @@
 package com.dentist.webapp;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,33 +45,43 @@ public class TreatmentInfoController {
 
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value = "/status", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<Integer, String>> getPatientTeethStatus() {
+	public ResponseEntity<Map<String, Object>> getPatientTeethTreatmentStatus() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
-		Map<Integer, String> map = new HashMap<Integer, String>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<Integer, String> treatmentStatus = new HashMap<Integer, String>();
+		Map<Integer, String> patientTeethStatus = userServiceInterface.getPatientTeethStatusMapByPatientID(user.getUserID());
+		BigDecimal total = new BigDecimal(0);
 		for (int teethID = 1; teethID <= 32; teethID++) {
-			List<Treatment> treatments = userServiceInterface.getTreatmentsByPatientIDandTeethID(user.getUserID(),
-					teethID);
+			List<Treatment> treatments = userServiceInterface.getTreatmentsByPatientIDandTeethID(user.getUserID(), teethID);
 			String color = "Green";
 			if (treatments != null) {
 				for (Treatment t : treatments) {
 					if (t.getStatus().equals(TreatmentStatus.PENDING)) {
 						color = "Red";
 					}
+					if (t.getStatus().equals(TreatmentStatus.COMPLETED)) {
+						total = total.add(t.getAmountPaid());
+					}
 				}
 			}
-			map.put(teethID, color);
+			treatmentStatus.put(teethID, color);
 		}
+		map.put("total", total.toString());
+		map.put("treatmentStatus", treatmentStatus);
+		map.put("patientTeethStatus", patientTeethStatus);
 
-		return new ResponseEntity<Map<Integer, String>>(map, HttpStatus.OK);
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/status/{patientID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<Integer, String>> getPatientTeethStatusByPatientID(
-			@PathVariable("patientID") long patientID) {
+	public ResponseEntity<Map<String, Object>> getPatientTeethTreatmentStatusByPatientID(@PathVariable("patientID") long patientID) {
 
-		Map<Integer, String> map = new HashMap<Integer, String>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<Integer, String> treatmentStatus = new HashMap<Integer, String>();
+		Map<Integer, String> patientTeethStatus = userServiceInterface.getPatientTeethStatusMapByPatientID(patientID);
+		BigDecimal total = new BigDecimal(0);
 		for (int teethID = 1; teethID <= 32; teethID++) {
 			List<Treatment> treatments = userServiceInterface.getTreatmentsByPatientIDandTeethID(patientID, teethID);
 			String color = "Green";
@@ -79,19 +90,24 @@ public class TreatmentInfoController {
 					if (t.getStatus().equals(TreatmentStatus.PENDING)) {
 						color = "Red";
 					}
+					if (t.getStatus().equals(TreatmentStatus.COMPLETED)) {
+						total = total.add(t.getAmountPaid());
+					}
 				}
 			}
-			map.put(teethID, color);
+			treatmentStatus.put(teethID, color);
 		}
-
-		return new ResponseEntity<Map<Integer, String>>(map, HttpStatus.OK);
+		map.put("total", total.toString());
+		map.put("treatmentStatus", treatmentStatus);
+		map.put("patientTeethStatus", patientTeethStatus);
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/{messageID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Treatment> getTreatmentByID(@PathVariable("messageID") long messageID) {
-		LOGGER.info("processing get request to /treatments/{messageID}");
-		Treatment Treatment = userServiceInterface.getTreatmentByID(messageID);
+	@RequestMapping(value = "/{treatmentID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Treatment> getTreatmentByID(@PathVariable("treatmentID") long treatmentID) {
+		LOGGER.info("processing get request to /treatments/{treatmentID}");
+		Treatment Treatment = userServiceInterface.getTreatmentByID(treatmentID);
 		return new ResponseEntity<Treatment>(Treatment, HttpStatus.OK);
 
 	}
@@ -103,4 +119,19 @@ public class TreatmentInfoController {
 		List<Treatment> treatments = userServiceInterface.getTreatmentsByPatientID(patientID);
 		return new ResponseEntity<List<Treatment>>(treatments, HttpStatus.OK);
 	}
+
+	/*******************************************************
+	 * POST API END POINTS TO HANDLE TREATMENTS REQUESTS FROM PATIENT
+	 ******************************************************/
+
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value = "/create", method = RequestMethod.POST, params = {"!status"}, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> createTreatment() {
+
+		Boolean valid = true;
+		Map<String, Object> map = new HashMap<>();
+
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	}
+
 }

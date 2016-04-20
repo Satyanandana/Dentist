@@ -31,8 +31,7 @@ public class EmailStructure {
 
 	}
 
-	public EmailStructure(String senderEmail, ArrayList<String> recipients, String subject, String body,
-			Map<String, File> attachments) {
+	public EmailStructure(String senderEmail, ArrayList<String> recipients, String subject, String body, Map<String, File> attachments) {
 		this.senderEmail = senderEmail;
 		this.recipients = recipients;
 		this.subject = subject;

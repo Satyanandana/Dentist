@@ -9,7 +9,7 @@ package com.dentist.configuration;
  * @since   Mar 17, 20161:10:28 AM
  *       
  */
-import org.springframework.security.web.context.*;
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
 public class SecurityWebApplicationInitializer extends AbstractSecurityWebApplicationInitializer {
 

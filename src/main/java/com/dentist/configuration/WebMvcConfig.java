@@ -21,8 +21,10 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mobile.device.DeviceHandlerMethodArgumentResolver;
 import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -37,13 +39,23 @@ import com.dentist.googlecalendar.CustomJodaLocalDateSerializer;
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
-@ComponentScan(basePackages = { "com.dentist.webapp" })
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+@ComponentScan(basePackages = {"com.dentist.webapp"})
 
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	/* Add static pages to the view controller */
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/aboutus").setViewName("aboutus");
+		registry.addViewController("/aboutme").setViewName("aboutme");
+		registry.addViewController("/askme").setViewName("askme");
+		registry.addViewController("/contactus").setViewName("contactus");
+		registry.addViewController("/footer").setViewName("footer");
+		registry.addViewController("/gallery").setViewName("gallery");
+		registry.addViewController("/services").setViewName("services");
+		registry.addViewController("/staticheader").setViewName("staticheader");
+		registry.addViewController("/template").setViewName("template");
+		registry.addViewController("/dynamicheader").setViewName("dynamicheader");
+		registry.addViewController("/test").setViewName("test");
 		registry.addViewController("/accessDenied").setViewName("accessDenied");
 
 	}
@@ -58,6 +70,16 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		viewResolver.setPrefix("/WEB-INF/views/");
 		viewResolver.setSuffix(".jsp");
 		return viewResolver;
+	}
+
+	@Bean(name = "multipartResolver")
+	public CommonsMultipartResolver getMultipartResolver() {
+		CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
+		commonsMultipartResolver.setMaxUploadSize(1024 * 1024 * 10); // 10 MB
+		commonsMultipartResolver.setMaxUploadSizePerFile(1024 * 1024 * 10); // 10
+																			// MB
+		return commonsMultipartResolver;
+
 	}
 
 	/*
@@ -88,9 +110,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
-		builder.indentOutput(true).serializerByType(LocalDate.class, new CustomJodaLocalDateSerializer())
-				.serializerByType(DateTime.class, new CustomJodaDateTimeSerializer());
-		;
+		builder.indentOutput(true).serializerByType(LocalDate.class, new CustomJodaLocalDateSerializer()).serializerByType(DateTime.class,
+				new CustomJodaDateTimeSerializer());;
 		converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
 
 	}

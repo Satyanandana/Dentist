@@ -26,8 +26,7 @@ public class CustomJodaLocalDateSerializer extends JsonSerializer<LocalDate> {
 	DateTimeFormatter format = DateTimeFormat.forPattern("MM-dd-yyyy");
 
 	@Override
-	public void serialize(LocalDate value, JsonGenerator gen, SerializerProvider serializers)
-			throws IOException, JsonProcessingException {
+	public void serialize(LocalDate value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
 
 		if (value == null) {
 			gen.writeNull();

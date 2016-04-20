@@ -28,9 +28,8 @@ public class CustomUserDetails extends UserAuthentication implements UserDetails
 	private long user_id;
 
 	public CustomUserDetails(UserAuthentication userAuth) {
-		super(userAuth.getUserID(), userAuth.getUserEmail(), userAuth.getUserPwd(), userAuth.getUserIp(),
-				userAuth.getCreationTime(), userAuth.getLastLoginTime(), userAuth.getAccountStatus(),
-				userAuth.getUserRole(), userAuth.getVerifyKey());
+		super(userAuth.getUserID(), userAuth.getUserEmail(), userAuth.getUserPwd(), userAuth.getUserIp(), userAuth.getCreationTime(),
+				userAuth.getLastLoginTime(), userAuth.getAccountStatus(), userAuth.getUserRole(), userAuth.getVerifyKey());
 		this.user_id = userAuth.getUserID();
 	}
 

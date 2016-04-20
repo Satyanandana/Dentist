@@ -17,8 +17,8 @@ import org.joda.time.DateTimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Service;
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
 
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
@@ -28,7 +28,7 @@ import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.EventReminder;
 
 @Service
-@PropertySource(value = { "classpath:application.properties" })
+@PropertySource(value = {"classpath:application.properties"})
 public class CalendarEventHandler {
 
 	@Autowired
@@ -49,9 +49,8 @@ public class CalendarEventHandler {
 		org.joda.time.DateTime createdDate = new org.joda.time.DateTime(DateTimeZone.forID("America/New_York"));
 		EventDateTime start = getStartDate(startDate);
 		EventDateTime end = getEndDate(startDate);
-		Event event = new Event().setSummary(getFakeEventSummary()).setLocation(getEventLocation())
-				.setDescription(getFakeEventDescription()).setCreated(new DateTime(createdDate.toDate()))
-				.setStart(start).setEnd(end);
+		Event event = new Event().setSummary(getFakeEventSummary()).setLocation(getEventLocation()).setDescription(getFakeEventDescription())
+				.setCreated(new DateTime(createdDate.toDate())).setStart(start).setEnd(end);
 
 		try {
 			event = calendar.events().insert(getFakeCalendarId(), event).setSendNotifications(true).execute();
@@ -61,23 +60,31 @@ public class CalendarEventHandler {
 		return event;
 	}
 
+	public Boolean deleteFakeEvent(String fakeEventID) {
+		boolean valid = false;
+		try {
+			calendar.events().delete(getFakeCalendarId(), fakeEventID);
+			valid = true;
+		} catch (Exception e) {
+			LOGGER.error("unable to delete fake event");
+		}
+		return valid;
+	}
+
 	public Event insertActualEvent(org.joda.time.DateTime startDate, String attendeeEmail) {
 		org.joda.time.DateTime createdDate = new org.joda.time.DateTime(DateTimeZone.forID("America/New_York"));
 		EventDateTime start = getStartDate(startDate);
 		EventDateTime end = getEndDate(startDate);
-		EventReminder[] reminderOverrides = new EventReminder[] { new EventReminder().setMethod("email").setMinutes(60),
-				new EventReminder().setMethod("popup").setMinutes(60),
-				new EventReminder().setMethod("email").setMinutes(24 * 60),
-				new EventReminder().setMethod("popup").setMinutes(24 * 60),
-				new EventReminder().setMethod("popup").setMinutes(10) };
-		Event.Reminders reminders = new Event.Reminders().setUseDefault(false)
-				.setOverrides(Arrays.asList(reminderOverrides));
+		EventReminder[] reminderOverrides = new EventReminder[]{new EventReminder().setMethod("email").setMinutes(60),
+				new EventReminder().setMethod("popup").setMinutes(60), new EventReminder().setMethod("email").setMinutes(24 * 60),
+				new EventReminder().setMethod("popup").setMinutes(24 * 60), new EventReminder().setMethod("popup").setMinutes(10)};
+		Event.Reminders reminders = new Event.Reminders().setUseDefault(false).setOverrides(Arrays.asList(reminderOverrides));
 
-		EventAttendee[] attendees = new EventAttendee[] { new EventAttendee().setEmail(attendeeEmail) };
+		EventAttendee[] attendees = new EventAttendee[]{new EventAttendee().setEmail(attendeeEmail)};
 
-		Event event = new Event().setSummary(getActualEventSummary()).setAttendees(Arrays.asList(attendees))
-				.setLocation(getEventLocation()).setDescription(getActualEventDescription())
-				.setCreated(new DateTime(createdDate.toDate())).setReminders(reminders).setStart(start).setEnd(end);
+		Event event = new Event().setSummary(getActualEventSummary()).setAttendees(Arrays.asList(attendees)).setLocation(getEventLocation())
+				.setDescription(getActualEventDescription()).setCreated(new DateTime(createdDate.toDate())).setReminders(reminders).setStart(start)
+				.setEnd(end);
 		System.out.println(getActualCalendarId());
 		try {
 			event = calendar.events().insert(getActualCalendarId(), event).setSendNotifications(true).execute();
@@ -85,6 +92,17 @@ public class CalendarEventHandler {
 			LOGGER.error("unable to insert an event", e);
 		}
 		return event;
+	}
+
+	public Boolean deleteActualEvent(String actualEventID) {
+		boolean valid = false;
+		try {
+			calendar.events().delete(getActualCalendarId(), actualEventID);
+			valid = true;
+		} catch (Exception e) {
+			LOGGER.error("unable to delete actual event");
+		}
+		return valid;
 	}
 
 	public EventDateTime getStartDate(org.joda.time.DateTime startDate) {

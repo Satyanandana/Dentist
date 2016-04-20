@@ -1,5 +1,6 @@
 package com.dentist.webapp;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,33 +54,53 @@ public class PatientTeethController {
 		List<Treatment> treatments = userServiceInterface.getTreatmentsByPatientIDandTeethID(user.getUserID(), teethID);
 		Teeth teeth = userServiceInterface.getTeethByID(teethID);
 		String color = "Green";
+		BigDecimal total = new BigDecimal(0);
 		for (Treatment t : treatments) {
 			if (t.getStatus().equals(TreatmentStatus.PENDING)) {
 				color = "Red";
 			}
+			if (t.getStatus().equals(TreatmentStatus.COMPLETED)) {
+				total = total.add(t.getAmountPaid());
+			}
 		}
+		map.put("total", total);
 		map.put("teeth", teeth);
 		map.put("treatments", treatments);
 		map.put("color", color);
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_USER')") // change to ROLE_ADMIN
+	@RequestMapping(value = "/teethstatus/{patientID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<Integer, String>> getPatientTeethStatus(@PathVariable("patientID") long patientID) {
+		LOGGER.debug("processing request to get personal info");
+
+		Map<Integer, String> patientTeethStatus = userServiceInterface.getPatientTeethStatusMapByPatientID(patientID);
+
+		return new ResponseEntity<Map<Integer, String>>(patientTeethStatus, HttpStatus.OK);
+	}
+
+	@PreAuthorize("hasRole('ROLE_USER')") // change to ROLE_ADMIN
 	@RequestMapping(value = "/{teethID}/{patientID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> getPatientTeethByPatientIDandTeethID(
-			@PathVariable("teethID") int teethID, @PathVariable("patientID") long patientID) {
+	public ResponseEntity<Map<String, Object>> getPatientTeethByPatientIDandTeethID(@PathVariable("teethID") int teethID,
+			@PathVariable("patientID") long patientID) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Treatment> treatments = userServiceInterface.getTreatmentsByPatientIDandTeethID(patientID, teethID);
 		Teeth teeth = userServiceInterface.getTeethByID(teethID);
 		String color = "Green";
+		BigDecimal total = new BigDecimal(0);
 		if (treatments != null) {
 			for (Treatment t : treatments) {
 				if (t.getStatus().equals(TreatmentStatus.PENDING)) {
 					color = "Red";
 				}
+				if (t.getStatus().equals(TreatmentStatus.COMPLETED)) {
+					total = total.add(t.getAmountPaid());
+				}
 			}
 		}
+		map.put("total", total);
 		map.put("teeth", teeth);
 		map.put("treatments", treatments);
 		map.put("color", color);

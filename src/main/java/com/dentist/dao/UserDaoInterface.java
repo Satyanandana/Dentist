@@ -54,6 +54,8 @@ public interface UserDaoInterface {
 
 	public AppointmentRequest getAppointmentRequestByID(long appointmentRequestID);
 
+	public AppointmentRequest getAppointmentRequestByIDandPatientID(long appointmentRequestID, long patientID);
+
 	public List<AppointmentRequest> getAppointmentRequestsByPatientID(long patientID);
 
 	/* DAO methods on Appointment.class */
@@ -63,6 +65,8 @@ public interface UserDaoInterface {
 
 	public Appointment getAppointmentByID(long appointmentID);
 
+	public Appointment getAppointmentByIDandPatientID(long appointmentID, long patientID);
+
 	public List<Appointment> getAppointmentsByPatientID(long patientID);
 
 	/* DAO methods on Insurance.class */
@@ -71,6 +75,8 @@ public interface UserDaoInterface {
 	public void updateInsurance(Insurance insurance);
 
 	public Insurance getInsuranceByID(long insuranceID);
+
+	public Insurance getInsuranceByIDandPatientID(long insuranceID, long patientID);
 
 	public List<Insurance> getInsurancesByPatientID(long patientID);
 

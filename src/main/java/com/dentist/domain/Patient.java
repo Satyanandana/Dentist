@@ -69,9 +69,9 @@ public class Patient implements Serializable {
 	@Embedded
 	private Address homeAddress;
 	@Embedded
-	@AttributeOverrides({ @AttributeOverride(name = "name", column = @Column(name = "emergencyContactName")),
+	@AttributeOverrides({@AttributeOverride(name = "name", column = @Column(name = "emergencyContactName")),
 			@AttributeOverride(name = "phoneNumber", column = @Column(name = "emergencyContactNumber")),
-			@AttributeOverride(name = "relation", column = @Column(name = "emergencyContactRelation")) })
+			@AttributeOverride(name = "relation", column = @Column(name = "emergencyContactRelation"))})
 	private EmergencyContact EmergencyContact;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sender")
@@ -79,6 +79,12 @@ public class Patient implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver")
 	private List<ReceivedMessage> receivedMessages = new ArrayList<ReceivedMessage>();
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sender")
+	private List<DocumentsUploaded> uploadedDocs = new ArrayList<DocumentsUploaded>();
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver")
+	private List<DocumentsReceived> receivedDocs = new ArrayList<DocumentsReceived>();
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
 	private List<Treatment> treatments = new ArrayList<Treatment>();
@@ -198,6 +204,22 @@ public class Patient implements Serializable {
 
 	public void setReceivedMessages(List<ReceivedMessage> receivedMessages) {
 		this.receivedMessages = receivedMessages;
+	}
+
+	public List<DocumentsUploaded> getUploadedDocs() {
+		return uploadedDocs;
+	}
+
+	public void setUploadedDocs(List<DocumentsUploaded> uploadedDocs) {
+		this.uploadedDocs = uploadedDocs;
+	}
+
+	public List<DocumentsReceived> getReceivedDocs() {
+		return receivedDocs;
+	}
+
+	public void setReceivedDocs(List<DocumentsReceived> receivedDocs) {
+		this.receivedDocs = receivedDocs;
 	}
 
 	public List<Treatment> getTreatments() {

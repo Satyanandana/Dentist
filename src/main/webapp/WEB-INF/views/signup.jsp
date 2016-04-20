@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>SignUp</title>
 <!-- Bootstrap Core CSS -->
-<link href="<c:url value='/resources/css/bootstrap.min.css'/>" rel="stylesheet">
+<link href="<c:url value='resources/css/bootstrap.min.css'/>" rel="stylesheet">
 </head>
 <body>
 	<h2>Sign up Form</h2>

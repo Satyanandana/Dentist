@@ -85,8 +85,7 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
 	public String loginForm(HttpServletRequest request, HttpServletResponse response, Model model,
-			@CookieValue(name = "USER", required = false) String userCookie,
-			@RequestParam(name = "action", defaultValue = "login") String action) {
+			@CookieValue(name = "USER", required = false) String userCookie, @RequestParam(name = "action", defaultValue = "login") String action) {
 		LOGGER.info("processing get request to /login/form");
 		LOGGER.debug("Checking for the user in session");
 		boolean userSession = (request.getSession().getAttribute("user") != null);
@@ -103,8 +102,8 @@ public class LoginController {
 					LOGGER.debug("adding the user to spring session registry w.r.t cookie data");
 
 					try {
-						SessionHandler.handleSession(sessionRegistry, successHandler, request, response, userAuth,
-								encryptor);
+						Patient patient = userServiceInterface.getPatientInfoById(userAuth.getUserID());
+						SessionHandler.handleSession(sessionRegistry, successHandler, request, response, userAuth, encryptor, patient);
 					} catch (IOException e) {
 						LOGGER.error("", e);
 					} catch (ServletException e) {
@@ -122,23 +121,19 @@ public class LoginController {
 		}
 
 		LOGGER.debug("To login page .... ");
-		model.addAttribute("action", action);
-		model.addAttribute("serverTime", new DateTime().toString());
+		model.addAttribute("patient", new Patient());
+		model.addAttribute("action", "login");
 		return "login";
 
 	}
 
 	@RequestMapping(value = "/process", method = RequestMethod.POST)
-	public String Customlogin(HttpServletRequest request, HttpServletResponse response, Device device, Locale locale,
-			Model model, @RequestParam String email, @RequestParam String password)
-			throws IOException, ServletException {
-		LOGGER.info(
-				"processing post requset to /login/process and athuenticate the user if email and password are valid credentials");
+	public String customlogin(HttpServletRequest request, HttpServletResponse response, Device device, Locale locale, Model model,
+			@RequestParam String email, @RequestParam String password) throws IOException, ServletException {
+		LOGGER.info("processing post requset to /login/process and athuenticate the user if email and password are valid credentials");
 		boolean valid = false;
-		boolean validEmail = ServerSideValidations.validateEmail(email, model, null, "errorEmail",
-				"Invalid email address");
-		boolean validPassword = ServerSideValidations.validatePassword(password, model, null, "errorPassword",
-				"Invalid password");
+		boolean validEmail = ServerSideValidations.validateEmail(email, model, null, "errorEmail", "Invalid email address");
+		boolean validPassword = ServerSideValidations.validatePassword(password, model, null, "errorPassword", "Invalid password");
 
 		if (validEmail && validPassword) {
 			valid = true;
@@ -155,24 +150,22 @@ public class LoginController {
 					if (userAuth.getAccountStatus().equals(AccountStatus.ACTIVE)) {
 						LOGGER.debug("valid user credentials");
 						LOGGER.debug("adding user to spring session registry");
-						SessionHandler.handleSession(sessionRegistry, successHandler, request, response, userAuth,
-								encryptor);
+						Patient patient = userServiceInterface.getPatientInfoById(userAuth.getUserID());
+						SessionHandler.handleSession(sessionRegistry, successHandler, request, response, userAuth, encryptor, patient);
 						// get the location of user with IP address
 						String IpAddress = WebUtility.getIpAddress(request);
 						// uncomment the below line in production
-						// ServerLocation serverLocation =
-						// geoLocation.getLocation(IpAddress);
+						// ServerLocation serverLocation
+						// =geoLocation.getLocation(IpAddress);
 						// Comment the below line in production
 						ServerLocation serverLocation = geoLocation.getLocation("65.96.159.13");
 
 						if (serverLocation != null) {
-							Patient patient = userServiceInterface.getPatientInfoByEmail(email);
 
 							// Prepare and send last login info email
 							Map<String, Object> map = new HashMap<String, Object>();
 							map.put("user", patient.getFirstName() + " " + patient.getLastName());
-							map.put("time",
-									new DateTime().toString(DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss z")));
+							map.put("time", new DateTime().toString(DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss z")));
 							map.put("device", WebUtility.getDevice(device));
 							map.put("ipAddress", IpAddress);
 							map.put("location", serverLocation);
@@ -187,8 +180,7 @@ public class LoginController {
 
 						return null;
 					} else if (userAuth.getAccountStatus().equals(AccountStatus.NOT_ACTIVATED_YET)) {
-						model.addAttribute("error",
-								"Please verify your email Id by clicking on the link that we sent to your email");
+						model.addAttribute("error", "Please verify your email Id by clicking on the link that we sent to your email");
 						// Prepare and send email for verifying email
 						Map<String, Object> map = new HashMap<String, Object>();
 						map.put("verifyKey", userAuth.getVerifyKey());
@@ -196,7 +188,7 @@ public class LoginController {
 						String body = emailSender.prepareBody(EmailTemplate.VERIFY_ACCOUNT_EMAIL, map);
 						emailStructure.setBody(body);
 						emailStructure.setSenderEmail("gtsatyansv@gmail.com");
-						emailStructure.setSubject("Last login info");
+						emailStructure.setSubject("Verify your email account");
 						emailStructure.addRecipient(userAuth.getUserEmail());
 						emailSender.sendEmail(emailStructure);
 
@@ -216,11 +208,9 @@ public class LoginController {
 
 	@ResponseBody
 	@RequestMapping(value = "/forgotpassword", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, String>> getForgetPassword(Model model,
-			@RequestParam(name = "email") String email) {
+	public ResponseEntity<Map<String, String>> getForgetPassword(Model model, @RequestParam(name = "email") String email) {
 		Map<String, String> map = new HashMap<String, String>();
-		boolean validEmail = ServerSideValidations.validateEmail(email, null, map, "errorEmail",
-				"Invalid email address");
+		boolean validEmail = ServerSideValidations.validateEmail(email, null, map, "errorEmail", "Invalid email address");
 
 		if (validEmail) {
 			UserAuthentication userAuth = userServiceInterface.getUserAuthenticationInfoByEmail(email);
@@ -228,7 +218,8 @@ public class LoginController {
 
 				// Prepare and send Welcome Email
 				Map<String, Object> emailMap = new HashMap<String, Object>();
-				emailMap.put("email", userAuth.getUserEmail());
+				emailMap.put("user", userAuth.getUserEmail());
+				emailMap.put("username", userAuth.getUserEmail());
 				emailMap.put("password", userAuth.getUserPwd());
 				String body1 = emailSender.prepareBody(EmailTemplate.FORGOT_PASSWORD, emailMap);
 				emailStructure.setBody(body1);
@@ -236,7 +227,7 @@ public class LoginController {
 				emailStructure.setSubject("Forgot Password");
 				emailStructure.addRecipient(userAuth.getUserEmail());
 
-				// emailSender.sendEmail(emailStructure);
+				emailSender.sendEmail(emailStructure);
 
 				map.put("errorEmail", "We sent your credentials to your email ID.Please check your inbox");
 			} else {
@@ -251,8 +242,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/verifyemail", method = RequestMethod.GET)
-	public String verifyEmail(Model model, @RequestParam(name = "key") String key,
-			@RequestParam(name = "id") String id) {
+	public String verifyEmail(Model model, @RequestParam(name = "key") String key, @RequestParam(name = "id") String id) {
 
 		try {
 

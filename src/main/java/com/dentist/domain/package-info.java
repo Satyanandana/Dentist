@@ -8,8 +8,8 @@
  * 
  */
 
-@TypeDefs({ @TypeDef(name = "encryptedString", typeClass = EncryptedStringType.class, parameters = {
-		@Parameter(name = "encryptorRegisteredName", value = "HibernateStringEncryptor") }) })
+@TypeDefs({@TypeDef(name = "encryptedString", typeClass = EncryptedStringType.class, parameters = {
+		@Parameter(name = "encryptorRegisteredName", value = "HibernateStringEncryptor")})})
 package com.dentist.domain;
 
 import org.hibernate.annotations.TypeDef;

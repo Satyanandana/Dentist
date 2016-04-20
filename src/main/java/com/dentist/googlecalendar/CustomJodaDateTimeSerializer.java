@@ -26,8 +26,7 @@ public class CustomJodaDateTimeSerializer extends JsonSerializer<DateTime> {
 	DateTimeFormatter format = DateTimeFormat.forPattern("MM-dd-yyyy : HH:mm");
 
 	@Override
-	public void serialize(DateTime value, JsonGenerator gen, SerializerProvider serializers)
-			throws IOException, JsonProcessingException {
+	public void serialize(DateTime value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
 
 		if (value == null) {
 			gen.writeNull();
