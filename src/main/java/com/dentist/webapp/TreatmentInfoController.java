@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,12 +19,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dentist.domain.Patient;
+import com.dentist.domain.Teeth;
 import com.dentist.domain.Treatment;
 import com.dentist.domain.TreatmentStatus;
 import com.dentist.service.CustomUserDetails;
 import com.dentist.service.UserServiceInterface;
+import com.dentist.util.WebUtility;
 
 /**
  * 
@@ -125,11 +131,112 @@ public class TreatmentInfoController {
 	 ******************************************************/
 
 	@PreAuthorize("hasRole('ROLE_USER')")
-	@RequestMapping(value = "/create", method = RequestMethod.POST, params = {"!status"}, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> createTreatment() {
+	@RequestMapping(value = "/create", method = RequestMethod.POST, params = {"status=COMPLETED"}, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> createTreatmentWithStatusCompleted(@RequestParam(name = "teethID") int teethID,
+			@RequestParam(name = "note") String note, @RequestParam(name = "treatmentExpectedTime") String treatmentExpectedTime,
+			@RequestParam(name = "treatmentDoneTime") String treatmentDoneTime, @RequestParam(name = "amountExpected") BigDecimal amountExpected,
+			@RequestParam(name = "amountPaid") BigDecimal amountPaid) {
 
-		Boolean valid = true;
+		Boolean valid = false;
 		Map<String, Object> map = new HashMap<>();
+		LocalDate doneDate = WebUtility.getLocalDateFromHtmlDate(treatmentDoneTime);
+		LocalDate expectedDate = WebUtility.getLocalDateFromHtmlDate(treatmentExpectedTime);
+		if (doneDate != null && expectedDate != null && teethID > 0 && teethID < 33 && !note.isEmpty()) {
+			valid = true;
+		}
+
+		if (valid) {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+			Patient patient = userServiceInterface.getPatientInfoById(user.getUserID());
+			Teeth teeth = userServiceInterface.getTeethByID(teethID);
+			Treatment treatment = new Treatment();
+			treatment.setAmountExpected(amountExpected);
+			treatment.setAmountPaid(amountPaid);
+			treatment.setNote(note);
+			treatment.setPatient(patient);
+			treatment.setStatus(TreatmentStatus.COMPLETED);
+			treatment.setTeeth(teeth);
+			treatment.setTreatmentDoneTime(doneDate);
+			treatment.setTreatmentExpectedTime(expectedDate);
+			treatment.setTreatmentInsertedTime(new DateTime());
+			userServiceInterface.setTreatment(treatment);
+			map.put("success", "success");
+
+		} else {
+			map.put("error", "Unable to create a treatment .Please check all the fields and submit again");
+		}
+
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	}
+
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value = "/create", method = RequestMethod.POST, params = {"status=PENDING"}, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> createTreatmentWithStatusPending(@RequestParam(name = "teethID") int teethID,
+			@RequestParam(name = "note") String note, @RequestParam(name = "treatmentExpectedTime") String treatmentExpectedTime,
+			@RequestParam(name = "amountExpected") BigDecimal amountExpected) {
+
+		Boolean valid = false;
+		Map<String, Object> map = new HashMap<>();
+		LocalDate expectedDate = WebUtility.getLocalDateFromHtmlDate(treatmentExpectedTime);
+		if (expectedDate != null && teethID > 0 && teethID < 33 && !note.isEmpty()) {
+			valid = true;
+		}
+
+		if (valid) {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+			Patient patient = userServiceInterface.getPatientInfoById(user.getUserID());
+			Teeth teeth = userServiceInterface.getTeethByID(teethID);
+			Treatment treatment = new Treatment();
+			treatment.setAmountExpected(amountExpected);
+			treatment.setNote(note);
+			treatment.setPatient(patient);
+			treatment.setStatus(TreatmentStatus.PENDING);
+			treatment.setTeeth(teeth);
+			treatment.setTreatmentExpectedTime(expectedDate);
+			treatment.setTreatmentInsertedTime(new DateTime());
+			userServiceInterface.setTreatment(treatment);
+			map.put("success", "success");
+		} else {
+			map.put("error", "Unable to create a treatment .Please check all the fields and submit again");
+		}
+
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	}
+
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value = "/update", method = RequestMethod.POST, params = {"status=COMPLETED"}, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> updateTreatmentWithStatusCompleted(@RequestParam(name = "treatmentID") int treatmentID,
+			@RequestParam(name = "note") String note, @RequestParam(name = "treatmentDoneTime") String treatmentDoneTime,
+			@RequestParam(name = "amountPaid") BigDecimal amountPaid) {
+
+		Boolean valid = false;
+		Map<String, Object> map = new HashMap<>();
+		LocalDate doneDate = WebUtility.getLocalDateFromHtmlDate(treatmentDoneTime);
+
+		if (doneDate != null && !note.isEmpty()) {
+			valid = true;
+		}
+
+		if (valid) {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+
+			Treatment treatment = userServiceInterface.getTreatmentByIDandPatientID(treatmentID, user.getUserID());
+			if (treatment != null) {
+				treatment.setAmountPaid(amountPaid);
+				treatment.setNote(note);
+				treatment.setStatus(TreatmentStatus.COMPLETED);
+				treatment.setTreatmentDoneTime(doneDate);
+				map.put("success", "success");
+			} else {
+				map.put("error", "Invalid treatment ID");
+			}
+
+		} else {
+			map.put("error", "Unable to create a treatment .Please check all the fields and submit again");
+		}
 
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}

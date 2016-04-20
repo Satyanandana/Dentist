@@ -93,6 +93,12 @@ public class UserServiceImpl implements UserServiceInterface {
 	}
 
 	@Override
+	public Patient getBasicPatientDetails(long patientID) {
+
+		return userDaoInterface.getBasicPatientDetails(patientID);
+	}
+
+	@Override
 	public Patient getPatientInfoByEmail(String patientEmail) {
 		return userDaoInterface.getPatientInfoByEmail(patientEmail);
 	}
@@ -246,6 +252,12 @@ public class UserServiceImpl implements UserServiceInterface {
 	@Override
 	public Treatment getTreatmentByID(long treatmentID) {
 		return userDaoInterface.getTreatmentByID(treatmentID);
+	}
+
+	@Override
+	public Treatment getTreatmentByIDandPatientID(int treatmentID, long patientID) {
+
+		return userDaoInterface.getTreatmentByIDandPatientID(treatmentID, patientID);
 	}
 
 	@Override

@@ -13,7 +13,9 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
 import com.dentist.domain.Appointment;
@@ -73,6 +75,19 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 	@Override
 	public Patient getPatientInfoById(long patientID) {
 		Criteria criteria = getSession().createCriteria(Patient.class).add(Restrictions.idEq(patientID));
+		return (Patient) criteria.uniqueResult();
+	}
+
+	@Override
+	public Patient getBasicPatientDetails(long patientID) {
+
+		Criteria criteria = getSession().createCriteria(Patient.class).add(Restrictions.idEq(patientID))
+				.setProjection(Projections.projectionList().add(Projections.property("userID"), "userID")
+						.add(Projections.property("firstName"), "firstName").add(Projections.property("lastName"), "lastName")
+						.add(Projections.property("middleName"), "middleName").add(Projections.property("dateOfBirth"), "dateOfBirth")
+						.add(Projections.property("phoneNumber"), "phoneNumber").add(Projections.property("email"), "email"))
+				.setResultTransformer(Transformers.aliasToBean(Patient.class));
+
 		return (Patient) criteria.uniqueResult();
 	}
 
@@ -252,6 +267,13 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 	@Override
 	public Treatment getTreatmentByID(long treatmentID) {
 		Criteria criteria = getSession().createCriteria(Treatment.class).add(Restrictions.idEq(treatmentID));
+		return (Treatment) criteria.uniqueResult();
+	}
+
+	@Override
+	public Treatment getTreatmentByIDandPatientID(int treatmentID, long patientID) {
+		Criteria criteria = getSession().createCriteria(Treatment.class).add(Restrictions.idEq(treatmentID))
+				.add(Restrictions.eq("patient.userID", patientID));
 		return (Treatment) criteria.uniqueResult();
 	}
 

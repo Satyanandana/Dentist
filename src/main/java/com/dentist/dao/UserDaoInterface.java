@@ -45,6 +45,8 @@ public interface UserDaoInterface {
 
 	public Patient getPatientInfoById(long patientID);
 
+	public Patient getBasicPatientDetails(long patientID);
+
 	public Patient getPatientInfoByEmail(String patientEmail);
 
 	/* DAO methods on AppointmentRequest.class */
@@ -104,6 +106,8 @@ public interface UserDaoInterface {
 	public void updateTreatment(Treatment treatment);
 
 	public Treatment getTreatmentByID(long treatmentID);
+
+	public Treatment getTreatmentByIDandPatientID(int treatmentID, long patientID);
 
 	public List<Treatment> getTreatmentsByPatientID(long userID);
 

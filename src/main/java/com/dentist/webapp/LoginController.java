@@ -215,10 +215,10 @@ public class LoginController {
 		if (validEmail) {
 			UserAuthentication userAuth = userServiceInterface.getUserAuthenticationInfoByEmail(email);
 			if (userAuth != null && userAuth.getUserEmail() != null) {
-
+				Patient patient = userServiceInterface.getBasicPatientDetails(userAuth.getUserID());
 				// Prepare and send Welcome Email
 				Map<String, Object> emailMap = new HashMap<String, Object>();
-				emailMap.put("user", userAuth.getUserEmail());
+				emailMap.put("user", patient.getFirstName() + " " + patient.getLastName());
 				emailMap.put("username", userAuth.getUserEmail());
 				emailMap.put("password", userAuth.getUserPwd());
 				String body1 = emailSender.prepareBody(EmailTemplate.FORGOT_PASSWORD, emailMap);

@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dentist.domain.Insurance;
+import com.dentist.domain.InsuranceStatus;
 import com.dentist.domain.Patient;
 import com.dentist.service.CustomUserDetails;
 import com.dentist.service.UserServiceInterface;
@@ -67,16 +67,27 @@ public class InsuranceInfoController {
 	 ******************************************************/
 
 	@PreAuthorize("hasRole('ROLE_USER')")
-	@RequestMapping(value = "/create", method = RequestMethod.POST, params = {"status=Cancel"}, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, String>> createInsurance(@ModelAttribute("insurance") Insurance insurance,
+	@RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, String>> createInsurance(@RequestParam("insuranceProviderID") String insuranceProviderID,
+			@RequestParam("insuranceProviderName") String insuranceProviderName, @RequestParam("subscriberID") String subscriberID,
+			@RequestParam("subscriberFullName") String subscriberFullName, @RequestParam("status") String status,
 			@RequestParam(name = "dob") String dob) {
 		Map<String, String> map = new HashMap<>();
 		LocalDate dateOfBirth = WebUtility.getLocalDateFromHtmlDate(dob);
-		if (dateOfBirth != null && insurance.getInsuranceProviderID() != null && insurance.getInsuranceProviderName() != null
-				&& insurance.getSubscriberID() != null && insurance.getSubscriberFullName() != null && insurance.getStatus() != null) {
+		if (dateOfBirth != null) {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
 			Patient patient = userServiceInterface.getPatientInfoById(user.getUserID());
+			Insurance insurance = new Insurance();
+			if (status.equals(InsuranceStatus.ACTIVE)) {
+				insurance.setStatus(InsuranceStatus.ACTIVE);
+			} else {
+				insurance.setStatus(InsuranceStatus.EXPIRED);
+			}
+			insurance.setInsuranceProviderID(insuranceProviderID);
+			insurance.setInsuranceProviderName(insuranceProviderName);
+			insurance.setSubscriberFullName(subscriberFullName);
+			insurance.setSubscriberFullName(subscriberFullName);
 			insurance.setDateOfBirth(dateOfBirth);
 			insurance.setInsertedDate(new DateTime());
 			insurance.setInsurancePatient(patient);
@@ -91,23 +102,32 @@ public class InsuranceInfoController {
 	}
 
 	@PreAuthorize("hasRole('ROLE_USER')")
-	@RequestMapping(value = "/update", method = RequestMethod.POST, params = {"status=Cancel"}, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, String>> updateInsurance(@ModelAttribute("insurance") Insurance insurance,
+	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, String>> updateInsurance(@RequestParam("insuranceProviderID") String insuranceProviderID,
+			@RequestParam("insuranceProviderName") String insuranceProviderName, @RequestParam("subscriberID") String subscriberID,
+			@RequestParam("subscriberFullName") String subscriberFullName, @RequestParam("status") String status,
 			@RequestParam(name = "dob") String dob, @RequestParam(name = "insuranceID") long insuranceID) {
 		Map<String, String> map = new HashMap<>();
 		LocalDate dateOfBirth = WebUtility.getLocalDateFromHtmlDate(dob);
-		if (dateOfBirth != null && insurance.getInsuranceProviderID() != null && insurance.getInsuranceProviderName() != null
-				&& insurance.getSubscriberID() != null && insurance.getSubscriberFullName() != null && insurance.getStatus() != null) {
+		if (dateOfBirth != null) {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
-			Insurance insFromDb = userServiceInterface.getInsuranceByIDandPatientID(insuranceID, user.getUserID());
-			insFromDb.setDateOfBirth(dateOfBirth);
-			insFromDb.setInsuranceProviderID(insurance.getInsuranceProviderID());
-			insFromDb.setInsuranceProviderName(insurance.getInsuranceProviderName());
-			insFromDb.setSubscriberFullName(insurance.getSubscriberFullName());
-			insFromDb.setSubscriberID(insurance.getSubscriberID());
-			insFromDb.setStatus(insurance.getStatus());
-			map.put("Success", "Success");
+			Insurance insurance = userServiceInterface.getInsuranceByIDandPatientID(insuranceID, user.getUserID());
+			if (insurance != null) {
+				insurance.setDateOfBirth(dateOfBirth);
+				insurance.setInsuranceProviderID(insuranceProviderID);
+				insurance.setInsuranceProviderName(insuranceProviderName);
+				insurance.setSubscriberFullName(subscriberFullName);
+				insurance.setSubscriberID(subscriberID);
+				if (status.equals(InsuranceStatus.ACTIVE)) {
+					insurance.setStatus(InsuranceStatus.ACTIVE);
+				} else {
+					insurance.setStatus(InsuranceStatus.EXPIRED);
+				}
+				map.put("Success", "Success");
+			} else {
+				map.put("error", "Invalid insurance ID");
+			}
 
 		} else {
 			map.put("error", "Please check the fields and submit valid data");
@@ -121,15 +141,27 @@ public class InsuranceInfoController {
 	 ******************************************************/
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/create/{patientID}", method = RequestMethod.POST, params = {
-			"status=Cancel"}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/create/{patientID}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, String>> createInsuranceByDoc(@PathVariable("patientID") long patientID,
-			@ModelAttribute("insurance") Insurance insurance, @RequestParam(name = "dob") String dob) {
+			@RequestParam("insuranceProviderID") String insuranceProviderID, @RequestParam("insuranceProviderName") String insuranceProviderName,
+			@RequestParam("subscriberID") String subscriberID, @RequestParam("subscriberFullName") String subscriberFullName,
+			@RequestParam("status") String status, @RequestParam(name = "dob") String dob) {
+
 		Map<String, String> map = new HashMap<>();
 		LocalDate dateOfBirth = WebUtility.getLocalDateFromHtmlDate(dob);
-		if (dateOfBirth != null && insurance.getInsuranceProviderID() != null && insurance.getInsuranceProviderName() != null
-				&& insurance.getSubscriberID() != null && insurance.getSubscriberFullName() != null && insurance.getStatus() != null) {
+		if (dateOfBirth != null) {
+
 			Patient patient = userServiceInterface.getPatientInfoById(patientID);
+			Insurance insurance = new Insurance();
+			if (status.equals(InsuranceStatus.ACTIVE)) {
+				insurance.setStatus(InsuranceStatus.ACTIVE);
+			} else {
+				insurance.setStatus(InsuranceStatus.EXPIRED);
+			}
+			insurance.setInsuranceProviderID(insuranceProviderID);
+			insurance.setInsuranceProviderName(insuranceProviderName);
+			insurance.setSubscriberFullName(subscriberFullName);
+			insurance.setSubscriberFullName(subscriberFullName);
 			insurance.setDateOfBirth(dateOfBirth);
 			insurance.setInsertedDate(new DateTime());
 			insurance.setInsurancePatient(patient);
@@ -147,24 +179,29 @@ public class InsuranceInfoController {
 	@RequestMapping(value = "/update/{patientID}", method = RequestMethod.POST, params = {
 			"status=Cancel"}, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, String>> updateInsuranceByDoc(@PathVariable("patientID") long patientID,
-			@ModelAttribute("insurance") Insurance insurance, @RequestParam(name = "dob") String dob,
-			@RequestParam(name = "insuranceID") long insuranceID) {
+			@RequestParam("insuranceProviderID") String insuranceProviderID, @RequestParam("insuranceProviderName") String insuranceProviderName,
+			@RequestParam("subscriberID") String subscriberID, @RequestParam("subscriberFullName") String subscriberFullName,
+			@RequestParam("status") String status, @RequestParam(name = "dob") String dob, @RequestParam(name = "insuranceID") long insuranceID) {
+
 		Map<String, String> map = new HashMap<>();
 		LocalDate dateOfBirth = WebUtility.getLocalDateFromHtmlDate(dob);
-		if (dateOfBirth != null && insurance.getInsuranceProviderID() != null && insurance.getInsuranceProviderName() != null
-				&& insurance.getSubscriberID() != null && insurance.getSubscriberFullName() != null && insurance.getStatus() != null) {
+		if (dateOfBirth != null) {
 
-			Insurance insFromDb = userServiceInterface.getInsuranceByIDandPatientID(insuranceID, patientID);
-			if (insFromDb != null) {
-				insFromDb.setDateOfBirth(dateOfBirth);
-				insFromDb.setInsuranceProviderID(insurance.getInsuranceProviderID());
-				insFromDb.setInsuranceProviderName(insurance.getInsuranceProviderName());
-				insFromDb.setSubscriberFullName(insurance.getSubscriberFullName());
-				insFromDb.setSubscriberID(insurance.getSubscriberID());
-				insFromDb.setStatus(insurance.getStatus());
+			Insurance insurance = userServiceInterface.getInsuranceByIDandPatientID(insuranceID, patientID);
+			if (insurance != null) {
+				insurance.setDateOfBirth(dateOfBirth);
+				insurance.setInsuranceProviderID(insuranceProviderID);
+				insurance.setInsuranceProviderName(insuranceProviderName);
+				insurance.setSubscriberFullName(subscriberFullName);
+				insurance.setSubscriberID(subscriberID);
+				if (status.equals(InsuranceStatus.ACTIVE)) {
+					insurance.setStatus(InsuranceStatus.ACTIVE);
+				} else {
+					insurance.setStatus(InsuranceStatus.EXPIRED);
+				}
 				map.put("Success", "Success");
 			} else {
-				map.put("error", "Invalid insurance ID or patient ID");
+				map.put("error", "Invalid insurance ID");
 			}
 
 		} else {
