@@ -27,6 +27,7 @@ import org.jasypt.hibernate4.encryptor.HibernatePBEStringEncryptor;
 import org.jasypt.properties.EncryptableProperties;
 import org.jasypt.salt.StringFixedSaltGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -62,6 +63,10 @@ public class ApplicationContextConfig {
 	private Environment environment;
 	@Autowired
 	private ResourceLoader resourceLoader;
+	@Autowired
+	@Qualifier("encryptableProps")
+	private Properties encryptableProps;
+
 	private static final Logger LOGGER = Logger.getLogger(ApplicationContextConfig.class);
 
 	@Bean
@@ -162,11 +167,11 @@ public class ApplicationContextConfig {
 		emailProperties.setProperty("type", "javax.mail.Session");
 
 		emailSender.setJavaMailProperties(emailProperties);
-		emailSender.setHost("smtp.gmail.com");
-		emailSender.setPort(587);
+		emailSender.setHost(environment.getProperty("email.host"));
+		emailSender.setPort(Integer.parseInt(environment.getProperty("email.port")));
 		emailSender.setProtocol("smtp");
-		emailSender.setUsername("gtsatyansv");
-		emailSender.setPassword("lancer4950");
+		emailSender.setUsername(encryptableProps.getProperty("email.id"));
+		emailSender.setPassword(encryptableProps.getProperty("email.password"));
 		return emailSender;
 	}
 
@@ -192,7 +197,7 @@ public class ApplicationContextConfig {
 		String serverAccountEmail = environment.getRequiredProperty("google.servertoserver.account.email");
 		ArrayList<String> OuthScopes = new ArrayList<String>();
 		OuthScopes.add(CalendarScopes.CALENDAR);
-		File privateKeyFileP12 = resourceLoader.getResource("classpath:DentalAppointmentCalander-9292a1aa991e.p12").getFile();
+		File privateKeyFileP12 = resourceLoader.getResource("classpath:DentalCalKey.p12").getFile();
 		// File privateKeyFileP12 = new
 		// File(environment.getRequiredProperty("google.servertoserver.p12file"));
 		GoogleCredential credential = GoogleServerToServer.getGoogleCredential(serverAccountEmail, privateKeyFileP12, OuthScopes);
