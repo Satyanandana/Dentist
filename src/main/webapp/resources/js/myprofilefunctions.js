@@ -20,6 +20,7 @@
  $("#hideEmergencyForm").hide();
  
  $("#hideAddressForm").hide();
+ myprofile.getProfileData(("../patient/personalinfo"));
  
  
  }
@@ -201,10 +202,18 @@ receivedmessages.getMessages("../patient/receivedmessages");
 		  }
  }
  
- function addNewTreatmentOnTeeth(teethId)
+ function addNewTreatmentOnTeeth(teethID)
  {
-	  alert("we have teethId , Go and add treatment for that teeth" +teethId);
+	 
+	 $('#teethID').attr("value",teethID);
 	  $('#treatmentModal').modal('show');
 	  
  }
+ function editInsurance(insuranceID)
+ {
+	 
+	 $('#insuranceID').attr("value",insuranceID);
+	 $('#updateInsuranceModal').modal('show');
+ }
+ 
 

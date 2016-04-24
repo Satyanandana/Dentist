@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +40,7 @@ import com.dentist.util.WebUtility;
  */
 
 @RestController
+@Transactional
 @RequestMapping("/insurances")
 public class InsuranceInfoController {
 
@@ -79,7 +81,7 @@ public class InsuranceInfoController {
 			CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
 			Patient patient = userServiceInterface.getPatientInfoById(user.getUserID());
 			Insurance insurance = new Insurance();
-			if (status.equals(InsuranceStatus.ACTIVE)) {
+			if (status.equals(InsuranceStatus.ACTIVE.toString())) {
 				insurance.setStatus(InsuranceStatus.ACTIVE);
 			} else {
 				insurance.setStatus(InsuranceStatus.EXPIRED);
@@ -87,7 +89,7 @@ public class InsuranceInfoController {
 			insurance.setInsuranceProviderID(insuranceProviderID);
 			insurance.setInsuranceProviderName(insuranceProviderName);
 			insurance.setSubscriberFullName(subscriberFullName);
-			insurance.setSubscriberFullName(subscriberFullName);
+			insurance.setSubscriberID(subscriberID);
 			insurance.setDateOfBirth(dateOfBirth);
 			insurance.setInsertedDate(new DateTime());
 			insurance.setInsurancePatient(patient);
@@ -119,7 +121,7 @@ public class InsuranceInfoController {
 				insurance.setInsuranceProviderName(insuranceProviderName);
 				insurance.setSubscriberFullName(subscriberFullName);
 				insurance.setSubscriberID(subscriberID);
-				if (status.equals(InsuranceStatus.ACTIVE)) {
+				if (status.equals(InsuranceStatus.ACTIVE.toString())) {
 					insurance.setStatus(InsuranceStatus.ACTIVE);
 				} else {
 					insurance.setStatus(InsuranceStatus.EXPIRED);

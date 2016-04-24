@@ -207,9 +207,9 @@ public class TreatmentInfoController {
 
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value = "/update", method = RequestMethod.POST, params = {"status=COMPLETED"}, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> updateTreatmentWithStatusCompleted(@RequestParam(name = "treatmentID") int treatmentID,
-			@RequestParam(name = "note") String note, @RequestParam(name = "treatmentDoneTime") String treatmentDoneTime,
-			@RequestParam(name = "amountPaid") BigDecimal amountPaid) {
+	public ResponseEntity<Map<String, Object>> updateTreatmentWithStatusCompleted(@RequestParam(name = "treatmentID") long treatmentID,
+			@RequestParam(name = "teethID") String teethID, @RequestParam(name = "note") String note,
+			@RequestParam(name = "treatmentDoneTime") String treatmentDoneTime, @RequestParam(name = "amountPaid") BigDecimal amountPaid) {
 
 		Boolean valid = false;
 		Map<String, Object> map = new HashMap<>();
@@ -237,6 +237,7 @@ public class TreatmentInfoController {
 		} else {
 			map.put("error", "Unable to create a treatment .Please check all the fields and submit again");
 		}
+		map.put("id", teethID);
 
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}

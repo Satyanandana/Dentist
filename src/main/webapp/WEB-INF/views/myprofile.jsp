@@ -48,7 +48,7 @@
 
 
 <%@include file="dynamicheader.jsp" %>
-
+<p id="action" style="visibility: hidden;">${action}</p>
   	<div class="container" style="height: 75%;width: 95%;">
   
 <br/>
@@ -94,7 +94,7 @@
               <a class="list-group-item" onclick="showAppointments()" href="javascript:void(0);">Appointments</a>
               <a class="list-group-item" onclick="showTreatments()" href="javascript:void(0);">Treatments</a>
               <a class="list-group-item" onclick="showInsurance()" href="javascript:void(0);">Insurance</a>
-              <a class="list-group-item" onclick="showPayment()" href="javascript:void(0);">Payment</a>
+              <a class="list-group-item" onclick="showPayment()" href="javascript:void(0);">Documents</a>
             </div>
           </div>
           
@@ -137,8 +137,8 @@
   </div>
   </form>
 </div>          		
-  		<div id="hidePersonalForm">
-          		<form class="form-horizontal" id="hidePersonalForm1">
+  		<div id="hidePersonalForm" class="form-group">
+          		<form class="form-horizontal" id="hidePersonalForm1" name="hidePersonalForm1" class="hidePersonalForm1">
   
   <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
 				<h2><i class="fa fa-info"></i>&nbsp; Personal Information </h2>
@@ -158,15 +158,15 @@
 </div>
  <div class="form-group">
   <label class="control-label" for="disabledInput">DOB</label>
-  <input class="form-control" id="dateOfBirth" type="number" placeholder=""  name="dateOfBirth" >
+  <input class="form-control" id="dob" type="text" placeholder=""  name="dob" >
 </div>
  
 
-   
+   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
   </div>
   </form>
   <div class="form-group">
-  <button  class="btn btn-primary" id="updatePersonal">Update</button>&nbsp;&nbsp;<i class="fa fa-spinner fa-pulse" style="font-size: 30px;visibility: hidden;" id="spinner"></i>
+  <button  class="btn btn-primary" id="updatePersonal" onclick="myprofile.sendPersonalProfileData('../patient/update/personalinfo')">Update</button>&nbsp;&nbsp;<i class="fa fa-spinner fa-pulse" style="font-size: 30px;visibility: hidden;" id="spinner"></i>
   </div>
   </div>
   
@@ -204,8 +204,8 @@
   </div>
   </form>
 </div>          		
-  		<div id="hideAddressForm">
-          		<form class="form-horizontal" id="hideAddressForm1">
+  		<div id="hideAddressForm" class="form-group">
+          		<form class="form-horizontal" id="hideAddressForm1" name="hideAddressForm1" class="hideAddressForm1">
   
   <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
 				<h2><i class="fa fa-map-marker"></i>&nbsp; Address Information </h2>
@@ -232,13 +232,13 @@
   <label class="control-label" for="disabledInput">Zip Code</label>
   <input class="form-control" id="zipcode" name="zipcode" type="number" placeholder="" >
 </div> 
- 
+ <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
    
   </div>
   </form>
     <div class="form-group">
-  <button  class="btn btn-primary" id="updateAddress">Update</button>&nbsp;&nbsp;<i class="fa fa-spinner fa-pulse" style="font-size: 30px;visibility: hidden;" id="spinner"></i>
+  <button  class="btn btn-primary" id="updateAddress" onclick="myprofile.sendAddressProfileData('../patient/update/addressinfo')">Update</button>&nbsp;&nbsp;<i class="fa fa-spinner fa-pulse" style="font-size: 30px;visibility: hidden;" id="spinner"></i>
   </div>
   </div>
           		
@@ -269,11 +269,11 @@
   </div>
   </form>
 </div>          		
-  		<div id="hideContactForm">
+  		<div id="hideContactForm" class="form-group">
           		
   
    <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
-   <form class="form-horizontal" id="hideContactForm1">
+   <form class="form-horizontal" id="hideContactForm1" name="hideContactForm1" class="hideContactForm1">
 				<h2><i class="fa fa-phone"></i> Contact Information </h2>
   
   
@@ -286,9 +286,10 @@
   <label class="control-label" for="disabledInput">Number</label>
   <input class="form-control" id="phoneNumber" name="phoneNumber" type="text" placeholder="">
 </div>
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
  </form>     
  <div class="form-group">
- <button class="btn btn-primary" id="updateContact">Update</button>&nbsp;&nbsp;<i class="fa fa-spinner fa-pulse" style="font-size: 30px;visibility: hidden;" id="spinner"></i>
+ <button class="btn btn-primary" id="updateContact" onclick="myprofile.sendContactProfileData('../patient/update/contactinfo')">Update</button>&nbsp;&nbsp;<i class="fa fa-spinner fa-pulse" style="font-size: 30px;visibility: hidden;" id="spinner"></i>
  </div>
   </div>
  
@@ -321,8 +322,8 @@
   </div>
   </form>
 </div>          		
-  		<div id="hideEmergencyForm">
-          		<form class="form-horizontal" id="hideEmergencyForm1">
+  		<div id="hideEmergencyForm"  class="form-group">
+          		<form class="form-horizontal" id="hideEmergencyForm1" name="hideEmergencyForm1" class="hideEmergencyForm1"> 
   
   <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
 				<h2><i class="fa fa-exclamation-triangle"></i>&nbsp; Emergency Information </h2>
@@ -330,31 +331,34 @@
   
     <div class="form-group">
  <label class="control-label" for="disabledInput">Emergency Contact Name</label>
-  <input class="form-control" id="name" name="name" type="text" placeholder="" >
+  <input class="form-control" id="emergencyContactName" name="emergencyContactName" type="text" placeholder="" >
 </div>
 <div class="form-group">
  <label class="control-label" for="disabledInput">Emergency Contact Number</label>
-  <input class="form-control" id="phoneNumber" name="phoneNumber" type="text" placeholder="" >
+  <input class="form-control" id="emergencyContactNumber" name="emergencyContactNumber" type="text" placeholder="" >
 </div>
 <div class="form-group">
   <label for="relation">Relation</label>
-  <select class="form-control" id="relation" name="relation">
-    <option>father</option>
-    <option>mother</option>
-    <option>sister</option>
-    <option>brother</option>
-    <option>cousin</option>
-    <option>friend</option>
-    <option>other</option>
+  <select class="form-control" id="emergencyContactRelation" name="emergencyContactRelation">
+    <option value="father">father</option>
+    <option value="mother">mother</option>
+    <option value="sister">sister</option>
+    <option value="brother">brother</option>
+    <option value="cousin">cousin</option>
+    <option value="friend">friend</option>
+    <option value="daughter">daughter</option>
+    <option value="son">son</option>
+    <option value="other">other</option>
   </select>
 </div>
 
 
    
   </div>
+  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
   </form>
   <div class="form-group">
- <button class="btn btn-primary" id="updateEmergency">Update</button>&nbsp;&nbsp;<i class="fa fa-spinner fa-pulse" style="font-size: 30px;visibility: hidden;" id="spinner"></i>
+ <button class="btn btn-primary" id="updateEmergency" onclick="myprofile.sendEmergencyProfileData('../patient/update/emergencycontactinfo')">Update</button>&nbsp;&nbsp;<i class="fa fa-spinner fa-pulse" style="font-size: 30px;visibility: hidden;" id="spinner"></i>
  </div>
   </div>
   
@@ -378,7 +382,7 @@
    <h2> <i class="fa fa-share"></i> Sent Messages <a href="" style="float: right;" data-toggle="modal" data-target="#messageModal" ><i class="fa fa-plus-circle"  >Compose</i></a></h2><br/> 
   
   <ul class="list-group">
-  <div id="sentmessages">
+  <div id="sentmessages1">
    
   </div>
   </ul>
@@ -415,19 +419,19 @@
           		<div id="Appointments">
           		<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
 				
-<div class="list-group">
+<div class="list-group" style="overflow:auto;max-height: 400px;padding-top: 5px;">
   
    <h2> <i class="fa fa-check"></i> Confirmed </h2><br/> 
    <table class="table">
   <thead>
     <tr>
-      <th>#</th>
+       <th>#</th>
       <th>Appointment Start Time</th>
       <th>Note</th>
       <th>Expected Amount</th>
       <th>Amount Paid</th>
       <th>Status</th>
-      <th></th>
+      <th>Change Status</th>
     </tr>
   </thead>
   
@@ -448,12 +452,13 @@
 </div>
 </div>
 <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
-<div class="list-group" >
-  
-   <h2> <i class="fa fa-exclamation-triangle"></i> Requested Appointments <a href="events.jsp" style="float: right;"><i class="fa fa-plus-circle"  >Schedule New</i></a></h2><br/> 
+<h2> <i class="fa fa-exclamation-triangle"></i> Requested Appointments <a href="<c:url value='/profile/scheduleappointment'/>" style="float: right;"><i class="fa fa-plus-circle"  >Schedule New</i></a></h2><br/>
 
+
+  
+<div class="list-group" style="overflow:auto;max-height: 400px;padding-top: 5px;" >
 <table class="table">
-  <thead>
+ <thead>
     <tr>
       <th>#</th>
       <th>Appointment Start Time</th>
@@ -463,11 +468,12 @@
     </tr>
   </thead>
 
-<tbody id="requestedAppointmentsForTemp">
+<tbody id="requestedAppointmentsForTemp" >
    
   
   
  </tbody>
+ 
  </table>
  
   
@@ -519,7 +525,7 @@
       <th>Teeth Number</th>
       <th>Teeth Name</th>
       <th>Description</th>
-      <th></th>
+      <th>Total Amount Spent</th>
    
      
      
@@ -544,11 +550,18 @@
   <table class="table" align="center">
   <thead>
     <tr>
-      <th>Status</th>
-      <th>Note</th>
-      <th>Treatment Time</th>
-      <th>Amount Paid</th>
+    	
+      <th>Treatment Inserted</th>
+      <th>Treatment Done</th>
+      <th>Treatment Expected</th>
       
+      
+      <th>Amount Paid</th>
+      <th>Amount Expected</th>
+      <th>Status</th>
+      
+      
+     
    
      
      
@@ -593,85 +606,30 @@
 				
 <div class="list-group" ">
   
-   <h2> <i class="fa fa-money"></i> My Payments </h2><br/> 
-  <div class="col-sm-6">
-  <ul class="list-group">
-    <li class="list-group-item">
-     
-   
-    <p class="list-group-item-text">
-   
-    
-    
-    <div class="form-group">
-  <label class="control-label" for="disabledInput">Appointment Time </label>&nbsp;&nbsp;10/12/1992 <small>10:55 pm</small>
+   <h2> <i class="fa fa-file-pdf-o" aria-hidden="true"></i> My Documents <a href="" style="float: right;" data-toggle="modal" data-target="#documentModal" ><i class="fa fa-plus-circle"  >Add New</i></a></h2> <br/> 
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>File Name</th>
+      <th>Uploaded Date</th>
+      <th>View File</th>
+      
+    </tr>
+  </thead>
   
-</div>
-<div class="form-group">
-  <label class="control-label" for="disabledInput">Patient Name </label>&nbsp;&nbsp;Aadish
-  
-</div>
-<div class="form-group">
-  <label class="control-label" for="disabledInput">Treatement name</label>&nbsp;&nbsp;note
-  
-</div>
-<div class="form-group">
-  <label class="control-label" for="disabledInput">Expected Amount</label>&nbsp;&nbsp;200
-  
-</div>
-<div class="form-group">
-  <label class="control-label" for="disabledInput">Amount Paid</label>&nbsp;&nbsp;100
-  
-</div>
+<tbody id="#">
 
- 
-        
+  </tbody>
+  </table>
+  
+  
+  
+</div>
+</div>
      
-    </li> 
-  </ul>
+
   </div>
-   <div class="col-sm-6">
-  <ul class="list-group">
-    <li class="list-group-item">
-     
-   
-    <p class="list-group-item-text">
-   
-    
-    
-    <div class="form-group">
-  <label class="control-label" for="disabledInput">Appointment Time </label>&nbsp;&nbsp;10/12/1992 <small>10:55 pm</small>
-  
-</div>
-<div class="form-group">
-  <label class="control-label" for="disabledInput">Patient Name </label>&nbsp;&nbsp;Aadish
-  
-</div>
-<div class="form-group">
-  <label class="control-label" for="disabledInput">Treatement name</label>&nbsp;&nbsp;note
-  
-</div>
-<div class="form-group">
-  <label class="control-label" for="disabledInput">Expected Amount</label>&nbsp;&nbsp;200
-  
-</div>
-<div class="form-group">
-  <label class="control-label" for="disabledInput">Amount Paid</label>&nbsp;&nbsp;100
-  
-</div>
-
- 
-        
-     
-    </li> 
-  </ul>
-  </div>
-</div>
-</div>
-          		
-          		
-
-          		</div>
 
 
           	</div>
@@ -682,7 +640,7 @@
           
         </div>
         
-        <!-- Modal new message -->
+        
   <div class="modal fade" id="messageModal" role="dialog">
     <div class="modal-dialog">
     
@@ -697,14 +655,18 @@
       <form id="sendMessage1" name="sendMessage1" class="sendMessage1">
       <div>
       
-        <textarea class="form-control" rows="3" id="textArea" name="textArea" placeholder="type your message here.." maxlength="255"></textarea>
+        <textarea class="form-control" rows="3" id="msg" name="msg" placeholder="type your message here.." maxlength="255"></textarea>
         <span class="help-block">Maximum 255 characters.</span>
       </div>
+      
+      
+    
+     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
       </form>
     </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" onclick="sentmessages.sendMessage('json/patient_insurances.json')" >Send</button>
+          <button type="button" class="btn btn-primary" onclick="sentmessages.sendMessage('../sentmessages/sendtodoc')" >Send</button>
         </div>
       </div>
       
@@ -722,55 +684,116 @@
           <h4 class="modal-title">Add New Insurance</h4>
         </div>
         <div class="modal-body">
+       
         <div class="form-group">
-  <label class="control-label" for="disabledInput">DOB</label>
-  <input class="form-control" id="disabledInput" type="number" placeholder="mm/dd/yyyy" >
-</div>
-        <div class="form-group">
+        <form name="addNewInsurance" id="addNewInsurance" class="addNewInsurance">
+        
  <label class="control-label" for="disabledInput">Insurance Provider ID</label>
-  <input class="form-control" id="disabledInput" type="number" placeholder="912902100 1 3" >
+  <input class="form-control" id="insuranceProviderID" name="insuranceProviderID" type="text" placeholder="912902100 1 3" >
 </div>
 <div class="form-group">
  <label class="control-label" for="disabledInput">Insurance Provider Name</label>
-  <input class="form-control" id="disabledInput" type="text" placeholder="Aetna" >
-</div>
-<div class="form-group">
- <label class="control-label" for="disabledInput">Subscriber Full Name</label>
-  <input class="form-control" id="disabledInput" type="text" placeholder="Aadish Shah" >
+  <input class="form-control" id="insuranceProviderName" name="insuranceProviderName" type="text" placeholder="Aetna" >
 </div>
 <div class="form-group">
  <label class="control-label" for="disabledInput">Subscriber ID</label>
-  <input class="form-control" id="disabledInput" type="text" placeholder="920329309209309" >
+  <input class="form-control" id="subscriberID" name="subscriberID" type="text" placeholder="920329309209309" >
 </div>
 <div class="form-group">
- <label class="control-label" for="disabledInput">Patient Name</label>
-  <input class="form-control" id="disabledInput" type="text" placeholder="xyz" >
+ <label class="control-label" for="disabledInput">Subscriber Full Name</label>
+  <input class="form-control" id="subscriberFullName" name="subscriberFullName" type="text" placeholder="Aadish Shah" >
 </div>
+
+ <div class="form-group">
+  <label class="control-label" for="disabledInput">DOB</label>
+  <input class="form-control" id="dob" name="dob" type="text" placeholder="mm/dd/yyyy" >
+</div>
+
 <div class="form-group">
       <label for="select">status</label>
       <div>
-        <select class="form-control" id="select">
-          <option selected="selected">Active</option>
-          <option>Expired</option>
+        <select class="form-control" id="status" name="status">
+          <option selected="selected" value="ACTIVE">Active</option>
+          <option value="EXPIRED">Expired</option>
         
         </select>
         
       </div>
     </div>  
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
       
-
+</form>
     
           
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" >Add</button>
+          <button type="button" class="btn btn-primary" onclick="insurances.addInsurance('../insurances/create')" >Add</button>
         </div>
       </div>
       
     </div>
       </div>
       
+         <!-- Modal Update insurance -->
+  <div class="modal fade" id="updateInsuranceModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Update Your Insurance</h4>
+        </div>
+        <div class="modal-body">
+       
+        <div class="form-group">
+        <form name="updateInsurance" id="updateInsurance" class="updateInsurance">
+        <input type="hidden" name="insuranceID" id="insuranceID" value="">
+ <label class="control-label" for="disabledInput">Insurance Provider ID</label>
+  <input class="form-control" id="insuranceProviderID" name="insuranceProviderID" type="text" placeholder="912902100 1 3" >
+</div>
+<div class="form-group">
+ <label class="control-label" for="disabledInput">Insurance Provider Name</label>
+  <input class="form-control" id="insuranceProviderName" name="insuranceProviderName" type="text" placeholder="Aetna" >
+</div>
+<div class="form-group">
+ <label class="control-label" for="disabledInput">Subscriber ID</label>
+  <input class="form-control" id="subscriberID" name="subscriberID" type="text" placeholder="920329309209309" >
+</div>
+<div class="form-group">
+ <label class="control-label" for="disabledInput">Subscriber Full Name</label>
+  <input class="form-control" id="subscriberFullName" name="subscriberFullName" type="text" placeholder="Aadish Shah" >
+</div>
+
+ <div class="form-group">
+  <label class="control-label" for="disabledInput">DOB</label>
+  <input class="form-control" id="dob" name="dob" type="text" placeholder="mm/dd/yyyy" >
+</div>
+
+<div class="form-group">
+      <label for="select">status</label>
+      <div>
+        <select class="form-control" id="status" name="status">
+          <option selected="selected" value="ACTIVE">Active</option>
+          <option value="EXPIRED">Expired</option>
+        
+        </select>
+        
+      </div>
+    </div>  
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
       
+</form>
+    
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="insurances.updateInsurance('/insurances/update')" >Update</button>
+        </div>
+      </div>
+      
+    </div>
+      </div>
       
           <!-- Modal new treatment -->
   <div class="modal fade" id="treatmentModal" role="dialog">
@@ -783,48 +806,77 @@
           <h4 class="modal-title">Add New Treatment</h4>
         </div>
         <div class="modal-body">
-        <div class="form-group">
-  <label class="control-label" for="disabledInput">Treatment Done Time</label>
-  <input class="form-control" id="disabledInput" type="number" placeholder="mm/dd/yyyy" >
+        <form id="addNewTreatment" name="addNewTreatment" class="addNewTreatment">
+        <input type="hidden" name="teethID" id="teethID" value="">
+         <div class="form-group">
+          <label for="select">Note</label>
+      
+      <div>
+        <textarea class="form-control" rows="3" id="note" name="note" placeholder="type your note here.." maxlength="255"></textarea>
+        <span class="help-block">Maximum 255 characters.</span>
+      </div>
+    </div>
+    <div class="form-group">
+  <label class="control-label" for="disabledInput">Treatment Expected Date</label>
+  <input class="form-control" id="treatmentExpectedTime" name="treatmentExpectedTime" type="text" placeholder="mm/dd/yyyy" >
 </div>
+<!-- <div class="form-group">
+  <label class="control-label" for="disabledInput">Treatment Done Time</label>
+  <input class="form-control" id="treatmentDoneTime" name="treatmentDoneTime" type="text" placeholder="mm/dd/yyyy" >
+</div> -->
+<!-- <div class="form-group">
+  <label class="control-label" for="disabledInput">Amount Paid</label>
+  <input class="form-control" id="amountPaid" name="amountPaid" type="text" placeholder="mm/dd/yyyy" >
+</div> -->
+<div class="form-group">
+  <label class="control-label" for="disabledInput">Amount Expected</label>
+  <input class="form-control" id="amountExpected" name="amountExpected" type="text" placeholder="200" >
+</div>
+<!-- <div class="form-group">
+  <label class="control-label" for="disabledInput">Amount Paid</label>
+  <input class="form-control" id="amountPaid" name="amountPaid" type="text" placeholder="mm/dd/yyyy" >
+</div> -->
 <div class="form-group">
       <label for="select">Treatment Status</label>
       <div>
-        <select class="form-control" id="select">
-          <option selected="selected">Completed</option>
-          <option>Pending</option>
+        <select class="form-control" id="newTreatementStatusChange" name="status" onchange="newTreatmentStatus()">
+          <option value="COMPLETED">Completed</option>
+          <option selected="selected" value="PENDING">Pending</option>
         
         </select>
         
       </div>
-    </div>  
-    <div class="modal-body">
-          <div class="form-group">
-          <label for="select">Note</label>
-      
-      <div>
-        <textarea class="form-control" rows="3" id="textArea" placeholder="type your note here.." maxlength="255"></textarea>
-        <span class="help-block">Maximum 255 characters.</span>
-      </div>
-    </div>
-        </div>
+    </div> 
+        <!-- 
+        text hidden teethID
+			        text note
+					date treatmentExpectedTime
+			        date treatmentDoneTime
+					text amountExpected
+			        text amountPaid	
+					select status=COMPLETED
+if status=PENDING
+Request Parameters: text hidden teethID
+			        text note
+					date treatmentExpectedTime
+			        text amountExpected
+					select status=PENDING
+         -->
+        
+ 
+    <div id="addNewTreatmentDiv"></div>
+         
+        
        
-<div class="form-group">
- <label class="control-label" for="disabledInput">Amount Paid</label>
-  <input class="form-control" id="disabledInput" type="text" placeholder="920329309209309" >
-</div>
-<div class="form-group">
- <label class="control-label" for="disabledInput">Amount Expected</label>
-  <input class="form-control" id="disabledInput" type="text" placeholder="xyz" >
-</div>
 
-      
 
-    
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+    </form>
           
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" >Add</button>
+          <button type="button" class="btn btn-primary" onclick="treatments.sendTreatment('../treatments/create')" >Add Treatment</button>
         </div>
       </div>
       
@@ -833,8 +885,8 @@
       
       
       
-      <!-- Modal Change Status -->
-  <div class="modal fade" id="statusModal" role="dialog">
+      <!-- Modal Change Status for requested Appointments -->
+  <div class="modal fade" id="requestedAppointmentStatusModal" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -847,15 +899,20 @@
         
 <div class="form-group">
       <label for="select">Treatment Status</label>
+      <form id="updateRequestedAppointment" name="updateRequestedAppointment">
       <div>
-        <select class="form-control" id="selectStatus" onchange=statusChanged();>
-          <option value="Completed">Completed</option>
-          <option value="Confirmed">Confirmed</option>
-          <option value="Canceled">Canceled</option>
+      <input type="hidden" name="appointmentRequestID" id="appointmentRequestID" value="">
+        <select class="form-control" name="status" id="status">
+           
+          <option value="CANCEL" selected="selected">Cancel</option>
           
-          <option>Pending</option>
+          
         
         </select>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        
+        
+        </form>
         
       </div>
     </div>  
@@ -869,11 +926,13 @@
           
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" >Update</button>
+          <button type="button" class="btn btn-primary" onclick="requestedappointments.updateRequestedAppointment('../appointmentrequests/update')" >Update</button>
         </div>
       </div>
       
     </div>
+    
+   
       </div>
   </div>
   
@@ -909,6 +968,171 @@
       
     </div>
   </div>
+  
+    
+  <!-- Modal new message -->
+  <div class="modal fade" id="documentModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add New Document</h4>
+        </div>
+        <div class="modal-body">
+         
+          <div class="form-group">
+ <label class="control-label" for="disabledInput">(.pdf , .docx , .txt , .jpg etc)</label>
+  <input class="form-control"  type="file"  >
+</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" >Attach</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+   <!-- Modal Change Status for teeth treatment -->
+    
+   <div class="modal fade" id="teethTreatmentsChangeStatusModal" name="teethTreatmentsChangeStatusModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal" type=
+                    "button">&times;</button>
+
+                    <h4 class="modal-title">Change Your Status</h4>
+                </div>
+
+
+                <div class="modal-body" id="statusCompleted">
+                    <div class="form-group">
+                        <label for="select">Treatment Status</label>
+
+                        <form id="updateTeethTreatment" name=
+                        "updateTeethTreatment">
+                            <div>
+                                <input id="treatmentUpdateTeethID" name="teethID" type=
+                                "hidden" value=""> <input id="treatmentID"
+                                name="treatmentID" type="hidden" value="">
+                                <select class="form-control" id="status" name=
+                                "status">
+                                    <option selected="selected" value=
+                                    "COMPLETED">
+                                        Completed
+                                    </option>
+                                </select>
+
+                                <div class="form-group">
+                                    <label class="control-label" for=
+                                    "disabledInput">Note</label>
+
+                                    <div>
+                                        <textarea class="form-control" id=
+                                        "note" maxlength="1000" name="note"
+                                        placeholder="type your note here.."
+                                        rows="3"></textarea> <span class=
+                                        "help-block">Maximum 1000
+                                        characters.</span>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label" for=
+                                    "disabledInput">Treatment Done Date</label>
+                                    <input class="form-control" id=
+                                    "treatmentDoneTime" name=
+                                    "treatmentDoneTime" placeholder=
+                                    "mm/dd/yyyy" type="text">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label" for=
+                                    "disabledInput">Amount Paid</label>
+                                    <input class="form-control" id="amountPaid"
+                                    name="amountPaid" placeholder="00" type=
+                                    "text">
+                                </div>
+                                <input name="${_csrf.parameterName}" type=
+                                "hidden" value="${_csrf.token}">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                 <div class="modal-footer">
+                <button class="btn btn-primary" onclick=
+                "teethTreatments.updateTeethTreatment('../treatments/update')"
+                type="button">Update</button>
+            </div>
+            </div>
+
+
+           
+        </div>
+    </div>
+    
+   
+    <!-- Modal Change Status for Confirmed Appointments -->
+  <div class="modal fade" id="confirmededAppointmentStatusModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Change Your Status</h4>
+        </div>
+        <div class="modal-body" id="statusCompleted">
+        
+<div class="form-group">
+      <label for="select">Treatment Status</label>
+      <form id="updateConfirmedAppointment" name="updateConfirmedAppointment">
+      <div>
+      <input type="hidden" name="appointmentID" id="appointmentID" value="">
+        <select class="form-control" name="status" id="status">
+           
+          <option value="COMPLETED" selected="selected">Completed</option>
+          
+          
+          
+        
+        </select>
+        <div class="form-group">
+ <label class="control-label" for="disabledInput">Note</label>
+   <div>
+      
+        <textarea class="form-control" rows="3" id="note" name="note" placeholder="type your note here.." maxlength="1000"></textarea>
+        <span class="help-block">Maximum 1000 characters.</span>
+      </div>
+</div>
+<div class="form-group">
+ <label class="control-label" for="disabledInput">Amount Paid</label>
+  <input class="form-control" id="amountPaid" name="amountPaid" type="text" placeholder="300.0" >
+</div>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        
+        </form>
+        
+      </div>
+    </div>  
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="confirmedappointments.updateConfirmedAppointment('../appointments/update')" >Update</button>
+        </div>
+      </div>
+      
+    </div>
+    
+   
         
 <%@include file="footer.jsp" %>
 

@@ -9,24 +9,12 @@
 </div>
 <head>
 
-<link rel="stylesheet" media="screen' href="<c:url value='/resources/css/business-frontpage.css'/>">
-<script type="text/javascript" src= "<c:url value='/resources/js/jquery.js'/>"></script>
+ <link rel="stylesheet" media="screen" href= " <c:url value='/resources/css/business-frontpage.css'/>" >
+
 
 </head>
 <body>
-  <p id="action">${action}</p>
- 
-
-  <header class="business-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    
-                </div>
-            </div>
-        </div>
-    </header>
-
+  <p id="action" style="visibility: hidden;">${action}</p>
 
 <!-- Page Content -->
 <!-- Page Content -->
@@ -37,12 +25,9 @@
  <div class="col-sm-2">
  </div>
  <div class="col-sm-8">
- <div class="alert alert-dismissible alert-danger">
-  
-  <strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up</a>.
-</div>
+
  
- <div id="login">
+ <div id="login" style="display: none;">
  <h2><span class="glyphicon glyphicon-user"></span>Login</h2>
  
   <div class="form-group">
@@ -65,7 +50,7 @@
  </div>
  
   </div>
- <div id="signup">
+ <div id="signup" style="display: none;">
  
  
  
@@ -154,7 +139,7 @@
  <a class="forgotlink">Forgot</a>
  </div>
  
- <div id="forgot">
+ <div id="forgot" style="display: none;">
   <h2><i class="fa fa-key"></i> Forgot Password</h2>
   <c:url value="/login/forgotpassword" var="forgotPasswordUrl" />
 			<form action="${forgotPasswordUrl}" method="post">
@@ -216,16 +201,16 @@
 	  $(".loginlink").on('click',login);
 	  $(".forgotlink").on('click',forgot);
 	  var action = $("#action");
-	  alert(action.html());
+	  
 	  
 	  if( action.html()==="" || action.html()=== "login"){
-		  alert("login");
+		
 		  login();
 	  }else if(action.html()==="signup"){
-		  alert("signup");
+		
 		  signup();
 	  }else if(action.html()==="forgot"){
-		  alert("forget");
+		
 		  forgot();
 	  }
 		 

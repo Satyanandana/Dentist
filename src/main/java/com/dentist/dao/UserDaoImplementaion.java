@@ -271,7 +271,7 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 	}
 
 	@Override
-	public Treatment getTreatmentByIDandPatientID(int treatmentID, long patientID) {
+	public Treatment getTreatmentByIDandPatientID(long treatmentID, long patientID) {
 		Criteria criteria = getSession().createCriteria(Treatment.class).add(Restrictions.idEq(treatmentID))
 				.add(Restrictions.eq("patient.userID", patientID));
 		return (Treatment) criteria.uniqueResult();

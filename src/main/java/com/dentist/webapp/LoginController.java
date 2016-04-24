@@ -203,6 +203,9 @@ public class LoginController {
 			}
 		}
 		model.addAttribute("serverTime", new DateTime().toString());
+		LOGGER.debug("To login page .... ");
+		model.addAttribute("patient", new Patient());
+		model.addAttribute("action", "login");
 		return "login";
 	}
 
@@ -229,12 +232,12 @@ public class LoginController {
 
 				emailSender.sendEmail(emailStructure);
 
-				map.put("errorEmail", "We sent your credentials to your email ID.Please check your inbox");
+				map.put("success", "We sent your credentials to your email ID.Please check your inbox");
 			} else {
-				map.put("errorEmail", "We dont have an account matching the email ID");
+				map.put("noaccount", "We dont have an account matching the email ID");
 			}
 		} else {
-			map.put("errorEmail", "Invalid email address");
+			map.put("invalid", "Invalid email address");
 		}
 
 		return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);

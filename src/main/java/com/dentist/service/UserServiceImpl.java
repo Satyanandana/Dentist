@@ -255,7 +255,7 @@ public class UserServiceImpl implements UserServiceInterface {
 	}
 
 	@Override
-	public Treatment getTreatmentByIDandPatientID(int treatmentID, long patientID) {
+	public Treatment getTreatmentByIDandPatientID(long treatmentID, long patientID) {
 
 		return userDaoInterface.getTreatmentByIDandPatientID(treatmentID, patientID);
 	}

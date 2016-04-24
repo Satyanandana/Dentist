@@ -112,7 +112,7 @@ public class AppointmentRequestInfoController {
 	}
 
 	@PreAuthorize("hasRole('ROLE_USER')")
-	@RequestMapping(value = "/update", method = RequestMethod.POST, params = {"status=Cancel"}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/update", method = RequestMethod.POST, params = {"status=CANCEL"}, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, String>> cancelAppointmentRequest(@RequestParam("appointmentRequestID") long appointmentRequestID) {
 		Map<String, String> map = new HashMap<>();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

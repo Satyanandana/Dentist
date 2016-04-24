@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/bootstrap.css'/>" media="screen">
     <link rel="stylesheet" href="<c:url value='/resources/css/bootstrap.min.css'/>" media="screen">
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300italic' rel='stylesheet' type='text/css'>
-
+    
 
     <link rel="stylesheet" href="<c:url value='/resources/css/custom.min.css'/>">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->

@@ -63,8 +63,23 @@ var treatments = (function() {
             displayTreatments(treatmentsData);
         });
     }
+    var sendTreatment = function(path) {
+    	  alert($('#addNewTreatment').serialize());
+    	   $.ajax({
+               url: path,
+               method: 'POST',
+               data:$('#addNewTreatment').serialize(),
+               contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+           }).then(function(data) {
+        	    
+        	   $('#treatmentModal').modal('toggle');
+        	   showTreatments();
+                
+           });
+    }
     return {
         getTreatments: getTreatments,
-        displayTreatments: displayTreatments
+        displayTreatments: displayTreatments,
+        sendTreatment:sendTreatment
     };
 }());

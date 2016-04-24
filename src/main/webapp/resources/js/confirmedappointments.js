@@ -19,7 +19,14 @@ var confirmedappointments = (function() {
               
        		  var template = $('#appointmentsTemp').html();
        		  val.counter=i;
+       		   if(val.status=='COMPLETED')
+       			   {
+       			    
+       			   	val.hidden="hidden";
+       			   }
+       		  
        		  i++;
+       		 
        		    var html = Mustache.to_html(template, val);
        		    $('#appointmentsForTemp').append(html);
        	});
@@ -35,8 +42,25 @@ var confirmedappointments = (function() {
             displayAppointments(appointmentsData);
         });
     }
+    
+    var updateConfirmedAppointment = function(path) {
+  	  alert($('#updateConfirmedAppointment').serialize());
+  	   $.ajax({
+             url: path,
+             method: 'POST',
+             data:$('#updateConfirmedAppointment').serialize(),
+             contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+         }).then(function(data) {
+      	   
+      	   $('#confirmededAppointmentStatusModal').modal('toggle');
+      	   showAppointments();
+        	 
+              
+         });
+  }
     return {
         getAppointments: getAppointments,
-        displayAppointments: displayAppointments
+        displayAppointments: displayAppointments,
+        updateConfirmedAppointment:updateConfirmedAppointment
     };
 }());

@@ -6,19 +6,22 @@
 <html>
 <head>
 <link rel="stylesheet" href="<c:url value='/resources/css/font/flaticonteeth12.css'/>">
+
 <script type="text/template" id="sentMessageTemp">
 
-  <li class="list-group-item"><p class="list-group-item-text">{{firstMessage}}<a class="read-more-show hide" href="#">Read More</a> <span class="read-more-content">{{secondMessage}} <a class="read-more-hide hide" href="#">Read Less</a></span></p><p><small style="float: right;">{{sentTime}}</small></p></li>
-  
-<script src="js/readmore.js"/>
+
+
+<li class="list-group-item"><p class="list-group-item-text">{{firstMessage}}<a class="read-more-show hide" href="#">Read More</a> <span class="read-more-content">{{secondMessage}} <a class="read-more-hide hide" href="#">Read Less</a></span></p><p><small style="float: right;">{{sentTime}}</small></p></li>
+<script type="text/javascript" src="<c:url value='/resources/js/readmore.js'/>" />  
+
 
 </script>
 
 <script type="text/template" id="receivedMessageTemp">
 
   <li class="list-group-item"><p class="list-group-item-text">{{firstMessage}}<a class="read-more-show hide" href="#">Read More</a> <span class="read-more-content">{{secondMessage}} <a class="read-more-hide hide" href="#">Read Less</a></span></p><p><small style="float: right;">{{receivedTime}}</small></p></li>
-  
-<script src="js/readmore.js"/>
+  <script type="text/javascript" src="<c:url value='/resources/js/readmore.js'/>" />
+
 
 </script>
 
@@ -64,7 +67,7 @@
 </div>
 
  
-        <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#insuranceModal">Edit</button>
+        <button type="submit" class="btn btn-primary btn-sm" onclick="editInsurance({{insuranceID}})">Edit</button>
         <button type="reset" class="btn btn-default btn-sm">Delete</button>
      
     </li> 
@@ -92,7 +95,7 @@
   
          </td>
 <td>
-  <button  class="btn btn-primary btn-xs" id="appointmentsStatusChange" onclick="postAppointmentStatus({{appointmentID}},{{patientID}},this.value)" data-toggle="modal" data-target="#statusModal">Change Status</button>
+  <button  class="btn btn-primary btn-xs" id="appointmentsStatusChange" onclick="postAppointmentStatus({{appointmentID}},{{patientID}},this.value)"  style="visibility:{{hidden}};">Change Status</button>
   
 </td>
   
@@ -110,7 +113,7 @@
      
       
 <td>
-  <button  class="btn btn-primary btn-xs" id="appointmentsRequesedStatusChange" onclick="postRequestedAppointmentStatus({{appointmentRequestID}},{{patientID}},this.value)" data-toggle="modal" data-target="#statusModal">Change Status</button>
+  <button  class="btn btn-primary btn-xs" id="appointmentsRequesedStatusChange" onclick="postRequestedAppointmentStatus({{appointmentRequestID}},{{patientID}},this.value)"  style="visibility:{{hidden}};">Change Status</button>
   
 </td>
      
@@ -124,8 +127,8 @@
 
      
 <td align="center">
-<p style="margin-left: 40px;">{{counter}}</p> 
-<i class="flaticon-icon-{{patientTeethStatus}}" style="color:{{treatmentStatus}};margin-left: 40px;" id="" onclick="showMyTeethDetails({{counter}})" data-toggle="tooltip" title="{{patientTeethStatus}}"></i><span class="tab"></span>  
+<p style="margin-left: 22px;">{{counter}}</p> 
+<i class="flaticon-icon-{{patientTeethStatus}}"  style="color:{{treatmentStatus}};margin-left: 20px;" id="" onclick="showMyTeethDetails({{counter}})" data-toggle="tooltip" title="{{patientTeethStatus}}" ></i><span class="tab"></span>  
 </td>
    
      
@@ -136,8 +139,8 @@
   
 <td align="center">
 
-<i class="flaticon-icon-{{patientTeethStatus}}" style="color:{{treatmentStatus}};margin-left: 40px;" id="" onclick="showMyTeethDetails({{counter}})" data-toggle="tooltip" title="{{patientTeethStatus}}" ></i><span class="tab"></span>  
-<p style="margin-left: 40px;">{{counter}}</p> 
+<i class="flaticon-icon-{{patientTeethStatus}}" style="color:{{treatmentStatus}};margin-left: 20px;" id="" onclick="showMyTeethDetails({{counter}})" data-toggle="tooltip" title="{{patientTeethStatus}}" ></i><span class="tab"></span>  
+<p style="margin-left: 22px;">{{counter}}</p> 
 </td>
  
      
@@ -145,32 +148,63 @@
 
 <script type="text/template" id="teethDetailsTemp">
 
-      <td>{{teethID}}</td>
-      <td>{{teethName}}</td>
-      <td>{{description}}</td>
+      <td>{{teeth.teethID}}</td>
+      <td>{{teeth.teethName}}</td>
+      <td>{{teeth.description}}</td>
+<td>{{total}}</td>
 
-<td><a href="#" class="btn btn-success btn-xs" onclick="addNewTreatmentOnTeeth({{teethID}})">Add New Treatment <i class="fa fa-plus-circle" ></i></a></td>
+<td><a href="#" class="btn btn-success btn-xs" onclick="addNewTreatmentOnTeeth({{teeth.teethID}})">Add New Treatment <i class="fa fa-plus-circle" ></i></a></td>
 	  
 
 
 </script>
 <script type="text/template" id="teethDetailsTreatmentTemp">
+
+ 
+
 <tr>
+
 <td>
-{{status}}
-</td>
-<td>
-{{note}}
+{{treatmentInsertedTime}}
 </td>
 <td>
 {{treatmentDoneTime}}
 </td>
 <td>
+{{treatmentExpectedTime}}
+</td>
+<td>
+{{amountPaid}}
+</td>
+<td>
 {{amountExpected}}
+</td>
+<td>
+{{status}}
+<p><button  class="btn btn-primary btn-xs" id="treatmentsStatusChange" onclick="changestatusOfTeethTreatment({{teethID}},{{treatmentID}})"  style="visibility:{{hidden}};">Change Status</button></p>
+</td>
+
+  
+  
+
+</tr>
+<tr>
+<td colspan="6">
+NOTE : {{note}}
 </td>
 </tr>
 </script>
 
+<script type="text/template" id="newTreatmentTempForStatus">
+<div class="form-group">
+  <label class="control-label" for="disabledInput">Treatment Done Date</label>
+  <input class="form-control" id="treatmentDoneTime" name="treatmentDoneTime" type="text" placeholder="mm/dd/yyyy" >
+</div>
+<div class="form-group">
+  <label class="control-label" for="disabledInput">Amount Paid</label>
+  <input class="form-control" id="amountPaid" name="amountPaid" type="text" placeholder="00" >
+</div> 
+</script>
 </head>
 
 </html>

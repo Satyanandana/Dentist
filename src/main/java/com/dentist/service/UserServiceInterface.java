@@ -112,7 +112,7 @@ public interface UserServiceInterface {
 
 	public Treatment getTreatmentByID(long treatmentID);
 
-	public Treatment getTreatmentByIDandPatientID(int treatmentID, long patientID);
+	public Treatment getTreatmentByIDandPatientID(long treatmentID, long patientID);
 
 	public List<Treatment> getTreatmentsByPatientID(long userID);
 

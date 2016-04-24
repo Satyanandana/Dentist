@@ -24,7 +24,7 @@
 [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
 [class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
   font-family: Flaticon;
-        font-size: 25px;
+        font-size: 28px;
 font-style: normal;
 
 }
@@ -47,7 +47,7 @@ font-style: normal;
 .flaticon-icon-Extracted:before { content: "\f10f"; }
 .flaticon-medical-10:before { content: "\f110"; }
 .flaticon-medical-11:before { content: "\f111"; }
-.flaticon-medical-12:before { content: "\f112"; }
+.flaticon-medical-12:before { content: "\f112";}
 .flaticon-medical-13:before { content: "\f113"; }
 .flaticon-medical-14:before { content: "\f114"; }
 .flaticon-medical-15:before { content: "\f115"; }

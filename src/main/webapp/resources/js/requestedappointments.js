@@ -20,6 +20,12 @@ var requestedappointments = (function() {
        		  var template = $('#requestedAppointmentsTemp').html();
        		  
        		  val.counter=i;
+       		if(val.status=='ACCEPTED' || val.status=='CANCELLED')
+			   {
+			    
+			   	val.hidden="hidden";
+			   }
+       		
        		  i++;
        		    var html = Mustache.to_html(template, val);
        		    $('#requestedAppointmentsForTemp').append(html);
@@ -37,8 +43,40 @@ var requestedappointments = (function() {
             displayAppointments(appointmentsData);
         });
     }
+    
+    var sendRequestedAppointment = function(path) {
+  	  alert($('#appointmentRequestForm').serialize());
+  	   $.ajax({
+             url: path,
+             method: 'POST',
+             data:$('#appointmentRequestForm').serialize(),
+             contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+         }).then(function(data) {
+      	    
+        	 top.location.href = "view?action=appointments";
+        	 
+              
+         });
+  }
+    var updateRequestedAppointment = function(path) {
+    	  alert($('#updateRequestedAppointment').serialize());
+    	   $.ajax({
+               url: path,
+               method: 'POST',
+               data:$('#updateRequestedAppointment').serialize(),
+               contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+           }).then(function(data) {
+        	   
+        	   $('#requestedAppointmentStatusModal').modal('toggle');
+        	   showAppointments();
+          	 
+                
+           });
+    }
     return {
         getAppointments: getAppointments,
-        displayAppointments: displayAppointments
+        displayAppointments: displayAppointments,
+        sendRequestedAppointment:sendRequestedAppointment,
+        updateRequestedAppointment:updateRequestedAppointment
     };
 }());

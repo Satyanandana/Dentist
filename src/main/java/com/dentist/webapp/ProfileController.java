@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dentist.domain.Appointment;
 import com.dentist.domain.AppointmentRequest;
@@ -41,7 +42,7 @@ public class ProfileController {
 	 */
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
-	public String getProfile(Model model) {
+	public String getProfile(Model model, @RequestParam(name = "action", defaultValue = "profile") String action) {
 		model.addAttribute("patient", new Patient());
 		model.addAttribute("insurance", new Insurance());
 		model.addAttribute("appointment", new Appointment());
@@ -52,6 +53,7 @@ public class ProfileController {
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
 		if (user.getUserRole().equals(Role.ROLE_USER)) {
 			LOGGER.debug("processing GET request to /profile/view  with USER role");
+			model.addAttribute("action", action);
 			return "myprofile";
 		} else {
 			return null;
@@ -59,9 +61,17 @@ public class ProfileController {
 
 	}
 
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value = "/scheduleappointment", method = RequestMethod.GET)
+	public String getScheduleAppointment(Model model) {
+
+		return "events";
+	}
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/view/{patientID}", method = RequestMethod.GET)
-	public String getProfileByPatientID(Model model, @PathVariable("patientID") long patientID) {
+	public String getProfileByPatientID(Model model, @PathVariable("patientID") long patientID,
+			@RequestParam(name = "action", defaultValue = "profile") String action) {
 		model.addAttribute("patient", new Patient());
 		model.addAttribute("insurance", new Insurance());
 		model.addAttribute("appointment", new Appointment());

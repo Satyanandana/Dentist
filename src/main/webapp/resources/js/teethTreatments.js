@@ -7,13 +7,13 @@ var teethTreatments = (function() {
         console.log(data);
         if(jQuery.isEmptyObject(data.treatments))
     	{
-        	alert("here");
+        	
         	$("#teethTreatment").show();
         	 $('#teethDetails').empty();
         	 $('#teethTreatmentDetails').empty();
         	 var template = $('#teethDetailsTemp').html();
     			console.log(data);
-    			    var html = Mustache.to_html(template, data.teeth);
+    			    var html = Mustache.to_html(template, data);
     			    $('#teethDetails').append(html);
         	 
     	
@@ -32,10 +32,19 @@ var teethTreatments = (function() {
        	       
        			  var template = $('#teethDetailsTemp').html();
        			console.log(data);
-       			    var html = Mustache.to_html(template, data.teeth);
+       			    var html = Mustache.to_html(template, data);
        			    $('#teethDetails').append(html);
+       			    
        			    $.each(data.treatments, function(key,val) {
-       			        
+       			         
+       			    	
+       			    	if(val.status=='COMPLETED')
+       				   {
+       				    
+       				   	val.hidden="hidden";
+       				   
+       				   }
+       			 	      val.teethID=data.teeth.teethID;
        					  var template = $('#teethDetailsTreatmentTemp').html();
        					
        					    var html = Mustache.to_html(template, val);
@@ -63,8 +72,25 @@ var teethTreatments = (function() {
             displayTreatmentsForTeeth(treatmentsDataForTeeth);
         });
     }
+    
+    var updateTeethTreatment = function(path) {
+  	  alert($('#updateTeethTreatment').serialize());
+  	   $.ajax({
+             url: path,
+             method: 'POST',
+             data:$('#updateTeethTreatment').serialize(),
+             contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+         }).then(function(data) {
+      	   alert(data.id);
+      	   $('#teethTreatmentsChangeStatusModal').modal('toggle');
+      	   showMyTeethDetails(data.id);
+        	 
+              
+         });
+  }
     return {
         getTreatmentsForTeeth: getTreatmentsForTeeth,
-        displayTreatmentsForTeeth: displayTreatmentsForTeeth
+        displayTreatmentsForTeeth: displayTreatmentsForTeeth,
+        updateTeethTreatment:updateTeethTreatment
     };
 }());

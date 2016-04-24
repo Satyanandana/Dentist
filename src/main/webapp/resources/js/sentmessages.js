@@ -7,20 +7,25 @@ var sentmessages = (function() {
         console.log(data);
         if(jQuery.isEmptyObject(data))
     	{
-        	 $('#sentmessages').empty();
-    	 $('#sentmessages').append("<center><p style='border-style: ridge ;'>Your sent messages folder is empty , please send new message by clicking COMPOSE . </p></center>");
+        	 $('#sentmessages1').empty();
+    	 $('#sentmessages1').append("<center><p style='border-style: ridge ;'>Your sent messages folder is empty , please send new message by clicking COMPOSE . </p></center>");
     	}
         else
         	{
         
-        $('#sentmessages').empty();
+        $('#sentmessages1').empty();
   	  $.each(data, function(key,val) {
           
   		  var template = $('#sentMessageTemp').html();
+  		
   		  val.firstMessage=val.msg.substring(0,200);
+  		
   		  val.secondMessage=val.msg.substring(201);
+  		
   		    var html = Mustache.to_html(template, val);
-  		    $('#sentmessages').append(html);
+  		  
+  		    $('#sentmessages1').append(html);
+  		  
   	});
     }
         
@@ -36,20 +41,18 @@ var sentmessages = (function() {
     }
     
     var sendMessage = function(path) {
-    	 
-    	alert("not working..");
-    	
-    	
-    	
-    	
-    	
-      /*  $.ajax({
+    	 alert("here");
+       $.ajax({
             url: path,
-            method: 'POST'
+            method: 'POST',
+            data: $('#sendMessage1').serialize(),
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8"
         }).then(function(data) {
-            messagesData = data;
-            displayMessages(messagesData);
-        });*/
+        	$('#messageModal').modal('toggle');
+        	sentmessages.getMessages("../patient/sentmessages");
+        	
+             
+        });
     }
     return {
         getMessages: getMessages,

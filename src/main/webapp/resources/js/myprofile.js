@@ -65,26 +65,75 @@ var myprofile = (function() {
         });
     }
     
-    var sendProfileData = function(path) {
-    	 
-    	alert("not working..");
-    	
-    	
-    	
-    	
-    	
-      /*  $.ajax({
-            url: path,
-            method: 'POST'
-        }).then(function(data) {
-            myprofiledata = data;
-            displayProfileData(myprofiledata);
-        });*/
+    var sendPersonalProfileData = function(path) {
+    	  alert($('#hidePersonalForm1').serialize());
+    	   $.ajax({
+               url: path,
+               method: 'POST',
+               data:$('#hidePersonalForm1').serialize(),
+               contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+           }).then(function(data) {
+        	   showProfile();
+        		myprofile.getProfileData(("../patient/personalinfo"));
+           	
+                
+           });
     }
+    var sendAddressProfileData = function(path) {
+  	  alert($('#hideAddressForm1').serialize());
+  	   $.ajax({
+             url: path,
+             method: 'POST',
+             data:$('#hideAddressForm1').serialize(),
+             contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+      
+            
+         }).then(function(data) {
+      	   showProfile();
+      		myprofile.getProfileData(("../patient/personalinfo"));
+         	
+              
+         });
+  }
+    var sendContactProfileData = function(path) {
+    	  alert($('#hideContactForm1').serialize());
+    	   $.ajax({
+               url: path,
+               method: 'POST',
+               data:$('#hideContactForm1').serialize(),
+               contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+        
+              
+           }).then(function(data) {
+        	   showProfile();
+        		myprofile.getProfileData(("../patient/personalinfo"));
+           	
+                
+           });
+    }
+    var sendEmergencyProfileData = function(path) {
+  	  alert($('#hideEmergencyForm1').serialize());
+  	   $.ajax({
+             url: path,
+             method: 'POST',
+             data:$('#hideEmergencyForm1').serialize(),
+             contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+      
+            
+         }).then(function(data) {
+      	   showProfile();
+      		myprofile.getProfileData(("../patient/personalinfo"));
+         	
+              
+         });
+  }
     return {
         getProfileData: getProfileData,
         displayProfileData: displayProfileData,
-        sendProfileData: sendProfileData
+        sendPersonalProfileData: sendPersonalProfileData,
+        sendAddressProfileData:sendAddressProfileData,
+        sendContactProfileData:sendContactProfileData,
+        sendEmergencyProfileData:sendEmergencyProfileData
         
     };
 }());

@@ -38,8 +38,41 @@ var insurances = (function() {
             displayInsurances(insurancesData);
         });
     }
+    var addInsurance = function(path) {
+  	  alert($('#addNewInsurance').serialize());
+  	   $.ajax({
+             url: path,
+             method: 'POST',
+             data:$('#addNewInsurance').serialize(),
+             contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+         }).then(function(data) {
+        	 
+        	 $('#insuranceModal').modal('toggle');
+        	 showInsurance();
+         	
+              
+         });
+  }
+    
+    var updateInsurance = function(path) {
+    	  alert($('#updateInsurance').serialize());
+    	   $.ajax({
+               url: path,
+               method: 'POST',
+               data:$('#updateInsurance').serialize(),
+               contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+           }).then(function(data) {
+          	 
+          	 $('#updateInsuranceModal').modal('toggle');
+          	 showInsurance();
+           	
+                
+           });
+    }
     return {
         getInsurances: getInsurances,
-        displayInsurances: displayInsurances
+        displayInsurances: displayInsurances,
+        addInsurance:addInsurance,
+        updateInsurance:updateInsurance
     };
 }());

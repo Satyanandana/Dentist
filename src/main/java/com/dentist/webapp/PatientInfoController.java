@@ -265,7 +265,7 @@ public class PatientInfoController {
 		boolean valid = false;
 
 		boolean validAddress1 = ServerSideValidations.validateAddress(address1, null, map, "errorAddress1", "Invalid Address1 format");
-		boolean validAddress2 = ServerSideValidations.validateName(address2, null, map, "errorAddress2", "Invalid Address1 format");
+		boolean validAddress2 = ServerSideValidations.validateAddress(address2, null, map, "errorAddress2", "Invalid Address1 format");
 		boolean validCity = ServerSideValidations.validateCity(city, null, map, "errorCity", "Invalid city format");
 		boolean validZipCode = ServerSideValidations.validateZipCode(zipcode, null, map, "errorZipCode", "Invalid zipcode");
 
