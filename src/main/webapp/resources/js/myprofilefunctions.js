@@ -171,6 +171,10 @@ receivedmessages.getMessages("../patient/receivedmessages");
      $("#Insurance").hide();
      $("#Payment").show();
  $("#MyProfile").hide();
+ 
+
+ senddocuments.getsenddocuments("../patient/sentdocuments");
+ receiveddocuments.getreceiveddocuments("../patient/receiveddocuments");
  }
 
  

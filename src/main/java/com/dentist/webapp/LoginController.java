@@ -147,10 +147,11 @@ public class LoginController {
 			UserAuthentication userAuth = userServiceInterface.getUserAuthenticationInfoByEmail(email);
 			if (userAuth != null) {
 				if (userAuth.getUserPwd().equals(password)) {
+					Patient patient = userServiceInterface.getPatientInfoById(userAuth.getUserID());
 					if (userAuth.getAccountStatus().equals(AccountStatus.ACTIVE)) {
 						LOGGER.debug("valid user credentials");
 						LOGGER.debug("adding user to spring session registry");
-						Patient patient = userServiceInterface.getPatientInfoById(userAuth.getUserID());
+
 						SessionHandler.handleSession(sessionRegistry, successHandler, request, response, userAuth, encryptor, patient);
 						// get the location of user with IP address
 						String IpAddress = WebUtility.getIpAddress(request);
@@ -183,6 +184,7 @@ public class LoginController {
 						model.addAttribute("error", "Please verify your email Id by clicking on the link that we sent to your email");
 						// Prepare and send email for verifying email
 						Map<String, Object> map = new HashMap<String, Object>();
+						map.put("user", patient.getFirstName() + " " + patient.getLastName());
 						map.put("verifyKey", userAuth.getVerifyKey());
 
 						String body = emailSender.prepareBody(EmailTemplate.VERIFY_ACCOUNT_EMAIL, map);

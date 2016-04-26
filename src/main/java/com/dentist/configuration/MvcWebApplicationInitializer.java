@@ -35,13 +35,14 @@ public class MvcWebApplicationInitializer extends AbstractAnnotationConfigDispat
 
 	@Override
 	protected Filter[] getServletFilters() {
+		// Adding SpringSecurityFilterChain and map to the DispatcherServlet
 		return new Filter[]{new DelegatingFilterProxy("springSecurityFilterChain")};
 	}
 
 	@Override
 	protected void registerDispatcherServlet(ServletContext servletContext) {
 		super.registerDispatcherServlet(servletContext);
-
+		// Required for SessionRegistry to work.
 		servletContext.addListener(new HttpSessionEventPublisher());
 
 	}

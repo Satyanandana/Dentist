@@ -22,14 +22,69 @@
         <div class="row">
 
             
-<%for(int i=1;i<=10;i++){ %>
+
     <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                 <a class="thumbnail" href="#">
-                    <img class="img-responsive"  src="<c:url value='/resources/img/g<%=i%>.jpg'/>"/>
+                    <img class="img-responsive"  src="<c:url value='/resources/img/g1.jpg'/>"/>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#">
+                    <img class="img-responsive"  src="<c:url value='/resources/img/g2.jpg'/>"/>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#">
+                    <img class="img-responsive"  src="<c:url value='/resources/img/g3.jpg'/>"/>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#">
+                    <img class="img-responsive"  src="<c:url value='/resources/img/g4.jpg'/>"/>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#">
+                    <img class="img-responsive"  src="<c:url value='/resources/img/g5.jpg'/>"/>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#">
+                    <img class="img-responsive"  src="<c:url value='/resources/img/g6.jpg'/>"/>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#">
+                    <img class="img-responsive"  src="<c:url value='/resources/img/g7.jpg'/>"/>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#">
+                    <img class="img-responsive"  src="<c:url value='/resources/img/g8.jpg'/>"/>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#">
+                    <img class="img-responsive"  src="<c:url value='/resources/img/g9.jpg'/>"/>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#">
+                    <img class="img-responsive"  src="<c:url value='/resources/img/g10.jpg'/>"/>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#">
+                    <img class="img-responsive"  src="<c:url value='/resources/img/g11.jpg'/>"/>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#">
+                    <img class="img-responsive"  src="<c:url value='/resources/img/g12.jpg'/>"/>
                 </a>
             </div>
         
-<%} %>
+
                                </div>
 </div>
 

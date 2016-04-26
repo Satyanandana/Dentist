@@ -35,7 +35,11 @@ $(document).ready(function(){
 	  }else if(action.html()==="documents"){
 		 
 		  showPayment();
+	  }else if(action.html()==="settings"){
+		 
+		  showSettings();
 	  }
+	  
 	  
   
 

@@ -77,9 +77,24 @@ var treatments = (function() {
                 
            });
     }
+    var updateTeethStatus = function(path) {
+  	  alert($('#updateTeethStatus').serialize());
+  	   $.ajax({
+             url: path,
+             method: 'POST',
+             data:$('#updateTeethStatus').serialize(),
+             contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+         }).then(function(data) {
+      	    
+      	   $('#changeTeethStatusModal').modal('toggle');
+      	 treatments.getTreatments("../treatments/status");
+              
+         });
+  }
     return {
         getTreatments: getTreatments,
         displayTreatments: displayTreatments,
-        sendTreatment:sendTreatment
+        sendTreatment:sendTreatment,
+        updateTeethStatus:updateTeethStatus
     };
 }());

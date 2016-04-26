@@ -18,7 +18,9 @@ import com.dentist.domain.AppointmentRequest;
 import com.dentist.domain.Insurance;
 import com.dentist.domain.Patient;
 import com.dentist.domain.PatientTeethStatus;
+import com.dentist.domain.ReceivedDocument;
 import com.dentist.domain.ReceivedMessage;
+import com.dentist.domain.SentDocument;
 import com.dentist.domain.SentMessage;
 import com.dentist.domain.Teeth;
 import com.dentist.domain.Treatment;
@@ -49,6 +51,8 @@ public interface UserDaoInterface {
 
 	public Patient getPatientInfoByEmail(String patientEmail);
 
+	public List<Patient> getAllPatients();
+
 	/* DAO methods on AppointmentRequest.class */
 	public void setAppointmentRequest(AppointmentRequest request);
 
@@ -59,6 +63,10 @@ public interface UserDaoInterface {
 	public AppointmentRequest getAppointmentRequestByIDandPatientID(long appointmentRequestID, long patientID);
 
 	public List<AppointmentRequest> getAppointmentRequestsByPatientID(long patientID);
+
+	public List<AppointmentRequest> getAllAppointmentRequests();
+
+	public List<AppointmentRequest> getAllPendingAppointmentRequests();
 
 	/* DAO methods on Appointment.class */
 	public void setAppointment(Appointment appointment);
@@ -99,6 +107,28 @@ public interface UserDaoInterface {
 	public ReceivedMessage getReceivedMessageByID(long receivedMessageID);
 
 	public List<ReceivedMessage> getReceivedMessagesByPatientID(long patientID);
+
+	/* DAO methods on SentDocument.class */
+	public void setSentDocument(SentDocument sentDocument);
+
+	public void updateSentDocument(SentDocument sentDocument);
+
+	public SentDocument getSentDocumentByID(long sentDocumentID);
+
+	public SentDocument getSentDocumentByIDandPatientID(long sentDocumentID, long patientID);
+
+	public List<SentDocument> getSentDocumentsByPatientID(long patientID);
+
+	/* DAO methods on ReceivedDocument.class */
+	public void setReceivedDocument(ReceivedDocument receivedDocument);
+
+	public void updateReceivedDocument(ReceivedDocument receivedDocument);
+
+	public ReceivedDocument getReceivedDocumentByID(long receivedDocumentID);
+
+	public ReceivedDocument getReceivedDocumentByIDandPatientID(long receivedDocumentID, long patientID);
+
+	public List<ReceivedDocument> getReceivedDocumentsByPatientID(long patientID);
 
 	/* DAO methods on Treatment.class */
 	public void setTreatment(Treatment treatment);

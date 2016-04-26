@@ -81,7 +81,7 @@ var teethTreatments = (function() {
              data:$('#updateTeethTreatment').serialize(),
              contentType: "application/x-www-form-urlencoded; charset=UTF-8"
          }).then(function(data) {
-      	   alert(data.id);
+      	   
       	   $('#teethTreatmentsChangeStatusModal').modal('toggle');
       	   showMyTeethDetails(data.id);
         	 

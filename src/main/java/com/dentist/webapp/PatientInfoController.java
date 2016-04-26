@@ -27,7 +27,9 @@ import com.dentist.domain.AppointmentRequest;
 import com.dentist.domain.EmergencyContact;
 import com.dentist.domain.Insurance;
 import com.dentist.domain.Patient;
+import com.dentist.domain.ReceivedDocument;
 import com.dentist.domain.ReceivedMessage;
+import com.dentist.domain.SentDocument;
 import com.dentist.domain.SentMessage;
 import com.dentist.domain.Treatment;
 import com.dentist.service.CustomUserDetails;
@@ -51,6 +53,10 @@ public class PatientInfoController {
 	private static final Logger LOGGER = Logger.getLogger(PatientInfoController.class);
 	@Autowired
 	private UserServiceInterface userServiceInterface;
+
+	/********************************************
+	 * GET API END POINTS to handle requests from Patient
+	 ***************************************************/
 
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value = "/info", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -99,35 +105,6 @@ public class PatientInfoController {
 	}
 
 	@PreAuthorize("hasRole('ROLE_USER')")
-	@RequestMapping(value = "/personalinfo/{patientID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> getPersonalInfoByID(Model model, @PathVariable("patientID") long patientID) {
-
-		LOGGER.debug("processing GET request to personal info with patient ID ....");
-		Map<String, Object> map = new HashMap<String, Object>();
-		if (patientID != 0) {
-			Patient patient = userServiceInterface.getPatientInfoById(patientID);
-			if (patient != null) {
-				map.put("userID", patient.getUserID());
-				map.put("firstName", patient.getFirstName());
-				map.put("lastName", patient.getLastName());
-				map.put("middleName", patient.getMiddleName());
-				map.put("dateOfBirth", patient.getDateOfBirth());
-				map.put("phoneNumber", patient.getPhoneNumber());
-				map.put("email", patient.getEmail());
-				map.put("homeAddress", patient.getHomeAddress());
-				map.put("EmergencyContact", patient.getEmergencyContact());
-			} else {
-				map.put("error", "unable to find patient with given ID");
-			}
-		} else {
-			map.put("error", "Invalid patientID");
-		}
-
-		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-
-	}
-
-	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value = "/receivedmessages", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ReceivedMessage>> getPatientsReceivedMessages(Model model) {
 		LOGGER.debug("processing request to get personal info");
@@ -149,6 +126,30 @@ public class PatientInfoController {
 		List<SentMessage> received = userServiceInterface.getSentMessagesByPatientID(user.getUserID());
 
 		return new ResponseEntity<List<SentMessage>>(received, HttpStatus.OK);
+	}
+
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value = "/receiveddocuments", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ReceivedDocument>> getReceivedDocsPatient(Model model) {
+		LOGGER.debug("processing request to get received documents ...");
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		List<ReceivedDocument> received = userServiceInterface.getReceivedDocumentsByPatientID(user.getUserID());
+		return new ResponseEntity<List<ReceivedDocument>>(received, HttpStatus.OK);
+
+	}
+
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value = "/sentdocuments", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<SentDocument>> getSentDocsPatient(Model model) {
+		LOGGER.debug("processing request to get sent documents ...");
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		List<SentDocument> received = userServiceInterface.getSentDocumentsByPatientID(user.getUserID());
+		return new ResponseEntity<List<SentDocument>>(received, HttpStatus.OK);
+
 	}
 
 	@PreAuthorize("hasRole('ROLE_USER')")
@@ -209,6 +210,60 @@ public class PatientInfoController {
 		Map<Integer, String> patientTeethStatus = userServiceInterface.getPatientTeethStatusMapByPatientID(user.getUserID());
 
 		return new ResponseEntity<Map<Integer, String>>(patientTeethStatus, HttpStatus.OK);
+	}
+
+	/********************************************
+	 * GET API END POINTS to handle requests from Admin
+	 ***************************************************/
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/info/{patientID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Patient> getPatientInfoByAdmin(Model model, @PathVariable("patientID") long patientID) {
+		LOGGER.debug("processing request to get personal info by admin");
+
+		Patient patient = userServiceInterface.getPatientInfoById(patientID);
+		if (patient != null) {
+			patient.getAppointmentRequests().size();
+			patient.getAppointments().size();
+			patient.getReceivedMessages().size();
+			patient.getSentMessages().size();
+			patient.getInsurances().size();
+			patient.getTreatments().size();
+			patient.getPatientTeeth().size();
+			patient.getUploadedDocs().size();
+			patient.getReceivedDocs().size();
+		}
+
+		return new ResponseEntity<Patient>(patient, HttpStatus.OK);
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/personalinfo/{patientID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> getPersonalInfoByID(Model model, @PathVariable("patientID") long patientID) {
+
+		LOGGER.debug("processing GET request to personal info with patient ID ....");
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (patientID != 0) {
+			Patient patient = userServiceInterface.getPatientInfoById(patientID);
+			if (patient != null) {
+				map.put("userID", patient.getUserID());
+				map.put("firstName", patient.getFirstName());
+				map.put("lastName", patient.getLastName());
+				map.put("middleName", patient.getMiddleName());
+				map.put("dateOfBirth", patient.getDateOfBirth());
+				map.put("phoneNumber", patient.getPhoneNumber());
+				map.put("email", patient.getEmail());
+				map.put("homeAddress", patient.getHomeAddress());
+				map.put("EmergencyContact", patient.getEmergencyContact());
+			} else {
+				map.put("error", "unable to find patient with given ID");
+			}
+		} else {
+			map.put("error", "Invalid patientID");
+		}
+
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+
 	}
 
 	/********************************************
@@ -278,6 +333,9 @@ public class PatientInfoController {
 			CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
 			Patient patient = userServiceInterface.getPatientInfoById(user.getUserID());
 			Address address = patient.getHomeAddress();
+			if (address == null) {
+				address = new Address();
+			}
 			address.setAddress1(address1);
 			address.setAddress2(address2);
 			address.setCity(city);
@@ -339,9 +397,13 @@ public class PatientInfoController {
 			CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
 			Patient patient = userServiceInterface.getPatientInfoById(user.getUserID());
 			EmergencyContact emergencyContact = patient.getEmergencyContact();
+			if (emergencyContact == null) {
+				emergencyContact = new EmergencyContact();
+			}
 			emergencyContact.setName(emergencyContactName);
 			emergencyContact.setPhoneNumber(emergencyContactNumber);
 			emergencyContact.setRelation(emergencyContactRelation);
+			patient.setEmergencyContact(emergencyContact);
 			map.put("success", "success");
 		}
 

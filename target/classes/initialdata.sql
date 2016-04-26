@@ -31,29 +31,3 @@ INSERT INTO teeth (teethID, Description, teethName) VALUES (30, "Lower Left Cusp
 INSERT INTO teeth (teethID, Description, teethName) VALUES (31, "Lower Left Lateral", "LLL");
 INSERT INTO teeth (teethID, Description, teethName) VALUES (32, "Lower Left Central", "LLCe");
 
-
-INSERT INTO user_auth (userID,accountStatus,creationTime,lastLoginTime,userEmail,userIp,userPwd,userRole,verifyKey,prevSessionID)  VALUES (1,"ACTIVE","2016-03-24 00:41:33","2016-03-24 00:41:33","srikanthvarma.vadapalli@gmail.com","0:0:0:0:0:0:0:1","Mx6AwbSui/IPwbOZXxu7O4U40l/+hUk0O9kZ+nPxORk=","ROLE_USER","5fQhbBa47nw+uZiGCAucIMSgCJbcAw8SFNk1sCzR58zFusK8sYQWPeiw+y350+mDAEgEVkNXPWDX8mz1g+swqqKPhZUNCy6Em6uncn5CBd0=","055924DC7BD63D3728BB93A111552657") ;
-INSERT INTO patient_details (userID, emergencyContactName, emergencyContactNumber, emergencyContactRelation, dateOfBirth, email, firstName, address1, address2, city, state, zipcode, lastName, middleName, phoneNumber) VALUES ("1", "Hima Sindhu", "6174895892", "Sister", "1989-03-01", "srikanthvarma.vadapalli@gmail.com", "Satyanandana", "30 Franklin street", "unit 228", "Malden", "MA", "01248", "Vadapalli", "Srikanthvarma", "6178491980");
-
-INSERT INTO recieved_messages (msg, receivedTime, receiverID) VALUES ("First message", "2016-02-10 00:00:00", "1");
-INSERT INTO recieved_messages (msg, receivedTime, receiverID) VALUES ("Second message", "2016-03-01 00:00:00", "1");
-
-INSERT INTO sent_messages (msg, sentTime, senderID) VALUES ("First message", "2016-02-10 00:00:00", "1");
-INSERT INTO sent_messages (msg, sentTime, senderID) VALUES ("Second message", "2016-03-01 00:00:00", "1");
-
-INSERT INTO appointmentrequests (appointmentRequestID, appointmentStartTime, note, requestInsertedTime, status, appointmentID, patientID) VALUES (NULL, "2016-03-01 00:00:00", "cleaning teeth", "2016-02-25 00:00:00", "WAITING_FOR_APPROVAL", NULL, "1");
-INSERT INTO appointmentrequests (appointmentRequestID, appointmentStartTime, note, requestInsertedTime, status, appointmentID, patientID) VALUES (NULL, "2016-03-17 00:00:00", "Extract teeth", "2016-03-01 00:00:00", "ACCEPTED", NULL, "1");
-
-INSERT INTO appointments (appointmentID, actualCalEventID, amountPaid, appointmentInsertedTime, appointmentStartTime, expectedAmount, fakeCalEventID, note, status, appointmentRequestID, patientID) VALUES (NULL, "fht789w76", NULL, "2016-03-02 00:00:00", "2016-03-01 00:00:00", NULL, "yr73988", "", "CONFIRMED", "1", "1");
-INSERT INTO appointments (appointmentID, actualCalEventID, amountPaid, appointmentInsertedTime, appointmentStartTime, expectedAmount, fakeCalEventID, note, status, appointmentRequestID, patientID) VALUES (NULL, "fhtuyiw76", NULL, "2016-03-18 00:00:00", "2016-03-17 00:00:00", NULL, "yr73988", "", "CONFIRMED", "2", "1");
-
-INSERT INTO insurances (insuranceID, dateOfBirth, insertedDate, insuranceProviderID, insuranceProviderName, status, subscriberFullName, subscriberID, patientID) VALUES (NULL, NULL, "2015-03-01 00:00:00", "5864858467", "Aetna", "EXPIRED", "SATYANANDANA SRIKANTHVARMA", "5486665487", "1");
-INSERT INTO insurances (insuranceID, dateOfBirth, insertedDate, insuranceProviderID, insuranceProviderName, status, subscriberFullName, subscriberID, patientID) VALUES (NULL, NULL, "2016-03-01 00:00:00", "5864855783", "Blue Cross", "ACTIVE", "SATYANANDANA SRIKANTHVARMA", "5486685739", "1");
-
-INSERT INTO patientteethstatus (lastModified, teethStatus, patientID, teethID) VALUES ("2016-03-01 00:00:00", "NORMAL", "1", "1");
-INSERT INTO patientteethstatus (lastModified, teethStatus, patientID, teethID) VALUES ("2016-03-01 00:00:00", "EXTRACTED", "1", "2");
-
-INSERT INTO treatments (treatmentID, amountExpected, amountPaid, note, status, treatmentDoneTime, treatmentExpectedTime, treatmentInsertedTime, patientID, teethID) VALUES (NULL, "180", "200", "somethig done to teeth 1", "COMPLETED", "2016-03-15", "2016-03-15", "2016-03-02 00:00:00", "1", "1");
-INSERT INTO treatments (treatmentID, amountExpected, amountPaid, note, status, treatmentDoneTime, treatmentExpectedTime, treatmentInsertedTime, patientID, teethID) VALUES (NULL, "100", NULL, "somethig to be done to teeth 1", "PENDING", NULL, "2016-03-24", "2016-03-22 00:00:00", "1", "1");
-INSERT INTO treatments (treatmentID, amountExpected, amountPaid, note, status, treatmentDoneTime, treatmentExpectedTime, treatmentInsertedTime, patientID, teethID) VALUES (NULL, "180", "200", "somethig done to teeth 2", "COMPLETED", "2016-03-15", "2016-03-15", "2016-03-02 00:00:00", "1", "2");
-INSERT INTO treatments (treatmentID, amountExpected, amountPaid, note, status, treatmentDoneTime, treatmentExpectedTime, treatmentInsertedTime, patientID, teethID) VALUES (NULL, "100", NULL, "somethig to be done to teeth 2", "PENDING", NULL, "2016-03-24", "2016-03-22 00:00:00", "1", "2");

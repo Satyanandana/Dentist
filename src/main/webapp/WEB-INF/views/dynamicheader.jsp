@@ -36,11 +36,13 @@
   
   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
   
-    	<div class="navbar navbar-default navbar-fixed-top">
-    <img src="<c:url value='/resources/img/logo_1.gif'/>" height="70" width="180" style="float: left;" ></img>
-      <div class="container">
+    	
+    
+      <div class="container-fluid">
+      <div class="navbar navbar-default navbar-fixed-top">
+      <img src="<c:url value='/resources/img/logo_1.gif'/>" height="70" width="180" style="float: left;margin-right: 20px;margin-left: 5px;" ></img>
         <div class="navbar-header">
-          <a href="home.jsp" class="navbar-brand" data-toggle="tooltip" title="Go Back To Homepage"> Dr Kang's Dental Clinic</a>
+          <a href="<c:url value='/home'/>" class="navbar-brand" data-toggle="tooltip" title="Go Back To Homepage"> Dr Kang's Dental Clinic</a>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -57,25 +59,13 @@
                 <li><a href="<c:url value='/services'/>" data-toggle="tooltip" title="Our Services">Our Services</a></li>
                 <li class="divider"></li>
 
-                <li><a href="<c:url value='/askme'/>" data-toggle="tooltip" title="Frequently asked questions">FAQ's</a></li>
-                <li class="divider"></li>
+                
+                
                 <li><a href="<c:url value='/gallery'/>" data-toggle="tooltip" title="View our gallery">Our Gallery</a></li>
                 <li class="divider"></li>
 
 
-                   <li><a href="https://www.youtube.com/embed/YIscPhv_cWU" data-titlestyle="right" data-width=600 data-height=400 class="html5lightbox" title="Dr. Kang's Office" data-description="
-
-<br/><br/>
-<strong>
-	Mon:		Closed<br/><br/>
-	Tue:		9:00am to 5:00pm
-					<a href=tel:(617)%20244-8087>(Call for appointment times)</a><br/><br/>
-	Wed:		Closed<br/><br/>
-	Thu:		Closed<br/><br/>
-	Fri:		9:00am to 5:00pm
-					<a href=tel:(617)%20244-8087>(Call for appointment times)</a><br/><br/>
-	Sat:		Closed<br/><br/>
-	Sun:		Closed</strong>" >Getting To the Office</a></li>
+                   <li><a data-toggle="modal" data-target="#officeVideoModal">Getting To The Office</a></li>
 
 
 
@@ -84,14 +74,16 @@
             </ul>
             </li>
             <li>
-              <a href="events.jsp" data-toggle="tooltip" title="View Appointments">Appointments</a>
+              <a href="<c:url value='/profile/scheduleappointment'/>" data-toggle="tooltip" title="View Appointments">Schedule Appointment</a>
             </li>
+            <li><a href="<c:url value='/askme'/>" data-toggle="tooltip" title="Frequently asked questions">FAQ's</a></li>
             <li>
-            <a href="contactus.jsp" data-toggle="tooltip" title="Contact us/Help">Contact Us</a>
+            <a href="<c:url value='/contactus'/>" data-toggle="tooltip" title="Contact us/Help">Contact Us</a>
             </li>
            </ul>
 
-          <ul class="nav navbar-nav navbar-right">
+           <!-- dynamic profile menu  -->
+      <ul class="nav navbar-nav navbar-right" style="margin-right: 5px;">
 
 
  <c:choose>
@@ -107,6 +99,55 @@
                     <i class="fa fa-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-default">
+    <c:choose>
+        <c:when test="${role == 'ROLE_USER'}">
+        
+                      <li>
+                            <a href="<c:url  value="/profile/view?action=profile" />">
+                           <i class="fa fa-user"></i>&nbsp;&nbsp;My Profile </a>
+                        </li>
+                       <li>
+                            <a href="<c:url  value="/profile/view?action=messages" />">
+                           <i class="fa fa-envelope"></i>&nbsp;&nbsp;Messages </a>
+                        </li>
+                          <li>
+                            <a href="<c:url  value="/profile/view?action=appointments" />">
+                           <i class="fa fa-calendar"></i>&nbsp;&nbsp;Appointments </a>
+                        </li>
+                        <li>
+                            <a href="<c:url  value="/profile/view?action=treatments" />">
+                           <i class="fa fa-gavel"></i>&nbsp;&nbsp;Treatments </a>
+                        </li>
+                        <li>
+                            <a href="<c:url  value="/profile/view?action=insurance" />">
+                           <i class="fa fa-medkit"></i>&nbsp;&nbsp;Insurance </a>
+                        </li>
+                        <li>
+                            <a href="<c:url  value="/profile/view?action=documents" />">
+                           <i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;&nbsp;Documents </a>
+                        </li>
+                        <li>
+                            <a href="<c:url  value="/profile/view?action=settings" />">
+                           <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;&nbsp;Settings </a>
+                        </li>
+                       
+                        <li class="divider">
+                        </li>
+                        
+                        <li>
+                            
+                            
+                          <c:url value="/logout" var="logout" />
+                    	<form action="${logout}" method="POST" id="logoutForm">
+			            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		                
+	                   </form>
+	                   <a href="#" onclick="submitLogout()"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;Logout </a>
+                        </li>
+        
+    </c:when>    
+    <c:otherwise>
+    
                       <li>
                             <a href="#">
                             <i class="glyphicon glyphicon-th-large" style="font-size: 13px !important; display: inline !important;"></i></i> Dashboard </a>
@@ -146,6 +187,9 @@
 		                <input type="submit" >Logout </>
 	                   </form> </a>
                         </li>
+     </c:otherwise>
+</c:choose>
+                    
                     </ul>
                 </li>
     </c:otherwise>
@@ -156,11 +200,49 @@
 
         </div>
       </div>
+     
     </div>
   
   
   
+  <!-- Modal Getting To The Office Video-->
+  <div class="modal fade" id="officeVideoModal" role="dialog" style="height: 600px;width: 900px;">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Getting To The Office</h4>
+        </div>
+        <div class="modal-body">
+          <video width="320" height="240" controls>
+  <source src="<c:url value='/resources/video/gettingtoDrKangsoffice.mov'/>" type="video/webm">
+  
 
+</video>
+          
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Got It.</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<script type="text/javascript">
+
+function submitLogout()
+{
+	
+	/* document.getElementById("logoutForm").action =; */
+        
+        document.getElementById("logoutForm").submit();
+        
+	}
+
+</script>
 
 
 </body>

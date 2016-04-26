@@ -15,10 +15,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -30,8 +28,10 @@ import com.dentist.domain.AppointmentRequest;
 import com.dentist.domain.Insurance;
 import com.dentist.domain.Patient;
 import com.dentist.domain.PatientTeethStatus;
+import com.dentist.domain.ReceivedDocument;
 import com.dentist.domain.ReceivedMessage;
 import com.dentist.domain.Role;
+import com.dentist.domain.SentDocument;
 import com.dentist.domain.SentMessage;
 import com.dentist.domain.Teeth;
 import com.dentist.domain.TeethStatus;
@@ -42,12 +42,9 @@ import com.dentist.util.WebUtility;
 @Service
 @Transactional
 public class UserServiceImpl implements UserServiceInterface {
-	@Autowired
-	private ApplicationContext context;
+
 	@Autowired
 	private UserDaoInterface userDaoInterface;
-	@Autowired
-	private PooledPBEStringEncryptor encryptor;
 
 	/*
 	 * DAO methods on UserAuthentication.class
@@ -103,6 +100,11 @@ public class UserServiceImpl implements UserServiceInterface {
 		return userDaoInterface.getPatientInfoByEmail(patientEmail);
 	}
 
+	@Override
+	public List<Patient> getAllPatients() {
+		return userDaoInterface.getAllPatients();
+	}
+
 	/*
 	 * DAO methods on AppointmentRequest.class
 	 */
@@ -130,6 +132,16 @@ public class UserServiceImpl implements UserServiceInterface {
 	public AppointmentRequest getAppointmentRequestByIDandPatientID(long appointmentRequestID, long patientID) {
 		return userDaoInterface.getAppointmentRequestByIDandPatientID(appointmentRequestID, patientID);
 
+	}
+
+	@Override
+	public List<AppointmentRequest> getAllAppointmentRequests() {
+		return userDaoInterface.getAllAppointmentRequests();
+	}
+
+	@Override
+	public List<AppointmentRequest> getAllPendingAppointmentRequests() {
+		return userDaoInterface.getAllPendingAppointmentRequests();
 	}
 
 	/*
@@ -234,6 +246,64 @@ public class UserServiceImpl implements UserServiceInterface {
 	@Override
 	public List<ReceivedMessage> getReceivedMessagesByPatientID(long patientID) {
 		return userDaoInterface.getReceivedMessagesByPatientID(patientID);
+	}
+
+	/**
+	 * call DAO methods on SentDocument.class
+	 **/
+
+	@Override
+	public void setSentDocument(SentDocument sentDocument) {
+		userDaoInterface.setSentDocument(sentDocument);
+	}
+
+	@Override
+	public void updateSentDocument(SentDocument sentDocument) {
+		userDaoInterface.updateSentDocument(sentDocument);
+	}
+
+	@Override
+	public SentDocument getSentDocumentByID(long sentDocumentID) {
+		return userDaoInterface.getSentDocumentByID(sentDocumentID);
+	}
+
+	@Override
+	public SentDocument getSentDocumentByIDandPatientID(long sentDocumentID, long patientID) {
+		return userDaoInterface.getSentDocumentByIDandPatientID(sentDocumentID, patientID);
+	}
+
+	@Override
+	public List<SentDocument> getSentDocumentsByPatientID(long patientID) {
+		return userDaoInterface.getSentDocumentsByPatientID(patientID);
+	}
+
+	/**
+	 * call DAO methods on ReceivedDocument.class
+	 **/
+	@Override
+	public void setReceivedDocument(ReceivedDocument receivedDocument) {
+		userDaoInterface.setReceivedDocument(receivedDocument);
+	}
+
+	@Override
+	public void updateReceivedDocument(ReceivedDocument receivedDocument) {
+		userDaoInterface.updateReceivedDocument(receivedDocument);
+	}
+
+	@Override
+	public ReceivedDocument getReceivedDocumentByID(long receivedDocumentID) {
+		return userDaoInterface.getReceivedDocumentByID(receivedDocumentID);
+	}
+
+	@Override
+	public ReceivedDocument getReceivedDocumentByIDandPatientID(long receivedDocumentID, long patientID) {
+
+		return userDaoInterface.getReceivedDocumentByIDandPatientID(receivedDocumentID, patientID);
+	}
+
+	@Override
+	public List<ReceivedDocument> getReceivedDocumentsByPatientID(long patientID) {
+		return userDaoInterface.getReceivedDocumentsByPatientID(patientID);
 	}
 
 	/*

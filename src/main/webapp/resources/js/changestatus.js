@@ -30,6 +30,16 @@ function changestatusOfTeethTreatment(teethID,treatmentId)
 		  
 }
 
+function changeTeethStatus(teethID)
+{
+	  
+	  $('#teethStatusTeethID').attr("value",teethID);
+	  
+		 $('#changeTeethStatusModal').modal('show');
+	 
+		  
+}
+
 function newTreatmentStatus()
 {
 	

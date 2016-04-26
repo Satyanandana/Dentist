@@ -37,6 +37,12 @@ public class HibernateConfig {
 	@Qualifier("encryptableProps")
 	private Properties encryptableProps;
 
+	/**
+	 * Configuration to create an instance of SessionFactory.This variant of
+	 * LocalSessionFactoryBean requires Hibernate 4.0 or higher.it is closer to
+	 * AnnotationSessionFactoryBean since its core purpose is to bootstrap a
+	 * SessionFactory from package scanning.
+	 **/
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -46,6 +52,13 @@ public class HibernateConfig {
 		return sessionFactory;
 	}
 
+	/**
+	 * Configuration to create an instance of DataSource to establish a
+	 * connection with the Database.A DataSource that can be instantiated
+	 * through IoC and implements the DataSource interface since the
+	 * DataSourceProxy is used as a generic proxy. The DataSource simply wraps a
+	 * ConnectionPool in order to provide a standard interface to the user
+	 **/
 	@Bean
 	public DataSource dataSource() {
 
@@ -53,7 +66,9 @@ public class HibernateConfig {
 		p.setUrl(environment.getRequiredProperty("jdbc.url"));
 		p.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
 		p.setUsername(environment.getRequiredProperty("jdbc.username"));
+		/** If the password is not encrypted in application.properties **/
 		// p.setPassword(environment.getRequiredProperty("jdbc.password"));
+		/** If the password encrypted in application.properties **/
 		p.setPassword(encryptableProps.getProperty("jdbc.password"));
 		p.setJmxEnabled(true);
 		p.setTestWhileIdle(false);
@@ -79,6 +94,10 @@ public class HibernateConfig {
 		return dataSource;
 	}
 
+	/**
+	 * Adding the hibernate properties extracted from application.properties
+	 * file in classpath to java.util.Properties.
+	 **/
 	private Properties hibernateProperties() {
 		Properties properties = new Properties();
 		properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
@@ -90,6 +109,29 @@ public class HibernateConfig {
 		return properties;
 	}
 
+	/**
+	 * Configuration of Hibernate Transaction Manager.This is important to make
+	 * Spring Transaction work i.e @Transactional.Set LocalSessionFactory to
+	 * transaction manager.
+	 * 
+	 * Binds a Hibernate Session from the specified factory to the thread,
+	 * potentially allowing for one thread-bound Session per factory.
+	 * SessionFactory.getCurrentSession() is required for Hibernate access code
+	 * that needs to support this transaction handling mechanism, with the
+	 * SessionFactory being configured with SpringSessionContext.
+	 * 
+	 * Supports custom isolation levels, and timeouts that get applied as
+	 * Hibernate transaction timeouts.
+	 * 
+	 * This transaction manager is appropriate for applications that use a
+	 * single Hibernate SessionFactory for transactional data access, but it
+	 * also supports direct DataSource access within a transaction (i.e. plain
+	 * JDBC code working with the same DataSource). This allows for mixing
+	 * services which access Hibernate and services which use plain JDBC
+	 * (without being aware of Hibernate)! Application code needs to stick to
+	 * the same simple Connection lookup pattern as with
+	 * 
+	 **/
 	@Bean
 	@Autowired
 	public HibernateTransactionManager transactionManager(SessionFactory s) {

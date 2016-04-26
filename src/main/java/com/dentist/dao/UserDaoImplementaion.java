@@ -20,10 +20,13 @@ import org.springframework.stereotype.Repository;
 
 import com.dentist.domain.Appointment;
 import com.dentist.domain.AppointmentRequest;
+import com.dentist.domain.AppointmentRequestStatus;
 import com.dentist.domain.Insurance;
 import com.dentist.domain.Patient;
 import com.dentist.domain.PatientTeethStatus;
+import com.dentist.domain.ReceivedDocument;
 import com.dentist.domain.ReceivedMessage;
+import com.dentist.domain.SentDocument;
 import com.dentist.domain.SentMessage;
 import com.dentist.domain.Teeth;
 import com.dentist.domain.Treatment;
@@ -97,6 +100,13 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 		return (Patient) criteria.uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Patient> getAllPatients() {
+		Criteria criteria = getSession().createCriteria(Patient.class);
+		return criteria.list();
+	}
+
 	/*
 	 * DAO methods on AppointmentRequest.class
 	 */
@@ -128,6 +138,21 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 		Criteria criteria = getSession().createCriteria(AppointmentRequest.class).add(Restrictions.idEq(appointmentRequestID))
 				.add(Restrictions.eq("appointmentPatient.userID", patientID));
 		return (AppointmentRequest) criteria.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AppointmentRequest> getAllAppointmentRequests() {
+		Criteria criteria = getSession().createCriteria(AppointmentRequest.class);
+		return criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AppointmentRequest> getAllPendingAppointmentRequests() {
+		Criteria criteria = getSession().createCriteria(AppointmentRequest.class)
+				.add(Restrictions.eq("status", AppointmentRequestStatus.WAITING_FOR_APPROVAL));
+		return criteria.list();
 	}
 
 	/*
@@ -247,6 +272,74 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 	@SuppressWarnings("unchecked")
 	public List<ReceivedMessage> getReceivedMessagesByPatientID(long patientID) {
 		Criteria criteria = getSession().createCriteria(ReceivedMessage.class).add(Restrictions.eq("receiver.userID", patientID));
+		return criteria.list();
+	}
+
+	/**
+	 * DAO Methods on SentDocument.class
+	 **/
+
+	@Override
+	public void setSentDocument(SentDocument sentDocument) {
+		persist(sentDocument);
+	}
+
+	@Override
+	public void updateSentDocument(SentDocument sentDocument) {
+		update(sentDocument);
+	}
+
+	@Override
+	public SentDocument getSentDocumentByID(long sentDocumentID) {
+		Criteria criteria = getSession().createCriteria(SentDocument.class).add(Restrictions.idEq(sentDocumentID));
+		return (SentDocument) criteria.uniqueResult();
+	}
+
+	@Override
+	public SentDocument getSentDocumentByIDandPatientID(long sentDocumentID, long patientID) {
+		Criteria criteria = getSession().createCriteria(SentDocument.class).add(Restrictions.idEq(sentDocumentID))
+				.add(Restrictions.eq("sender.userID", patientID));
+		return (SentDocument) criteria.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SentDocument> getSentDocumentsByPatientID(long patientID) {
+		Criteria criteria = getSession().createCriteria(SentDocument.class).add(Restrictions.eq("sender.userID", patientID));
+		return criteria.list();
+	}
+
+	/**
+	 * DAO Methods on ReceivedDocument.class
+	 **/
+
+	@Override
+	public void setReceivedDocument(ReceivedDocument receivedDocument) {
+		persist(receivedDocument);
+	}
+
+	@Override
+	public void updateReceivedDocument(ReceivedDocument receivedDocument) {
+		update(receivedDocument);
+	}
+
+	@Override
+	public ReceivedDocument getReceivedDocumentByID(long receivedDocumentID) {
+		Criteria criteria = getSession().createCriteria(ReceivedDocument.class).add(Restrictions.idEq(receivedDocumentID));
+		return (ReceivedDocument) criteria.uniqueResult();
+	}
+
+	@Override
+	public ReceivedDocument getReceivedDocumentByIDandPatientID(long receivedDocumentID, long patientID) {
+		Criteria criteria = getSession().createCriteria(ReceivedDocument.class).add(Restrictions.idEq(receivedDocumentID))
+				.add(Restrictions.eq("receiver.userID", patientID));
+		return (ReceivedDocument) criteria.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ReceivedDocument> getReceivedDocumentsByPatientID(long patientID) {
+		Criteria criteria = getSession().createCriteria(ReceivedDocument.class).add(Restrictions.eq("receiver.userID", patientID));
 		return criteria.list();
 	}
 

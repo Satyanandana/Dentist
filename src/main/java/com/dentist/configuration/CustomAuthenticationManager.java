@@ -15,6 +15,14 @@ import org.springframework.security.core.AuthenticationException;
  * @git
  * 
  */
+
+/**
+ * This implementation is required for making the Expression-Based Access
+ * Control work. @EnableGlobalMethodSecurity requires a bean of
+ * AuthenticationManager.Add @EnableGlobalMethodSecurity(prePostEnabled = true)
+ * to WebMvcConfigurerAdapter so that @@PreAuthorize work.
+ **/
+
 public class CustomAuthenticationManager implements AuthenticationManager {
 
 	@Override

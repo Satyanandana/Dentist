@@ -27,6 +27,8 @@
  <script type="text/javascript" src="<c:url value='/resources/js/myprofile.js'/>"></script>
  
  <script type="text/javascript" src="<c:url value='/resources/js/teethTreatments.js'/>"></script>
+ <script type="text/javascript" src="<c:url value='/resources/js/senddocuments.js'/>"></script>
+ <script type="text/javascript" src="<c:url value='/resources/js/receiveddocuments.js'/>"></script>
  
  
  <%@include file="template.jsp" %>
@@ -59,7 +61,7 @@
   
   <p>We've provided All informations of you , If you have any difficulties , please call us at (617) 244-8087. We look forward to resolving all of your dental concerns.</p>
 </div>
-<div id="filters">
+<!-- <div id="filters">
 <div class="row">
 <div class="col-sm-3">
 <form class="navbar-form navbar-left" role="search">
@@ -84,7 +86,7 @@
   </ul>
   </div>
 </div>
-</div>
+</div> -->
 <div class="row">
 
           <div class="col-sm-3">
@@ -107,7 +109,7 @@
           		 <div id="showPersonalForm">
           		<form class="form-horizontal" id="showPersonalForm">
   
-   <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
+   <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
 				<h2><i class="fa fa-info"></i>&nbsp; Personal Information </h2>
   
   
@@ -140,7 +142,7 @@
   		<div id="hidePersonalForm" class="form-group">
           		<form class="form-horizontal" id="hidePersonalForm1" name="hidePersonalForm1" class="hidePersonalForm1">
   
-  <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
+  <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
 				<h2><i class="fa fa-info"></i>&nbsp; Personal Information </h2>
   
   
@@ -174,7 +176,7 @@
   <div id="showAddressForm">
           		<form class="form-horizontal">
   
-   <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
+   <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
 				<h2><i class="fa fa-map-marker"></i>&nbsp; Address Information </h2>
   
   
@@ -207,7 +209,7 @@
   		<div id="hideAddressForm" class="form-group">
           		<form class="form-horizontal" id="hideAddressForm1" name="hideAddressForm1" class="hideAddressForm1">
   
-  <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
+  <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
 				<h2><i class="fa fa-map-marker"></i>&nbsp; Address Information </h2>
   
   
@@ -246,7 +248,7 @@
           		<div id="showContactForm">
           		<form class="form-horizontal">
   
-   <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
+   <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
 				<h2><i class="fa fa-phone"></i> Contact Information </h2>
   
   
@@ -272,7 +274,7 @@
   		<div id="hideContactForm" class="form-group">
           		
   
-   <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
+   <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
    <form class="form-horizontal" id="hideContactForm1" name="hideContactForm1" class="hideContactForm1">
 				<h2><i class="fa fa-phone"></i> Contact Information </h2>
   
@@ -300,7 +302,7 @@
    <div id="showEmergencyForm">
           		<form class="form-horizontal">
   
-   <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
+   <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
 				<h2><i class="fa fa-exclamation-triangle"></i>&nbsp; Emergency Information </h2>
   
   
@@ -325,7 +327,7 @@
   		<div id="hideEmergencyForm"  class="form-group">
           		<form class="form-horizontal" id="hideEmergencyForm1" name="hideEmergencyForm1" class="hideEmergencyForm1"> 
   
-  <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
+  <div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
 				<h2><i class="fa fa-exclamation-triangle"></i>&nbsp; Emergency Information </h2>
   
   
@@ -374,7 +376,7 @@
 
 
 				<div id="Messages">
-				<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
+				<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
 				
 <div class="list-group" ">
   
@@ -397,7 +399,7 @@
 
 
 
-<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
+<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
 				
 <div class="list-group">
   
@@ -417,7 +419,7 @@
           		
           		
           		<div id="Appointments">
-          		<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
+          		<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
 				
 <div class="list-group" style="overflow:auto;max-height: 400px;padding-top: 5px;">
   
@@ -451,7 +453,7 @@
   
 </div>
 </div>
-<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
+<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
 <h2> <i class="fa fa-exclamation-triangle"></i> Requested Appointments <a href="<c:url value='/profile/scheduleappointment'/>" style="float: right;"><i class="fa fa-plus-circle"  >Schedule New</i></a></h2><br/>
 
 
@@ -488,7 +490,7 @@
           		
           		<div id="Treatments">
              
-<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
+<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
 				
 <div class="list-group" ">
   
@@ -515,29 +517,9 @@
    
    <div class="col-sm-12" style="background-color: white;margin-bottom: 20px;">
    				
-<div class="list-group">
+<div class="list-group"  id="teethDetails">
   
-   <h2 style="float: left;"> <i class="flaticon-icon-91156"></i>Teeth Details</h2><br/> 
   
-  <table class="table" align="center">
-  <thead>
-    <tr>
-      <th>Teeth Number</th>
-      <th>Teeth Name</th>
-      <th>Description</th>
-      <th>Total Amount Spent</th>
-   
-     
-     
-    </tr>
-  </thead>
-  
-  <tbody >
-    <tr id="teethDetails">
-    
-    </tr>
-   </tbody>
-  </table>
   
 </div>
 </div>
@@ -547,31 +529,10 @@
   
    <h2 style="float: left;"> <i class="flaticon-medical-23"></i>Treatment Details</h2><br/> 
   
-  <table class="table" align="center">
-  <thead>
-    <tr>
-    	
-      <th>Treatment Inserted</th>
-      <th>Treatment Done</th>
-      <th>Treatment Expected</th>
-      
-      
-      <th>Amount Paid</th>
-      <th>Amount Expected</th>
-      <th>Status</th>
-      
-      
-     
-   
-     
-     
-    </tr>
-  </thead>
+<br/>
+  <br/>
+  <div id="teethTreatmentDetails"></div>
   
-  <tbody id="teethTreatmentDetails">
-   
-   </tbody>
-  </table>
   
 </div>
 </div>
@@ -587,7 +548,7 @@
           		<div id="Insurance">
           		
      
-<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
+<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
 				
 <div class="list-group" ">
   
@@ -602,7 +563,7 @@
           		
           		<div id="Payment">
           		
-          		<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;">
+          		<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
 				
 <div class="list-group" ">
   
@@ -618,13 +579,37 @@
     </tr>
   </thead>
   
-<tbody id="#">
+<tbody id="mydocuments">
 
   </tbody>
   </table>
   
   
   
+</div>
+</div>
+<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
+<div class="list-group">
+  
+   <h2> <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Received Documents </h2> <br/> 
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>File Name</th>
+      <th>Received Date</th>
+      <th>View File</th>
+      
+    </tr>
+  </thead>
+  
+<tbody id="receiveddocuments">
+
+  </tbody>
+  </table>
+  
+  
+  </div>
 </div>
 </div>
      
@@ -981,19 +966,68 @@ Request Parameters: text hidden teethID
           <h4 class="modal-title">Add New Document</h4>
         </div>
         <div class="modal-body">
-         
+          <form name="attachDocumentForm" id="attachDocumentForm" enctype="multipart/form-data">
+          <div class="form-group">
+                                    <label class="control-label" for="disabledInput">File Name</label>
+                                    <input class="form-control" id="uploadFileName" name="name" placeholder="document" type="text">
+                                </div>
+          
           <div class="form-group">
  <label class="control-label" for="disabledInput">(.pdf , .docx , .txt , .jpg etc)</label>
-  <input class="form-control"  type="file"  >
+  <input class="form-control"  type="file" name="file" id="file">
 </div>
+ <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
+ </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" >Attach</button>
+          <button type="button" class="btn btn-primary" onclick="senddocuments.postdocuments('../doc/upload')">Attach</button>
         </div>
       </div>
       
     </div>
   </div>
+  <!-- Modal to Change Status of teeth -->
+  <div class="modal fade" id="changeTeethStatusModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Change Your Teeth Status</h4>
+        </div>
+        <div class="modal-body" id="teethStatus">
+        
+<div class="form-group">
+      <label for="select">Teeth Status</label>
+      <form id="updateTeethStatus" name="updateTeethStatus">
+      
+      <input type="hidden" name="teethID" id="teethStatusTeethID" value="">
+        <select class="form-control" name="status" id="status">
+           
+          <option value="NORMAL" selected="selected">Normal</option>
+          <option value="EXTRACTED">Extracted</option>
+          
+          
+          
+        
+        </select>
+        
+
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        
+        </form>
+        
+      </div>
+    
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="treatments.updateTeethStatus('../teeth/update/status')" >Update</button>
+        </div>
+      </div>
+      </div>  
+    </div>
   
    <!-- Modal Change Status for teeth treatment -->
     
@@ -1133,6 +1167,7 @@ Request Parameters: text hidden teethID
     </div>
     
    
+    
         
 <%@include file="footer.jsp" %>
 

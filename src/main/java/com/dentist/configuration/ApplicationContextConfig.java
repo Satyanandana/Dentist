@@ -69,23 +69,39 @@ public class ApplicationContextConfig {
 
 	private static final Logger LOGGER = Logger.getLogger(ApplicationContextConfig.class);
 
+	/**
+	 * Bean required to maintains the registry of sessions.In order to make this
+	 * bean work register HttpSessionEventPublisher listener with Spring
+	 * DispatcherServlet.
+	 **/
 	@Bean
 	public SessionRegistry sessionRegistry() {
 		SessionRegistry sessionRegistry = new SessionRegistryImpl();
 		return sessionRegistry;
 	}
 
+	/**
+	 * When a request is intercepted and requires authentication, the request
+	 * data is stored to record the original destination before the
+	 * authentication process commenced, and to allow the request to be
+	 * reconstructed when a redirect to the same URL occurs. This bean is
+	 * responsible for performing the redirect to the original URL if
+	 * appropriate.
+	 **/
 	@Bean
 	public AuthenticationSuccessHandler getAuthenticationSuccessHandler() {
 
-		AuthenticationSuccessHandler SuccessHandler = new SavedRequestAwareAuthenticationSuccessHandler();
-		return SuccessHandler;
+		AuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
+		return successHandler;
 	}
+
+	/**
+	 * JASYPT configuration to integrate with Hibernate 4 and Spring FrameWork
+	 **/
 
 	@Bean
 	public StringFixedSaltGenerator stringFixedSaltGenerator() {
 		StringFixedSaltGenerator stringFixedSaltGenerator = new StringFixedSaltGenerator("justAnotherSaltforGX");
-
 		return stringFixedSaltGenerator;
 	}
 
@@ -96,9 +112,8 @@ public class ApplicationContextConfig {
 		encryptorConfig.setAlgorithm("PBEWITHSHA256AND128BITAES-CBC-BC");
 		encryptorConfig.setPassword("Boston");
 		// encryptorConfig.setStringOutputType("hexadecimal");
-
-		// encryptorConfig.setSaltGenerator(stringFixedSaltGenerator());
-
+		// encryptorConfig.setSaltGenerator(new
+		// StringFixedSaltGenerator("mySalt"));
 		// config.setPasswordEnvName("APP_ENCRYPTION_PASSWORD");
 		return encryptorConfig;
 	}
@@ -117,31 +132,13 @@ public class ApplicationContextConfig {
 		hibernatePBEStringEncryptor.setConfig(environmentVariablesConfiguration());
 		hibernatePBEStringEncryptor.setEncryptor(pooledPBEStringEncryptor());
 		hibernatePBEStringEncryptor.setRegisteredName("HibernateStringEncryptor");
-
 		return hibernatePBEStringEncryptor;
 	}
 
-	/*
-	 * @Bean public StandardPBEStringEncryptor standardPBEStringEncryptor() {
-	 * StandardPBEStringEncryptor standardPBEStringEncryptor = new
-	 * StandardPBEStringEncryptor();
-	 * standardPBEStringEncryptor.setConfig(environmentVariablesConfiguration())
-	 * ; return standardPBEStringEncryptor; }
-	 */
-
-	/*
-	 * Can be used with hibernate xml configuration.
-	 * 
-	 * @Bean public EncryptablePropertyPlaceholderConfigurer
-	 * encryptablePropertyPlaceholderConfiguration(){
-	 * EncryptablePropertyPlaceholderConfigurer ePPConfiguration = new
-	 * EncryptablePropertyPlaceholderConfigurer(stringEncryptor()); Resource
-	 * resource = new ClassPathResource("application.properties");
-	 * ePPConfiguration.setLocation(resource);; return ePPConfiguration;
-	 * 
-	 * }
-	 */
-
+	/**
+	 * Required to get the decrypted properties wrapped with ENC() in
+	 * application.properties files in classpath
+	 **/
 	@Bean(name = "encryptableProps")
 	public Properties encryptableProperties() {
 		Properties props = new EncryptableProperties(pooledPBEStringEncryptor());
@@ -155,7 +152,9 @@ public class ApplicationContextConfig {
 
 	}
 
-	// Email bean configuration
+	/**
+	 * Email bean configuration
+	 **/
 
 	@Bean(name = "emailSender")
 	public JavaMailSenderImpl emailSender() {
@@ -175,7 +174,9 @@ public class ApplicationContextConfig {
 		return emailSender;
 	}
 
-	// Velocity templating bean configuration for email template generation
+	/**
+	 * Velocity templating bean configuration for email template generation
+	 **/
 
 	@Bean
 	public VelocityConfigurer velocityConfigurer() throws VelocityException, IOException {
@@ -192,25 +193,31 @@ public class ApplicationContextConfig {
 		return velocityEngine;
 	}
 
+	/**
+	 * Configuration to establish server to server connection with Goolge
+	 **/
 	@Bean(name = "googleCredential")
 	public GoogleCredential getGoogleCredential() throws IOException {
 		String serverAccountEmail = environment.getRequiredProperty("google.servertoserver.account.email");
 		ArrayList<String> OuthScopes = new ArrayList<String>();
 		OuthScopes.add(CalendarScopes.CALENDAR);
 		File privateKeyFileP12 = resourceLoader.getResource("classpath:DentalCalKey.p12").getFile();
-		// File privateKeyFileP12 = new
-		// File(environment.getRequiredProperty("google.servertoserver.p12file"));
 		GoogleCredential credential = GoogleServerToServer.getGoogleCredential(serverAccountEmail, privateKeyFileP12, OuthScopes);
-
 		return credential;
 	}
 
+	/**
+	 * Configuration to establish connection with Google Calendar
+	 **/
 	@Bean(name = "googleCalendar")
 	public Calendar getCalendar() throws GeneralSecurityException, IOException {
 		Calendar calendar = GoogleServerToServer.getCalendar(getGoogleCredential(), "dentalappointmentcalander");
 		return calendar;
 	}
 
+	/**
+	 * Required to get the Geo location of the user base on remote IP address
+	 **/
 	@Bean(name = "lookupService")
 	public LookupService getGeoLocation() throws IOException {
 		Resource geoLiteDatabaseFile = resourceLoader.getResource("classpath:GeoLiteCity.dat");

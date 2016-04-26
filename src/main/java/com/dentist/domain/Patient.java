@@ -81,10 +81,10 @@ public class Patient implements Serializable {
 	private List<ReceivedMessage> receivedMessages = new ArrayList<ReceivedMessage>();
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sender")
-	private List<DocumentsUploaded> uploadedDocs = new ArrayList<DocumentsUploaded>();
+	private List<SentDocument> uploadedDocs = new ArrayList<SentDocument>();
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver")
-	private List<DocumentsReceived> receivedDocs = new ArrayList<DocumentsReceived>();
+	private List<ReceivedDocument> receivedDocs = new ArrayList<ReceivedDocument>();
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
 	private List<Treatment> treatments = new ArrayList<Treatment>();
@@ -206,19 +206,19 @@ public class Patient implements Serializable {
 		this.receivedMessages = receivedMessages;
 	}
 
-	public List<DocumentsUploaded> getUploadedDocs() {
+	public List<SentDocument> getUploadedDocs() {
 		return uploadedDocs;
 	}
 
-	public void setUploadedDocs(List<DocumentsUploaded> uploadedDocs) {
+	public void setUploadedDocs(List<SentDocument> uploadedDocs) {
 		this.uploadedDocs = uploadedDocs;
 	}
 
-	public List<DocumentsReceived> getReceivedDocs() {
+	public List<ReceivedDocument> getReceivedDocs() {
 		return receivedDocs;
 	}
 
-	public void setReceivedDocs(List<DocumentsReceived> receivedDocs) {
+	public void setReceivedDocs(List<ReceivedDocument> receivedDocs) {
 		this.receivedDocs = receivedDocs;
 	}
 

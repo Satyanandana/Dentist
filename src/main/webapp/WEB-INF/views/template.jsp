@@ -11,7 +11,7 @@
 
 
 
-<li class="list-group-item"><p class="list-group-item-text">{{firstMessage}}<a class="read-more-show hide" href="#">Read More</a> <span class="read-more-content">{{secondMessage}} <a class="read-more-hide hide" href="#">Read Less</a></span></p><p><small style="float: right;">{{sentTime}}</small></p></li>
+<li class="list-group-item"><p class="list-group-item-text"><i class="fa fa-envelope" aria-hidden="true"></i>  {{firstMessage}}<a class="read-more-show hide" href="#">Read More</a> <span class="read-more-content">{{secondMessage}} <a class="read-more-hide hide" href="#">Read Less</a></span></p><p><div style="float: right;"><i class="fa fa-clock-o" aria-hidden="true"></i>  {{sentTime}}</div></p></li>
 <script type="text/javascript" src="<c:url value='/resources/js/readmore.js'/>" />  
 
 
@@ -19,7 +19,7 @@
 
 <script type="text/template" id="receivedMessageTemp">
 
-  <li class="list-group-item"><p class="list-group-item-text">{{firstMessage}}<a class="read-more-show hide" href="#">Read More</a> <span class="read-more-content">{{secondMessage}} <a class="read-more-hide hide" href="#">Read Less</a></span></p><p><small style="float: right;">{{receivedTime}}</small></p></li>
+  <li class="list-group-item"><p class="list-group-item-text"><i class="fa fa-envelope" aria-hidden="true"></i>  {{firstMessage}}<a class="read-more-show hide" href="#">Read More</a> <span class="read-more-content">{{secondMessage}} <a class="read-more-hide hide" href="#">Read Less</a></span></p><p><small style="float: right;"><i class="fa fa-clock-o" aria-hidden="true"></i>  {{receivedTime}}</small></p></li>
   <script type="text/javascript" src="<c:url value='/resources/js/readmore.js'/>" />
 
 
@@ -123,6 +123,43 @@
    
 </script>
 
+<script type="text/template" id="mydocumentsTemp">
+
+ 
+
+    <tr >
+      <td>{{counter}}</td>
+      <td>{{fileName}}</td>
+      <td>{{sentTime}}</td>
+
+      <td><a href="../doc/download/sent/{{docID}}" target="_blank">View File</a></td>
+     
+
+     
+    </tr>
+
+
+   
+</script>
+
+<script type="text/template" id="receiveddocumentsTemp">
+
+ 
+
+    <tr >
+      <td>{{counter}}</td>
+      <td>{{fileName}}</td>
+      <td>{{receivedTime}}</td>
+
+      <td><a href="../doc/download/received/{{docID}}" target="_blank">View File</a></td>
+     
+
+     
+    </tr>
+
+
+   
+</script>
 <script type="text/template" id="requestedTreatmentsTemp">
 
      
@@ -147,52 +184,73 @@
 </script>
 
 <script type="text/template" id="teethDetailsTemp">
+<div class="row">
+<div class="col-xs-6">
+ <h2 style="float: left;"> <i class="flaticon-icon-91156"></i>Teeth Details</h2>
+</div>
+<div class="col-xs-6">
+<h2> <a href="#" style="float:right;" class="btn btn-success btn-xs" onclick="addNewTreatmentOnTeeth({{teeth.teethID}})">Add New Treatment <i class="fa fa-plus-circle" ></i></a> </h2>
+</div>
+</div>
+ 
+  
+  <table class="table" align="center">
+  <thead>
+    <tr>
+      <th>Teeth Number</th>
+      <th>Teeth Name</th>
+      <th>Description</th>
+      <th>Total Amount Spent</th>
+      <th>Status</th>
+       <th></th>
+     
+     
+    </tr>
+  </thead>
+  
+  <tbody >
+    <tr>
+    
 
       <td>{{teeth.teethID}}</td>
       <td>{{teeth.teethName}}</td>
       <td>{{teeth.description}}</td>
 <td>{{total}}</td>
-
-<td><a href="#" class="btn btn-success btn-xs" onclick="addNewTreatmentOnTeeth({{teeth.teethID}})">Add New Treatment <i class="fa fa-plus-circle" ></i></a></td>
+<td>{{status}}</td>
+<td></td>
+<td><button  class="btn btn-primary btn-xs" id="" onclick="changeTeethStatus({{teeth.teethID}})" style="float:right;" >Change Status</button></p></td>
 	  
 
+    </tr>
+   </tbody>
+  </table>
 
 </script>
 <script type="text/template" id="teethDetailsTreatmentTemp">
 
- 
+<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+NOTE : {{note}}         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#panel{{treatmentID}}" style="float:right;">View All</a>
+                
+			</h4>
+		</div>
+		<div id="panel{{treatmentID}}" class="panel-collapse collapse">
+			<div class="panel-body">
+<p>Treatment Inserted : {{treatmentInsertedTime}} </p>
+<p>Treatment Done : {{treatmentDoneTime}} </p>
+<p>Treatment Expected : {{treatmentExpectedTime}}</p>
 
-<tr>
+<p>Amount Paid : {{amountPaid}} </p>
+<p>Amount Expected : {{amountExpected}}</p>
 
-<td>
-{{treatmentInsertedTime}}
-</td>
-<td>
-{{treatmentDoneTime}}
-</td>
-<td>
-{{treatmentExpectedTime}}
-</td>
-<td>
-{{amountPaid}}
-</td>
-<td>
-{{amountExpected}}
-</td>
-<td>
-{{status}}
-<p><button  class="btn btn-primary btn-xs" id="treatmentsStatusChange" onclick="changestatusOfTeethTreatment({{teethID}},{{treatmentID}})"  style="visibility:{{hidden}};">Change Status</button></p>
-</td>
+<p>Status : {{status}}    <button  class="btn btn-primary btn-xs" id="" onclick="changestatusOfTeethTreatment({{teethID}},{{treatmentID}})" style="float:right;visibility:{{hidden}}" >Change Status</button></p>
+               
+			</div>
+		</div>
+    </div>
+    </div> 
 
-  
-  
-
-</tr>
-<tr>
-<td colspan="6">
-NOTE : {{note}}
-</td>
-</tr>
 </script>
 
 <script type="text/template" id="newTreatmentTempForStatus">
