@@ -7,7 +7,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
 
 </head>
 <body>
@@ -22,7 +22,7 @@
 
               <li><a href="https://www.facebook.com/ykangdmd" data-toggle="tooltip" title="FACEBOOK"><i class="fa fa-facebook-official" style="font-size:30px;color:#3b5998"></i></a></li>
               <li><a href="https://plus.google.com/+Ykangdmd/about?gl=US&hl=en-US" data-toggle="tooltip" title="GOOGLE"><i class="fa fa-google" style="font-size:30px;color:#42B5F4"></i></a></li>
-              <li><a href="http://www.yelp.com/biz/dr-kangs-dental-newton-centre" data-toggle="tooltip" title="YELP"><i class="fa fa-yelp" style="font-size:30px;color:#c41200"></i></a></li>
+              <li><a href="https://www.yelp.com/biz/dr-kangs-dental-newton-centre" data-toggle="tooltip" title="YELP"><i class="fa fa-yelp" style="font-size:30px;color:#c41200"></i></a></li>
 
 
 
@@ -49,5 +49,8 @@ function googleTranslateElementInit() {
 
       </footer>
 </div>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery.min.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/resources/js/bootstrap.min.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/resources/js/custom.js'/>"></script>
 </body>
 </html>

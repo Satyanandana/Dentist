@@ -20,36 +20,54 @@ var treatments = (function() {
         	 $('#totalPrice').empty();
 
 
-        	 $('#totalPrice').append("<i class='fa fa-usd' aria-hidden='true'></i>"+data.total);
+        	 $('#totalPrice').append("<i class='fa fa-usd' aria-hidden='true'></i> &nbsp;&nbsp;"+data.total);
 
-        	   var temp=data.patientTeethStatus;
-
-			          	  $.each(data.treatmentStatus, function(key,val) {
-
+        	 
 
 			          		  var template = $('#requestedTreatmentsTemp').html();
 
 			          		  var template12 = $('#requestedTreatmentsTemp12').html();
+			          		  
+			          		
+			          		var i;
+			          		var temp=data.patientTeethStatus;
+			         	   var treatments=data.treatmentStatus;
+			          		for (i = 1; i <= 16; i++) {
+			          		    
+			          			data.treatmentStatus=treatments[i];
+			          			
+			          			data.counter=i;
+			          		   
+			          		   data.patientTeethStatus=temp[i];
+			          		 
+			          		   
+			          		 var html = Mustache.to_html(template, data);
+			          		$('#treatmentsForTemp1to16').append(html);
+			          			
+			          		}
+			          		
+			          		var j;
+			          			for (j = 32;j>= 17; j--) {
+			          		    
+			          			data.treatmentStatus=treatments[j];
+			          			
+			          			data.counter=j;
+			          		   
+			          		   data.patientTeethStatus=temp[j];
+			          		 
+			          		   
+			          		 var html12= Mustache.to_html(template12, data);
+			          		$('#treatmentsForTemp17to32').append(html12);
+			          			
+			          		}
+			          		
+			          	
+			          		 
+			          		
 
-			          		   data.counter=key;
-			          		   data.treatmentStatus=val;
-			          		   data.patientTeethStatus=temp[key];
 
-
-			          		    var html = Mustache.to_html(template, data);
-			          		    var html12 = Mustache.to_html(template12, data);
-			          		     if(key<=16)
-			          		    	 {
-
-
-			          		    	 $('#treatmentsForTemp1to16').append(html);
-			          		    	 }
-			          		     else
-			          		    	 {
-			          		    	 $('#treatmentsForTemp17to32').append(html12);
-
-			          		    	 }
-        	});
+			          		   
+			          		    
 
     }
 

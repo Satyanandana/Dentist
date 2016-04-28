@@ -4,11 +4,13 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,8 @@ import com.dentist.domain.AppointmentRequestStatus;
 import com.dentist.domain.AppointmentStatus;
 import com.dentist.domain.Patient;
 import com.dentist.googlecalendar.CalendarEventHandler;
+import com.dentist.mail.EmailGenerator;
+import com.dentist.mail.EmailStructure;
 import com.dentist.service.CustomUserDetails;
 import com.dentist.service.UserServiceInterface;
 import com.dentist.util.WebUtility;
@@ -52,6 +56,13 @@ public class AppointmentRequestInfoController {
 	private static final Logger LOGGER = Logger.getLogger(AppointmentRequestInfoController.class);
 	@Autowired
 	private UserServiceInterface userServiceInterface;
+	@Autowired
+	private EmailGenerator emailSender;
+	@Autowired
+	private EmailStructure emailStructure;
+	@Autowired
+	@Qualifier("encryptableProps")
+	private Properties encryptableProps;
 	@Autowired
 	private CalendarEventHandler calendarEventHandler;
 
@@ -106,6 +117,21 @@ public class AppointmentRequestInfoController {
 			appointmentRequest.setRequestInsertedTime(new DateTime());
 			appointmentRequest.setAppointmentPatient(patient);
 			userServiceInterface.setAppointmentRequest(appointmentRequest);
+
+			// Prepare and send appointment request created email to admin
+			Map<String, Object> emailMap = new HashMap<String, Object>();
+			map.put("user", patient.getFirstName() + " " + patient.getLastName());
+			map.put("appointmentRequest", appointmentRequest);
+
+			/*String body = emailSender.prepareBody(EmailTemplate.APPOINTMENTREQUEST_CREATED, emailMap);
+			emailStructure.setBody(body);
+			emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
+			emailStructure.setSubject("New Appointment Request");
+			emailStructure.addRecipient(encryptableProps.getProperty("admin.email"));
+			emailSender.sendEmail(emailStructure);*/
+
+			map.put("Success", "Success");
+
 		}
 
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
@@ -138,10 +164,10 @@ public class AppointmentRequestInfoController {
 	 ******************************************************/
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/update/{patientID}", method = RequestMethod.POST, params = {
+	@RequestMapping(value = "/update/{patientID}/{appointmentRequestID}", method = RequestMethod.POST, params = {
 			"status=ACCEPT"}, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> acceptAppointmentRequest(@RequestParam("appointmentRequestID") long appointmentRequestID,
-			@PathVariable("patientID") long patientID, @RequestParam(name = "note") String note,
+	public ResponseEntity<Map<String, Object>> acceptAppointmentRequest(@PathVariable("patientID") long patientID,
+			@PathVariable("appointmentRequestID") long appointmentRequestID, @RequestParam(name = "note") String note,
 			@RequestParam("expectedAmount") BigDecimal expectedAmount) {
 		Map<String, Object> map = new HashMap<>();
 		AppointmentRequest appointmentRequest = userServiceInterface.getAppointmentRequestByIDandPatientID(appointmentRequestID, patientID);
@@ -166,8 +192,19 @@ public class AppointmentRequestInfoController {
 			appointment.setAppointmentStartTime(startTime);
 			appointment.setStatus(AppointmentStatus.CONFIRMED);
 			userServiceInterface.setAppointment(appointment);
+
 			// Prepare and send an email regarding the acceptance of appointment
 			// request.
+			Map<String, Object> emailMap = new HashMap<String, Object>();
+			map.put("user", patient.getFirstName() + " " + patient.getLastName());
+			map.put("appointmentRequest", appointment);
+
+			/*String body = emailSender.prepareBody(EmailTemplate.APPOINTMENT_CONFIRMED, emailMap);
+			emailStructure.setBody(body);
+			emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
+			emailStructure.setSubject("Appointment Confirmation");
+			emailStructure.addRecipient(patient.getEmail());
+			emailSender.sendEmail(emailStructure);*/
 
 			map.put("Success", "Success");
 		} else {
@@ -177,10 +214,10 @@ public class AppointmentRequestInfoController {
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/update/{patientID}", method = RequestMethod.POST, params = {
+	@RequestMapping(value = "/update/{patientID}/{appointmentRequestID}", method = RequestMethod.POST, params = {
 			"status=DECLINE"}, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> declineAppointmentRequest(@RequestParam("appointmentRequestID") long appointmentRequestID,
-			@PathVariable("patientID") long patientID,
+	public ResponseEntity<Map<String, Object>> declineAppointmentRequest(@PathVariable("patientID") long patientID,
+			@PathVariable("appointmentRequestID") long appointmentRequestID,
 			@RequestParam(name = "msg", value = "The appointment slot you selected is not available.Please create a new appointment request") String msg) {
 		Map<String, Object> map = new HashMap<>();
 		AppointmentRequest appointmentRequest = userServiceInterface.getAppointmentRequestByIDandPatientID(appointmentRequestID, patientID);
@@ -189,6 +226,19 @@ public class AppointmentRequestInfoController {
 			map.put("Success", "Success");
 			// Prepare and send an email regarding the decline of appointment
 			// request.
+			Patient patient = userServiceInterface.getBasicPatientDetails(patientID);
+			Map<String, Object> emailMap = new HashMap<String, Object>();
+			map.put("user", patient.getFirstName() + " " + patient.getLastName());
+			map.put("appointmentRequest", appointmentRequest);
+
+			/*String body = emailSender.prepareBody(EmailTemplate.APPOINTMENT_DECLINED, emailMap);
+			emailStructure.setBody(body);
+			emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
+			emailStructure.setSubject("Appointment Confirmation");
+			emailStructure.addRecipient(patient.getEmail());
+			emailSender.sendEmail(emailStructure);*/
+
+			map.put("Success", "Success");
 
 		} else {
 			map.put("error", "Invalid patient ID or appointRequestID");

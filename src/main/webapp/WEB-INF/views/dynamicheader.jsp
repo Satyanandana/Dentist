@@ -9,9 +9,9 @@
     <title>Dr. Kang's Clinic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
- <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="<c:url value='/resources/css/bootstrap.css'/>" media="screen">
+    
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+    
     <link rel="stylesheet" href="<c:url value='/resources/css/bootstrap.min.css'/>" media="screen">
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300italic' rel='stylesheet' type='text/css'>
     
@@ -22,15 +22,13 @@
       <script type="text/javascript" src="../bower_components/html5shiv/dist/html5shiv.js"></script>
       <script type="text/javascript" src="../bower_components/respond/dest/respond.min.js"></script>
     <![endif]-->
-        <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="<c:url value='/resources/js/bootstrap.min.js'/>"></script>
-    <script type="text/javascript" src="<c:url value='/resources/js/custom.js'/>"></script>
+        
 
 
 
 
 
-
+ 
   </head>
   <body>
   
@@ -39,20 +37,20 @@
     	
     
       <div class="container-fluid">
-      <div class="navbar navbar-default navbar-fixed-top">
+      <div class="navbar navbar-default navbar-fixed-top" >
       <img src="<c:url value='/resources/img/logo_1.gif'/>" height="70" width="180" style="float: left;margin-right: 20px;margin-left: 5px;" ></img>
         <div class="navbar-header">
-          <a href="<c:url value='/home'/>" class="navbar-brand" data-toggle="tooltip" title="Go Back To Homepage"> Dr Kang's Dental Clinic</a>
+          <a href="<c:url value='/home'/>" class="navbar-brand" data-toggle="tooltip" title="Go Back To Homepage"> Dr Kang's Dental</a>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
         </div>
-        <div class="navbar-collapse collapse" id="navbar-main">
+        <div class="navbar-collapse collapse" id="navbar-main" style="font-size: large;">
           <ul class="nav navbar-nav">
             <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="aboutus" >About Us <span class="caret"></span></a>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="aboutus" >About Us<span class="caret"></span></a>
               <ul class="dropdown-menu" aria-labelledby="aboutus">
                <li><a href="<c:url value='/aboutme'/>" data-toggle="tooltip" title="know about me">About Me</a></li>
                 <li class="divider"></li>

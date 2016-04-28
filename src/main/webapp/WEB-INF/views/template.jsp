@@ -9,19 +9,63 @@
 
 <script type="text/template" id="sentMessageTemp">
 
+<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+<div class="row">
+<div class="col-xs-5">
+<i class="fa fa-clock-o" aria-hidden="true"></i> Sent Time :  {{sentTime}} 
+</div>
+<div class="col-xs-5">
+ <i class="fa fa-envelope" aria-hidden="true"></i>  {{firstMessage}} 
+</div>
+<div class="col-xs-2">
+<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#panel2{{messageID}}" style="float:right;">View</a></p>
+</div>
+               </div> 
+			</h4>
+		</div>
+		<div id="panel2{{messageID}}" class="panel-collapse collapse">
+			<div class="panel-body">
+  {{firstMessage}}{{secondMessage}}
+               
+			</div>
+		</div>
+    </div>
+    </div> 
 
 
-<li class="list-group-item"><p class="list-group-item-text"><i class="fa fa-envelope" aria-hidden="true"></i>  {{firstMessage}}<a class="read-more-show hide" href="#">Read More</a> <span class="read-more-content">{{secondMessage}} <a class="read-more-hide hide" href="#">Read Less</a></span></p><p><div style="float: right;"><i class="fa fa-clock-o" aria-hidden="true"></i>  {{sentTime}}</div></p></li>
-<script type="text/javascript" src="<c:url value='/resources/js/readmore.js'/>" />  
+  
 
 
 </script>
 
 <script type="text/template" id="receivedMessageTemp">
 
-  <li class="list-group-item"><p class="list-group-item-text"><i class="fa fa-envelope" aria-hidden="true"></i>  {{firstMessage}}<a class="read-more-show hide" href="#">Read More</a> <span class="read-more-content">{{secondMessage}} <a class="read-more-hide hide" href="#">Read Less</a></span></p><p><small style="float: right;"><i class="fa fa-clock-o" aria-hidden="true"></i>  {{receivedTime}}</small></p></li>
-  <script type="text/javascript" src="<c:url value='/resources/js/readmore.js'/>" />
-
+<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+<div class="row">
+<div class="col-xs-5">
+<i class="fa fa-clock-o" aria-hidden="true"></i> Sent Time :  {{receivedTime}} 
+</div>
+<div class="col-xs-5">
+ <i class="fa fa-envelope" aria-hidden="true"></i>  {{firstMessage}} 
+</div>
+<div class="col-xs-2">
+<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#panel1{{messageID}}" style="float:right;">View</a></p>
+</div>
+               </div> 
+			</h4>
+		</div>
+		<div id="panel1{{messageID}}" class="panel-collapse collapse">
+			<div class="panel-body">
+  {{firstMessage}}{{secondMessage}}
+               
+			</div>
+		</div>
+    </div>
+    </div>
 
 </script>
 
@@ -67,7 +111,7 @@
 </div>
 
  
-        <button type="submit" class="btn btn-primary btn-sm" onclick="editInsurance({{insuranceID}})">Edit</button>
+        <button type="submit" class="btn btn-primary btn-sm" onclick="editInsurance({{insuranceID}},'{{insuranceProviderID}}','{{insuranceProviderName}}','{{subscriberID}}','{{subscriberFullName}}',{{patientID}},'{{dateOfBirth}}','{{status}}')">Edit</button>
         <button type="reset" class="btn btn-default btn-sm">Delete</button>
      
     </li> 
@@ -95,7 +139,7 @@
   
          </td>
 <td>
-  <button  class="btn btn-primary btn-xs" id="appointmentsStatusChange" onclick="postAppointmentStatus({{appointmentID}},{{patientID}},this.value)"  style="visibility:{{hidden}};">Change Status</button>
+  <button  class="btn btn-primary btn-xs" id="appointmentsStatusChange" onclick="postAppointmentStatus({{appointmentID}},{{patientID}},this.value,'{{note}}')"  style="visibility:{{hidden}};">Change Status</button>
   
 </td>
   
@@ -186,7 +230,7 @@
 <script type="text/template" id="teethDetailsTemp">
 <div class="row">
 <div class="col-xs-6">
- <h2 style="float: left;"> <i class="flaticon-icon-91156"></i>Teeth Details</h2>
+ <h2 style="float: left;"> <i class="flaticon-icon-91156"></i>Teeth Details Of Teeth:{{teeth.teethID}}</h2>
 </div>
 <div class="col-xs-6">
 <h2> <a href="#" style="float:right;" class="btn btn-success btn-xs" onclick="addNewTreatmentOnTeeth({{teeth.teethID}})">Add New Treatment <i class="fa fa-plus-circle" ></i></a> </h2>
@@ -197,7 +241,7 @@
   <table class="table" align="center">
   <thead>
     <tr>
-      <th>Teeth Number</th>
+      
       <th>Teeth Name</th>
       <th>Description</th>
       <th>Total Amount Spent</th>
@@ -212,7 +256,7 @@
     <tr>
     
 
-      <td>{{teeth.teethID}}</td>
+      
       <td>{{teeth.teethName}}</td>
       <td>{{teeth.description}}</td>
 <td>{{total}}</td>
@@ -231,21 +275,44 @@
 <div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">
-NOTE : {{note}}         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#panel{{treatmentID}}" style="float:right;">View All</a>
+<div class="row">
+<div class="col-xs-5">
+Created On : {{treatmentInsertedTime}}
+</div>
+<div class="col-xs-5">
+Status : {{status}}
+</div>
+<div class="col-xs-2">
+ <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#panel{{treatmentID}}" style="float:right;">View</a>
+</div>
+
+</div>
+        
                 
 			</h4>
 		</div>
 		<div id="panel{{treatmentID}}" class="panel-collapse collapse">
 			<div class="panel-body">
-<p>Treatment Inserted : {{treatmentInsertedTime}} </p>
-<p>Treatment Done : {{treatmentDoneTime}} </p>
-<p>Treatment Expected : {{treatmentExpectedTime}}</p>
+<div class="row" style="margin-bottom:20px;">
+<div class="col-xs-5">
+Treatment Expected : {{treatmentExpectedTime}} 
+</div>
+<div class="col-xs-5">
+Treatment Done : {{treatmentDoneTime}} 
+</div>
+</div>
 
-<p>Amount Paid : {{amountPaid}} </p>
-<p>Amount Expected : {{amountExpected}}</p>
+<div class="row" style="margin-bottom:20px;">
+<div class="col-xs-5">
+Amount Expected : {{amountExpected}}  
+</div>
+<div class="col-xs-5">
+Amount Paid : {{amountPaid}} 
+</div>
+</div>
 
-<p>Status : {{status}}    <button  class="btn btn-primary btn-xs" id="" onclick="changestatusOfTeethTreatment({{teethID}},{{treatmentID}})" style="float:right;visibility:{{hidden}}" >Change Status</button></p>
-               
+<p>NOTE :</p><p> {{note}}</p>
+<p>    <button  class="btn btn-primary btn-xs" id="" onclick="changestatusOfTeethTreatment({{teethID}},{{treatmentID}})" style="float:right;visibility:{{hidden}}" >Change Status</button></p> 
 			</div>
 		</div>
     </div>

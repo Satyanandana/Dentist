@@ -32,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Component
 @Scope("prototype")
 @Entity
-@Table(name = "documents_uploaded")
+@Table(name = "sent_documents")
 public class SentDocument implements Serializable {
 
 	/**

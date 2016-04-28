@@ -4,9 +4,11 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dentist.domain.Appointment;
 import com.dentist.domain.AppointmentStatus;
+import com.dentist.domain.Patient;
 import com.dentist.googlecalendar.CalendarEventHandler;
+import com.dentist.mail.EmailGenerator;
+import com.dentist.mail.EmailStructure;
 import com.dentist.service.CustomUserDetails;
 import com.dentist.service.UserServiceInterface;
 
@@ -45,6 +50,13 @@ public class AppointmentInfoController {
 	private static final Logger LOGGER = Logger.getLogger(AppointmentInfoController.class);
 	@Autowired
 	private UserServiceInterface userServiceInterface;
+	@Autowired
+	private EmailGenerator emailSender;
+	@Autowired
+	private EmailStructure emailStructure;
+	@Autowired
+	@Qualifier("encryptableProps")
+	private Properties encryptableProps;
 	@Autowired
 	private CalendarEventHandler calendarEventHandler;
 
@@ -90,6 +102,10 @@ public class AppointmentInfoController {
 
 	}
 
+	/*******************************************************
+	 * POST API END POINTS TO HANDLE APPOINTMENTS FROM ADMIN
+	 ******************************************************/
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/update/{patientID}", method = RequestMethod.POST, params = {
 			"status=CANCEL"}, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -102,9 +118,41 @@ public class AppointmentInfoController {
 			appointment.setStatus(AppointmentStatus.CANCELLED);
 			// Prepare and send an email confirmation to the patient about the
 			// appointment cancellation
+			Patient patient = userServiceInterface.getBasicPatientDetails(patientID);
+			Map<String, Object> map1 = new HashMap<String, Object>();
+			map1.put("user", patient.getFirstName() + " " + patient.getLastName());
+			map1.put("appointment", appointment);
+
+			/*String body = emailSender.prepareBody(EmailTemplate.APPOINTMENT_CANCELLED, map1);
+			emailStructure.setBody(body);
+			emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
+			emailStructure.setSubject("Last login info");
+			emailStructure.addRecipient(patient.getEmail());
+			emailSender.sendEmail(emailStructure);*/
 
 			calendarEventHandler.deleteActualEvent(appointment.getActualCalEventID());
 			calendarEventHandler.deleteFakeEvent(appointment.getFakeCalEventID());
+			map.put("Success", "Success");
+		} else {
+			map.put("error", "Invalid appoint id or patient id");
+		}
+
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/update/{patientID}", method = RequestMethod.POST, params = {
+			"status=COMPLETED"}, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> updateAppointmentToCompletedByAdmin(@PathVariable("patientID") long patientID,
+			@RequestParam(name = "appointmentID") long appointmentID, @RequestParam(name = "note") String note,
+			@RequestParam(name = "amountPaid") BigDecimal amountPaid) {
+		Map<String, Object> map = new HashMap<>();
+		Appointment appointment = userServiceInterface.getAppointmentByIDandPatientID(appointmentID, patientID);
+		if (appointment != null) {
+			appointment.setNote(note);
+			appointment.setAmountPaid(amountPaid);
+			appointment.setStatus(AppointmentStatus.COMPLETED);
 			map.put("Success", "Success");
 		} else {
 			map.put("error", "Invalid appoint id or patient id");

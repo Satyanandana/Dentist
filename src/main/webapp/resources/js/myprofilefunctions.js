@@ -8,7 +8,8 @@
      $("#Appointments").hide();
      $("#Treatments").hide();
      $("#Insurance").hide();
-     $("#Payment").hide();     
+     $("#Payment").hide(); 
+     $("#Settings").hide();
  $("#MyProfile").show();
  $("#showContactForm").show();
  $("#showPersonalForm").show();
@@ -33,7 +34,7 @@
      $("#Insurance").hide();
      $("#Payment").hide();
  $("#MyProfile").hide();
- 
+ $("#Settings").hide();
 
  sentmessages.getMessages("../patient/sentmessages");
 receivedmessages.getMessages("../patient/receivedmessages"); 
@@ -48,7 +49,7 @@ receivedmessages.getMessages("../patient/receivedmessages");
      $("#Insurance").hide();
      $("#Payment").hide();
  $("#MyProfile").hide();
- 
+ $("#Settings").hide();
  confirmedappointments.getAppointments("../patient/appointments");
  
  requestedappointments.getAppointments("../patient/appointmentrequests"); 
@@ -64,7 +65,7 @@ receivedmessages.getMessages("../patient/receivedmessages");
      $("#Payment").hide();
  $("#MyProfile").hide();
  
- 
+ $("#Settings").hide();
 
  treatments.getTreatments("../treatments/status");
  $("#teethTreatment").hide();
@@ -79,7 +80,7 @@ receivedmessages.getMessages("../patient/receivedmessages");
      $("#Insurance").show();
      $("#Payment").hide();
  $("#MyProfile").hide();
- 
+ $("#Settings").hide();
  insurances.getInsurances("../patient/insurances");
  
 
@@ -91,7 +92,8 @@ receivedmessages.getMessages("../patient/receivedmessages");
      $("#Appointments").hide();
      $("#Treatments").hide();
      $("#Insurance").hide();
-     $("#Payment").hide();     
+     $("#Payment").hide();
+     $("#Settings").hide();
  $("#MyProfile").show();
  $("#hideContactForm").show();
  $("#showContactForm").hide("slow");
@@ -110,7 +112,8 @@ receivedmessages.getMessages("../patient/receivedmessages");
      $("#Appointments").hide();
      $("#Treatments").hide();
      $("#Insurance").hide();
-     $("#Payment").hide();     
+     $("#Payment").hide(); 
+     $("#Settings").hide();
  $("#MyProfile").show();
  $("#hideContactForm").hide();
  $("#showContactForm").show();
@@ -130,6 +133,7 @@ receivedmessages.getMessages("../patient/receivedmessages");
      $("#Appointments").hide();
      $("#Treatments").hide();
      $("#Insurance").hide();
+     $("#Settings").hide();
      $("#Payment").hide();     
  $("#MyProfile").show();
  $("#hideContactForm").hide();
@@ -150,7 +154,8 @@ receivedmessages.getMessages("../patient/receivedmessages");
      $("#Appointments").hide();
      $("#Treatments").hide();
      $("#Insurance").hide();
-     $("#Payment").hide();     
+     $("#Payment").hide(); 
+     $("#Settings").hide();
  $("#MyProfile").show();
  $("#hideContactForm").hide();
  $("#showContactForm").show();
@@ -170,14 +175,29 @@ receivedmessages.getMessages("../patient/receivedmessages");
      $("#Treatments").hide();
      $("#Insurance").hide();
      $("#Payment").show();
+     $("#Settings").hide();
  $("#MyProfile").hide();
  
 
  senddocuments.getsenddocuments("../patient/sentdocuments");
  receiveddocuments.getreceiveddocuments("../patient/receiveddocuments");
  }
+ 
+
+ function showSettings()
+ {
+	 $("#Messages").hide();
+     $("#Appointments").hide();
+     $("#Treatments").hide();
+     $("#Insurance").hide();
+     $("#Payment").hide();
+ $("#MyProfile").hide();
+ $("#Settings").show();
+ 
+ 
 
  
+ }
 
  function showMyTeethDetails(id)
  {
@@ -213,10 +233,16 @@ receivedmessages.getMessages("../patient/receivedmessages");
 	  $('#treatmentModal').modal('show');
 	  
  }
- function editInsurance(insuranceID)
+ function editInsurance(insuranceID,insuranceProviderID,insuranceProviderName,subscriberID,subscriberFullName,patientID,dateOfBirth,status)
  {
 	 
 	 $('#insuranceID').attr("value",insuranceID);
+	 $('#updateInsurance #insuranceProviderID').val(insuranceProviderID);
+	 $('#updateInsurance #insuranceProviderName').val(insuranceProviderName);
+	 $('#updateInsurance #subscriberID').val(subscriberID);
+	 $('#updateInsurance #subscriberFullName').val(subscriberFullName);
+	 $('#updateInsurance #dob').val(dateOfBirth);
+	 $('#updateInsurance #status').val(status);
 	 $('#updateInsuranceModal').modal('show');
  }
  

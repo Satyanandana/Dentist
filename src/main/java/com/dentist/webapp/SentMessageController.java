@@ -3,10 +3,12 @@ package com.dentist.webapp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dentist.domain.Patient;
 import com.dentist.domain.ReceivedMessage;
 import com.dentist.domain.SentMessage;
+import com.dentist.mail.EmailGenerator;
+import com.dentist.mail.EmailStructure;
 import com.dentist.service.CustomUserDetails;
 import com.dentist.service.UserServiceInterface;
 
@@ -45,6 +49,13 @@ public class SentMessageController {
 	private static final Logger LOGGER = Logger.getLogger(SentMessageController.class);
 	@Autowired
 	private UserServiceInterface userServiceInterface;
+	@Autowired
+	private EmailGenerator emailSender;
+	@Autowired
+	private EmailStructure emailStructure;
+	@Autowired
+	@Qualifier("encryptableProps")
+	private Properties encryptableProps;
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/{messageID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -90,7 +101,18 @@ public class SentMessageController {
 			message.setSender(patient);
 			message.setSentTime(new DateTime());
 			userServiceInterface.setSentMessage(message);
-			map.put("success", "success");
+			// Prepare and send an email to Admin to notify him about the new
+			// message.
+			Map<String, Object> emailMap = new HashMap<String, Object>();
+			map.put("user", "Admin");
+
+			/*String body = emailSender.prepareBody(EmailTemplate.NEW_MESSAGE_NOTIFICATION, emailMap);
+			emailStructure.setBody(body);
+			emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
+			emailStructure.setSubject("You received a new message");
+			emailStructure.addRecipient(encryptableProps.getProperty("admin.email"));
+			emailSender.sendEmail(emailStructure);
+			map.put("success", "success");*/
 		}
 
 		return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
@@ -118,6 +140,18 @@ public class SentMessageController {
 				message.setMsg(msg);
 				message.setReceivedTime(new DateTime());
 				message.setReceiver(patient);
+
+				// Prepare and send an email to patient to notify him about the
+				// new message.
+				Map<String, Object> emailMap = new HashMap<String, Object>();
+				map.put("user", patient.getFirstName() + " " + patient.getLastName());
+
+				/* String body = emailSender.prepareBody(EmailTemplate.NEW_MESSAGE_NOTIFICATION, emailMap);
+				emailStructure.setBody(body);
+				emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
+				emailStructure.setSubject("You received a new message");
+				emailStructure.addRecipient(patient.getEmail());
+				emailSender.sendEmail(emailStructure); */
 				map.put("success", "success");
 			} else {
 				map.put("error", "Invalid Patient ID");

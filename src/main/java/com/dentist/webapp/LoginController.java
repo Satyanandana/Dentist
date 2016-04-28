@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -24,6 +25,7 @@ import org.jasypt.hibernate4.encryptor.HibernatePBEStringEncryptor;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -75,6 +77,9 @@ public class LoginController {
 	private EmailGenerator emailSender;
 	@Autowired
 	private EmailStructure emailStructure;
+	@Autowired
+	@Qualifier("encryptableProps")
+	private Properties encryptableProps;
 	@Autowired
 	private HibernatePBEStringEncryptor encryptor;
 	@Autowired
@@ -159,7 +164,7 @@ public class LoginController {
 						// ServerLocation serverLocation
 						// =geoLocation.getLocation(IpAddress);
 						// Comment the below line in production
-						ServerLocation serverLocation = geoLocation.getLocation("65.96.159.13");
+						ServerLocation serverLocation = geoLocation.getLocation(IpAddress);
 
 						if (serverLocation != null) {
 
@@ -173,7 +178,7 @@ public class LoginController {
 
 							String body = emailSender.prepareBody(EmailTemplate.LAST_LOGIN_EMAIL, map);
 							emailStructure.setBody(body);
-							emailStructure.setSenderEmail("gtsatyansv@gmail.com");
+							emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
 							emailStructure.setSubject("Last login info");
 							emailStructure.addRecipient(userAuth.getUserEmail());
 							emailSender.sendEmail(emailStructure);
@@ -189,7 +194,7 @@ public class LoginController {
 
 						String body = emailSender.prepareBody(EmailTemplate.VERIFY_ACCOUNT_EMAIL, map);
 						emailStructure.setBody(body);
-						emailStructure.setSenderEmail("gtsatyansv@gmail.com");
+						emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
 						emailStructure.setSubject("Verify your email account");
 						emailStructure.addRecipient(userAuth.getUserEmail());
 						emailSender.sendEmail(emailStructure);
@@ -228,7 +233,7 @@ public class LoginController {
 				emailMap.put("password", userAuth.getUserPwd());
 				String body1 = emailSender.prepareBody(EmailTemplate.FORGOT_PASSWORD, emailMap);
 				emailStructure.setBody(body1);
-				emailStructure.setSenderEmail("gtsatyansv@gmail.com");
+				emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
 				emailStructure.setSubject("Forgot Password");
 				emailStructure.addRecipient(userAuth.getUserEmail());
 

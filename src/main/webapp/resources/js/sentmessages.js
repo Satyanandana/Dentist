@@ -18,9 +18,9 @@ var sentmessages = (function() {
           
   		  var template = $('#sentMessageTemp').html();
   		
-  		  val.firstMessage=val.msg.substring(0,200);
+  		  val.firstMessage=val.msg.substring(0,20);
   		
-  		  val.secondMessage=val.msg.substring(201);
+  		  val.secondMessage=val.msg.substring(20);
   		
   		    var html = Mustache.to_html(template, val);
   		  

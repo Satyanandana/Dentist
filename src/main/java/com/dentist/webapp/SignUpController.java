@@ -12,6 +12,7 @@ package com.dentist.webapp;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -22,6 +23,7 @@ import org.apache.log4j.Logger;
 import org.jasypt.hibernate4.encryptor.HibernatePBEStringEncryptor;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -66,6 +68,9 @@ public class SignUpController {
 	private EmailGenerator emailSender;
 	@Autowired
 	private EmailStructure emailStructure;
+	@Autowired
+	@Qualifier("encryptableProps")
+	private Properties encryptableProps;
 	@Autowired(required = true)
 	private HibernatePBEStringEncryptor encryptor;
 
@@ -152,10 +157,10 @@ public class SignUpController {
 
 				// Prepare and send Welcome Email
 				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("user", "Srikanthvarma");
+				map.put("user", patient.getFirstName() + "  " + patient.getLastName());
 				String body1 = emailSender.prepareBody(EmailTemplate.WELCOME_EMAIL, map);
 				emailStructure.setBody(body1);
-				emailStructure.setSenderEmail("gtsatyansv@gmail.com");
+				emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
 				emailStructure.setSubject("Welcome to Dr.Kang Dentistry");
 				emailStructure.addRecipient(patientCreated.getEmail());
 
@@ -172,7 +177,7 @@ public class SignUpController {
 				LOGGER.debug(encryptor.decrypt(UrlSafeEncryption.decrypt((String) map.get("id"))));
 				String body2 = emailSender.prepareBody(EmailTemplate.VERIFY_ACCOUNT_EMAIL, map);
 				emailStructure.setBody(body2);
-				emailStructure.setSenderEmail("gtsatyansv@gmail.com");
+				emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
 				emailStructure.setSubject("Verify your account with Dr.Kang Dentistry");
 				emailStructure.addRecipient(patientCreated.getEmail());
 

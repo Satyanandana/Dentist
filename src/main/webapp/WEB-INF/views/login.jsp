@@ -10,6 +10,8 @@
 <head>
 
  <link rel="stylesheet" media="screen" href= " <c:url value='/resources/css/business-frontpage.css'/>" >
+ 
+ 
 
 
 </head>
@@ -32,6 +34,12 @@
  
   <div class="form-group">
   <c:url value="/login/process" var="loginUrl" />
+  <c:if test="${error != null}">
+  <div class="alert alert-dismissible alert-success" id="errorLoginDiv" >
+  
+  <strong><p>${error}</p></strong>
+</div>
+</c:if>
   <form method="POST" action="${loginUrl}" >
 			    <label for="email">Username</label>
 			    <input type="text" class="form-control" id="email" name="email"  placeholder="Enter username" value="" />
@@ -41,7 +49,7 @@
 			    <input type="password" class="form-control" id="password" name="password"  placeholder="Password"/>
 			  </div>
 			  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-			  <button type="submit" class="btn btn-primary">Login </button><a   class="forgotlink"><font color="red"> <u>Forgot Password ?</u></font></a><br/>
+			  <button type="submit" class="btn btn-primary">Login </button><a   class="forgotlink" style="margin-left: 20px;"> <u>Forgot Password ?</u></a><br/>
 			  <br/>
 </form>
 			  
@@ -130,30 +138,70 @@
           </label>
         </div>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-			  <button type="submit" class="btn btn-primary">Register</button>
+			  <button type="submit" class="btn btn-primary">Register</button><div style="float: right;font-size: large;"><a class="loginlink" style="margin-right: 20px;">Login</a>
+ <a class="forgotlink">Forgot Password</a></div>
 			 
 			  </div>
 			  
 			</form:form>
- <a class="loginlink">Login</a>
- <a class="forgotlink">Forgot</a>
+ 
  </div>
  
  <div id="forgot" style="display: none;">
   <h2><i class="fa fa-key"></i> Forgot Password</h2>
-  <c:url value="/login/forgotpassword" var="forgotPasswordUrl" />
-			<form action="${forgotPasswordUrl}" method="post">
+  <div class="col-sm-12">
+       <div class="alert alert-dismissible alert-success" id="successDiv" style="display: none;">
+  
+  <strong><p> </p></strong>
+</div>
+  
+			<form id="forgotPasswordForm" >
 			  <div class="form-group">
 			    <label for="first-name">Enter Your Email</label>
 			     <input type="text" class="form-control" name="email"/>
 			  </div>
-			  <button type="submit" class="btn btn-primary">Send Me An Email </button>
+			  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			  
+			  
+			  </form>
+			  
+			  <button type="submit" class="btn btn-primary" onclick="forgotPassword.sendEmailPassword('../login/forgotpassword')">Send Me An Email </button>
+			  
+			  <div style="float: right;font-size: large;"><a class="loginlink" style="margin-right: 20px;">Login</a>
+ <a class="signuplink">SignUp</a></div>
+			  
+			
+ </div>
+ 
+ <!-- 
+  <div id="forgot" style="display: none;">
+  <h2><i class="fa fa-key"></i> Forgot Password</h2>
+
+<div class="col-sm-6">
+       <div class="alert alert-dismissible alert-success" id="successDiv" style="display: none;">
+  
+  <strong><p></p></strong>.
+</div>
+<div class="alert alert-dismissible alert-danger" id="errorDiv" style="display: none;">
+  
+  <strong><p></p></strong>
+</div>
+</div>
+
+			<form id="forgotPasswordForm">
+			  <div class="form-group">
+			    <label for="first-name">Enter Your Email</label>
+			     <input type="text" class="form-control" name="email" id="email"/>
+			  </div>
+			  <button type="submit" class="btn btn-primary" onclick="forgot.sendEmail('../login/forgotpassword')">Send Me An Email </button><div style="float: right;"><a class="loginlink" style="margin-right: 20px;font-size: large;">Login</a>
+ <a class="signuplink" style="font-size: large;">SignUp</a></div>
 			  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			  </form>
 			  
-			  <a class="loginlink">Login</a>
- <a class="signuplink">SignUp</a>
+			 
  </div>
+ 
+  -->
  
  
  </div>
@@ -167,6 +215,8 @@
 <%@include file="footer.jsp" %>
 <script type="text/javascript" src="<c:url value='/resources/js/bootstrap-datepicker.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/jquery.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/resources/js/forgot.js'/>"></script>
+	
     <script type="text/javascript">
    
 	   function login()

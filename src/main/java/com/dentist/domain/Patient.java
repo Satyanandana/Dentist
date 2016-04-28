@@ -37,7 +37,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Component
 @Scope("prototype")
 @Entity
-@Table(name = "Patient_Details")
+@Table(name = "patient_details")
 
 public class Patient implements Serializable {
 	/**

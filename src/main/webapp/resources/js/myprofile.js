@@ -20,10 +20,10 @@ var myprofile = (function() {
 	    	 
 	    	
 	    	
-	    	 $("#hidePersonalForm #firstName").attr("placeholder", data.firstName);
-	    	 $("#hidePersonalForm #middleName").attr("placeholder", data.middleName);
-	    	 $("#hidePersonalForm #lastName").attr("placeholder", data.lastName);
-	    	 $("#hidePersonalForm #dateOfBirth").attr("placeholder", data.dateOfBirth);
+	    	 $("#hidePersonalForm #firstName").attr("value", data.firstName);
+	    	 $("#hidePersonalForm #middleName").attr("value", data.middleName);
+	    	 $("#hidePersonalForm #lastName").attr("value", data.lastName);
+	    	 $("#hidePersonalForm #dob").attr("value", data.dateOfBirth);
 	    	 
 	    	 $("#showAddressForm #address1").html(data.homeAddress.address1);
 	    	 $("#showAddressForm #address2").html(data.homeAddress.address2);
@@ -31,17 +31,18 @@ var myprofile = (function() {
 	    	 $("#showAddressForm #state").html(data.homeAddress.state);
 	    	 $("#showAddressForm #zipcode").html(data.homeAddress.zipcode);
 	    	
-	    	 $("#hideAddressForm #address1").attr("placeholder", data.homeAddress.address1);
-	    	 $("#hideAddressForm #address2").attr("placeholder", data.homeAddress.address2);
-	    	 $("#hideAddressForm #city").attr("placeholder", data.homeAddress.city);
-	    	 $("#hideAddressForm #state").attr("placeholder", data.homeAddress.state);
-	    	 $("#hideAddressForm #zipcode").attr("placeholder", data.homeAddress.zipcode);
+	    	 $("#hideAddressForm #address1").attr("value", data.homeAddress.address1);
+	    	 $("#hideAddressForm #address2").attr("value", data.homeAddress.address2);
+	    	 $("#hideAddressForm #city").attr("value", data.homeAddress.city);
+	    	 $("#hideAddressForm #state").attr("value", data.homeAddress.state);
+	    	 $("#hideAddressForm #zipcode").attr("value", data.homeAddress.zipcode);
 	    	 
 	    	 $("#showContactForm #email").html(data.email);
 	    	 $("#showContactForm #phoneNumber").html(data.phoneNumber);
 	    	 
-	    	 $("#hideContactForm #email").attr("placeholder", data.email);
-	    	 $("#hideContactForm #phoneNumber").attr("placeholder", data.phoneNumber);
+	    	 $("#hideContactForm #email").attr("value", data.email);
+	    	 $("#hideContactForm #phoneNumber").attr("value", data.phoneNumber);
+	    	 
 	    	 
 	    	 $("#showEmergencyForm #name").html(data.EmergencyContact.name);
 	    	 $("#showEmergencyForm #phoneNumber").html(data.EmergencyContact.phoneNumber);
@@ -49,9 +50,9 @@ var myprofile = (function() {
 	    	 
 	    	
 	    	 
-	    	 $("#hideEmergencyForm #name").attr("placeholder", data.EmergencyContact.name);
-	    	 $("#hideEmergencyForm #phoneNumber").attr("placeholder", data.EmergencyContact.phoneNumber);
-	    	 $("#hideEmergencyForm #relation").attr("placeholder", data.EmergencyContact.relation);
+	    	 $("#hideEmergencyForm #emergencyContactName").attr("value", data.EmergencyContact.name);
+	    	 $("#hideEmergencyForm #emergencyContactNumber").attr("value", data.EmergencyContact.phoneNumber);
+	    	 $("#hideEmergencyForm #emergencyContactRelation").attr("value", data.EmergencyContact.relation);
     }
         
     }

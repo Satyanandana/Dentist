@@ -1,11 +1,13 @@
 /**
  * 
  */
-function postAppointmentStatus(appointmentID,patientId,value)
+function postAppointmentStatus(appointmentID,patientId,value,note)
 {
 	
 	
+	
 	$('#appointmentID').attr("value",appointmentID);
+	$('#updateConfirmedAppointment textarea').val(note);
 	 $('#confirmededAppointmentStatusModal').modal('show');
 		  
 		  

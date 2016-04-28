@@ -29,6 +29,7 @@
  <script type="text/javascript" src="<c:url value='/resources/js/teethTreatments.js'/>"></script>
  <script type="text/javascript" src="<c:url value='/resources/js/senddocuments.js'/>"></script>
  <script type="text/javascript" src="<c:url value='/resources/js/receiveddocuments.js'/>"></script>
+ <script type="text/javascript" src="<c:url value='/resources/js/settings.js'/>"></script>
  
  
  <%@include file="template.jsp" %>
@@ -97,6 +98,7 @@
               <a class="list-group-item" onclick="showTreatments()" href="javascript:void(0);">Treatments</a>
               <a class="list-group-item" onclick="showInsurance()" href="javascript:void(0);">Insurance</a>
               <a class="list-group-item" onclick="showPayment()" href="javascript:void(0);">Documents</a>
+              <a class="list-group-item" onclick="showSettings()" href="javascript:void(0);">Settings</a>
             </div>
           </div>
           
@@ -127,7 +129,7 @@
   
 </div>
  <div class="form-group">
-  <label class="control-label" for="disabledInput">DOB</label>&nbsp;&nbsp;<div id="dateOfBirth" style="display: inline;"></div>
+  <label class="control-label" for="disabledInput">Date Of Birth</label>&nbsp;&nbsp;<div id="dateOfBirth" style="display: inline;"></div>
   
 </div>
 
@@ -159,7 +161,7 @@
   <input class="form-control" id="lastName"  type="text" placeholder="" name="lastName" >
 </div>
  <div class="form-group">
-  <label class="control-label" for="disabledInput">DOB</label>
+  <label class="control-label" for="disabledInput">Date Of Birth</label>
   <input class="form-control" id="dob" type="text" placeholder=""  name="dob" >
 </div>
  
@@ -419,6 +421,39 @@
           		
           		
           		<div id="Appointments">
+
+<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
+<h2> <i class="fa fa-exclamation-triangle"></i> Requested Appointments <a href="<c:url value='/profile/scheduleappointment'/>" style="float: right;"><i class="fa fa-plus-circle"  >Schedule New</i></a></h2><br/>
+
+
+  
+<div class="list-group" style="overflow:auto;max-height: 400px;padding-top: 5px;" >
+<table class="table">
+ <thead>
+    <tr>
+      <th>#</th>
+      <th>Appointment Start Time</th>
+      <th>Note</th> 
+      <th>Status</th>
+ 	  <th>Change Status</th>
+    </tr>
+  </thead>
+
+<tbody id="requestedAppointmentsForTemp" >
+   
+  
+  
+ </tbody>
+ 
+ </table>
+ 
+  
+  
+  
+  
+</div>
+
+</div>
           		<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
 				
 <div class="list-group" style="overflow:auto;max-height: 400px;padding-top: 5px;">
@@ -453,38 +488,6 @@
   
 </div>
 </div>
-<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
-<h2> <i class="fa fa-exclamation-triangle"></i> Requested Appointments <a href="<c:url value='/profile/scheduleappointment'/>" style="float: right;"><i class="fa fa-plus-circle"  >Schedule New</i></a></h2><br/>
-
-
-  
-<div class="list-group" style="overflow:auto;max-height: 400px;padding-top: 5px;" >
-<table class="table">
- <thead>
-    <tr>
-      <th>#</th>
-      <th>Appointment Start Time</th>
-      <th>Note</th> 
-      <th>Status</th>
- 	  <th>Change Status</th>
-    </tr>
-  </thead>
-
-<tbody id="requestedAppointmentsForTemp" >
-   
-  
-  
- </tbody>
- 
- </table>
- 
-  
-  
-  
-  
-</div>
-
-</div>
 </div>
           		
           		
@@ -494,7 +497,7 @@
 				
 <div class="list-group" ">
   
-   <h2> <i class="fa fa-gavel"></i> My Treatments <div id="" style="float:right;font-size: 70%; ">Total Price <p id="totalPrice"></p> </div></h2> <br/> 
+   <h2> <i class="fa fa-gavel"></i> My Treatments <div id="" style="float:right;font-size: 70%; ">Total Amount Paid <p id="totalPrice"></p> </div></h2> <br/> 
  
   <div>
    <table>
@@ -613,7 +616,41 @@
 </div>
 </div>
      
-
+     <div id="Settings">
+          		
+          		<div class="col-sm-12" style="background-color: #F0FFFF;margin-bottom: 20px;padding-left: 30px;">
+				
+<div class="list-group" ">
+  
+   <h2> <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;&nbsp; My Settings </h2><br/>
+    <div class="col-sm-6">
+       <div class="alert alert-dismissible alert-success" id="successDiv" style="display: none;">
+  
+  <strong>Well done!</strong> You successfully changed your password.</a>.
+</div>
+<div class="alert alert-dismissible alert-danger" id="errorDiv" style="display: none;">
+  
+  <strong><p></p></strong>
+</div>
+   <form name="newPasswordForm" id="newPasswordForm">
+             
+         
+			  <div class="form-group">
+			    <label for="first-name">Your Old Password</label>
+			     <input type="password" class="form-control" name="oldPwd" id="oldPwd" value=""/>
+			  </div>
+			  <div class="form-group">
+			    <label for="first-name">New Password</label>
+			     <input type="password" class="form-control" name="newPwd" id="newPwd" value=""/>
+			  </div>
+			  
+			  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			  </form>
+			  <button type="submit" class="btn btn-primary" onclick="settings.postNewPassword('../settings/updatepassword')">Change Password</button>
+</div>
+</div>
+</div>
+</div>
   </div>
 
 
@@ -670,28 +707,35 @@
         </div>
         <div class="modal-body">
        
-        <div class="form-group">
-        <form name="addNewInsurance" id="addNewInsurance" class="addNewInsurance">
         
- <label class="control-label" for="disabledInput">Insurance Provider ID</label>
-  <input class="form-control" id="insuranceProviderID" name="insuranceProviderID" type="text" placeholder="912902100 1 3" >
-</div>
+        <form name="addNewInsurance" id="addNewInsurance" class="addNewInsurance">
+      
 <div class="form-group">
  <label class="control-label" for="disabledInput">Insurance Provider Name</label>
-  <input class="form-control" id="insuranceProviderName" name="insuranceProviderName" type="text" placeholder="Aetna" >
+  <input class="form-control" id="insuranceProviderName" name="insuranceProviderName" type="text" placeholder="Enter Insurance Provider Name With State Name " >
+  <span class="help-block">eg : Aetna MA</span>
 </div>
 <div class="form-group">
  <label class="control-label" for="disabledInput">Subscriber ID</label>
-  <input class="form-control" id="subscriberID" name="subscriberID" type="text" placeholder="920329309209309" >
+  <input class="form-control" id="subscriberID" name="subscriberID" type="text" placeholder="Enter Subscriber ID Here " >
 </div>
 <div class="form-group">
- <label class="control-label" for="disabledInput">Subscriber Full Name</label>
-  <input class="form-control" id="subscriberFullName" name="subscriberFullName" type="text" placeholder="Aadish Shah" >
+ <label class="control-label" for="disabledInput">Insurance Group Name</label>
+  <input class="form-control" id="insuranceProviderID" name="insuranceProviderID" type="text" placeholder="Enter Insurance Group Name Here " >
+  
+  
 </div>
 
+<div class="form-group">
+ <label class="control-label" for="disabledInput">Subscriber Full Name</label>
+  <input class="form-control" id="subscriberFullName" name="subscriberFullName" type="text" placeholder="Enter Subscriber Full Name Here" >
+  
+</div>
+  
+
  <div class="form-group">
-  <label class="control-label" for="disabledInput">DOB</label>
-  <input class="form-control" id="dob" name="dob" type="text" placeholder="mm/dd/yyyy" >
+  <label class="control-label" for="disabledInput">Date Of Birth</label>
+  <input class="form-control" id="dob" name="dob" type="text" placeholder="Enter Date Of Birth in mm/dd/yyyy format" >
 </div>
 
 <div class="form-group">
@@ -730,29 +774,30 @@
           <h4 class="modal-title">Update Your Insurance</h4>
         </div>
         <div class="modal-body">
-       
+       <form name="updateInsurance" id="updateInsurance" class="updateInsurance">
         <div class="form-group">
-        <form name="updateInsurance" id="updateInsurance" class="updateInsurance">
+        
+        
         <input type="hidden" name="insuranceID" id="insuranceID" value="">
  <label class="control-label" for="disabledInput">Insurance Provider ID</label>
-  <input class="form-control" id="insuranceProviderID" name="insuranceProviderID" type="text" placeholder="912902100 1 3" >
+  <input class="form-control" id="insuranceProviderID" name="insuranceProviderID" type="text" placeholder="912902100 1 3" value="" >
 </div>
 <div class="form-group">
  <label class="control-label" for="disabledInput">Insurance Provider Name</label>
-  <input class="form-control" id="insuranceProviderName" name="insuranceProviderName" type="text" placeholder="Aetna" >
+  <input class="form-control" id="insuranceProviderName" name="insuranceProviderName" type="text" placeholder="Aetna" value="">
 </div>
 <div class="form-group">
  <label class="control-label" for="disabledInput">Subscriber ID</label>
-  <input class="form-control" id="subscriberID" name="subscriberID" type="text" placeholder="920329309209309" >
+  <input class="form-control" id="subscriberID" name="subscriberID" type="text" placeholder="920329309209309" value="" >
 </div>
 <div class="form-group">
  <label class="control-label" for="disabledInput">Subscriber Full Name</label>
-  <input class="form-control" id="subscriberFullName" name="subscriberFullName" type="text" placeholder="Aadish Shah" >
+  <input class="form-control" id="subscriberFullName" name="subscriberFullName" type="text" placeholder="" value="" >
 </div>
 
  <div class="form-group">
-  <label class="control-label" for="disabledInput">DOB</label>
-  <input class="form-control" id="dob" name="dob" type="text" placeholder="mm/dd/yyyy" >
+  <label class="control-label" for="disabledInput">Date Of Birth</label>
+  <input class="form-control" id="dob" name="dob" type="text" placeholder="mm/dd/yyyy" value="">
 </div>
 
 <div class="form-group">
@@ -1143,7 +1188,7 @@ Request Parameters: text hidden teethID
  <label class="control-label" for="disabledInput">Note</label>
    <div>
       
-        <textarea class="form-control" rows="3" id="note" name="note" placeholder="type your note here.." maxlength="1000"></textarea>
+        <textarea class="form-control" rows="3" id="note" name="note" placeholder="type your note here.." maxlength="1000" value=""></textarea>
         <span class="help-block">Maximum 1000 characters.</span>
       </div>
 </div>

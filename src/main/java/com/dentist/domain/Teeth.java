@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 @Entity
-@Table
+@Table(name = "teeth")
 public class Teeth implements Serializable {
 
 	/**
