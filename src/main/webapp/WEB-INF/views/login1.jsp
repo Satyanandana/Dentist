@@ -3,7 +3,8 @@
 <head>
 <title>Login</title>
 <!-- Bootstrap Core CSS -->
-<link href="<c:url value='/resources/css/bootstrap.min.css'/>" rel="stylesheet">
+<link href="<c:url value='/resources/css/bootstrap.min.css'/>"
+	rel="stylesheet">
 </head>
 <body>
 
@@ -17,7 +18,7 @@
 			<p>You have been logged out.</p>
 		</c:if>
 		<c:if test="${error != null}">
-			<p> ${error} </p>
+			<p>${error}</p>
 		</c:if>
 		<p>
 			<label for="username">email</label> <input type="text" id="email"
@@ -34,7 +35,7 @@
 
 	<P>The time on the server is ${serverTime}.</P>
 	<!-- script references -->
-	<script	src="<c:url value='/resources/js/jquery-2.2.2.min.js'/>"></script>
+	<script src="<c:url value='/resources/js/jquery-2.2.2.min.js'/>"></script>
 	<script src="<c:url value='/resources/js/login.js'/>"></script>
 	<!-- Bootstrap Core JavaScript -->
 	<script src="<c:url value='/resources/js/bootstrap.min.js'/>"></script>

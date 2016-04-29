@@ -66,7 +66,7 @@ public class SentMessageController {
 
 	}
 
-	@PreAuthorize("hasRole('ROLE_USER')") // change to ROLE_ADMIN
+	@PreAuthorize("hasRole('ROLE_ADMIN')") // change to ROLE_ADMIN
 	@RequestMapping(value = "/patient/{patientID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<SentMessage>> getSentMessagesByPatientID(@PathVariable("patientID") long patientID) {
 		LOGGER.info("processing get request to /sentmessages/patient/{patientID}");
@@ -140,6 +140,7 @@ public class SentMessageController {
 				message.setMsg(msg);
 				message.setReceivedTime(new DateTime());
 				message.setReceiver(patient);
+				userServiceInterface.setReceivedMessage(message);
 
 				// Prepare and send an email to patient to notify him about the
 				// new message.

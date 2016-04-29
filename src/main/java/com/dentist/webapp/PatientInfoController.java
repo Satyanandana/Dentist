@@ -217,6 +217,17 @@ public class PatientInfoController {
 	 ***************************************************/
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/allpatients", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> getAllPatientsByAdmin(Model model) {
+
+		LOGGER.debug("processing request to get all patients info by admin");
+		Map<String, Object> map = new HashMap<>();
+		List<Patient> patients = userServiceInterface.getAllPatients();
+		map.put("data", patients);
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/info/{patientID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Patient> getPatientInfoByAdmin(Model model, @PathVariable("patientID") long patientID) {
 		LOGGER.debug("processing request to get personal info by admin");
@@ -267,7 +278,7 @@ public class PatientInfoController {
 	}
 
 	/********************************************
-	 * POST API END POINTS
+	 * POST API END POINTS FOR PATIENT
 	 ***************************************************/
 
 	@PreAuthorize("hasRole('ROLE_USER')")

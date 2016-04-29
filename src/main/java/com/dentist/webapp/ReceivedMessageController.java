@@ -46,7 +46,7 @@ public class ReceivedMessageController {
 
 	}
 
-	@PreAuthorize("hasRole('ROLE_USER')") // change to ROLE_ADMIN
+	@PreAuthorize("hasRole('ROLE_ADMIN')") // change to ROLE_ADMIN
 	@RequestMapping(value = "/patient/{patientID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ReceivedMessage>> getReceivedMessagesByPatientID(@PathVariable("patientID") long patientID) {
 		LOGGER.info("processing get request to /receivedmessages/patient/{patientID}");

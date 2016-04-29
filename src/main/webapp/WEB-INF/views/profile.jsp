@@ -2,7 +2,7 @@
 <%@ page session="false"%>
 <html>
 <div id="root">
-<c:url value="/" var="root" />
+	<c:url value="/" var="root" />
 </div>
 <head>
 <title>Home</title>

@@ -74,30 +74,39 @@ public class Patient implements Serializable {
 			@AttributeOverride(name = "relation", column = @Column(name = "emergencyContactRelation"))})
 	private EmergencyContact EmergencyContact;
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sender")
 	private List<SentMessage> sentMessages = new ArrayList<SentMessage>();
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver")
 	private List<ReceivedMessage> receivedMessages = new ArrayList<ReceivedMessage>();
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sender")
 	private List<SentDocument> uploadedDocs = new ArrayList<SentDocument>();
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver")
 	private List<ReceivedDocument> receivedDocs = new ArrayList<ReceivedDocument>();
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
 	private List<Treatment> treatments = new ArrayList<Treatment>();
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "insurancePatient")
 	private List<Insurance> insurances = new ArrayList<Insurance>();
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "appointmentPatient")
 	private List<AppointmentRequest> appointmentRequests = new ArrayList<AppointmentRequest>();
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "appointmentPatient")
 	private List<Appointment> appointments = new ArrayList<Appointment>();
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "TeethStatusPK.patient")
 	private List<PatientTeethStatus> patientTeeth = new ArrayList<PatientTeethStatus>();
 

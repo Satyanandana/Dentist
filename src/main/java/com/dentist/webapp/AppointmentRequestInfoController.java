@@ -75,7 +75,7 @@ public class AppointmentRequestInfoController {
 
 	}
 
-	@PreAuthorize("hasRole('ROLE_USER')") // change to ROLE_ADMIN
+	@PreAuthorize("hasRole('ROLE_ADMIN')") // change to ROLE_ADMIN
 	@RequestMapping(value = "/patient/{patientID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AppointmentRequest>> getAppointmentRequestsByPatientID(@PathVariable("patientID") long patientID) {
 		LOGGER.info("processing get request to /appointmentrequests/patient/{patientID}");
@@ -218,7 +218,7 @@ public class AppointmentRequestInfoController {
 			"status=DECLINE"}, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> declineAppointmentRequest(@PathVariable("patientID") long patientID,
 			@PathVariable("appointmentRequestID") long appointmentRequestID,
-			@RequestParam(name = "msg", value = "The appointment slot you selected is not available.Please create a new appointment request") String msg) {
+			@RequestParam(name = "msg", defaultValue = "The appointment slot you selected is not available.Please create a new appointment request") String msg) {
 		Map<String, Object> map = new HashMap<>();
 		AppointmentRequest appointmentRequest = userServiceInterface.getAppointmentRequestByIDandPatientID(appointmentRequestID, patientID);
 		if (appointmentRequest != null) {

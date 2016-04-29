@@ -7,7 +7,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,28 +65,6 @@ public class ProfileController {
 	public String getScheduleAppointment(Model model) {
 
 		return "events";
-	}
-
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/view/{patientID}", method = RequestMethod.GET)
-	public String getProfileByPatientID(Model model, @PathVariable("patientID") long patientID,
-			@RequestParam(name = "action", defaultValue = "profile") String action) {
-		model.addAttribute("patient", new Patient());
-		model.addAttribute("insurance", new Insurance());
-		model.addAttribute("appointment", new Appointment());
-		model.addAttribute("appointmentRequest", new AppointmentRequest());
-		model.addAttribute("treatment", new Treatment());
-		model.addAttribute("patientID", patientID);
-
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
-		if (user.getUserRole().equals(Role.ROLE_ADMIN)) {
-			LOGGER.debug("processing GET request to /profile/view/" + patientID + "  with ADMIN role");
-			return "myprofile";
-		} else {
-			return null;
-		}
-
 	}
 
 }

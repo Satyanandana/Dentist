@@ -110,7 +110,7 @@ public class ApplicationContextConfig {
 		EnvironmentStringPBEConfig encryptorConfig = new EnvironmentStringPBEConfig();
 		encryptorConfig.setProvider(new BouncyCastleProvider());
 		encryptorConfig.setAlgorithm("PBEWITHSHA256AND128BITAES-CBC-BC");
-		encryptorConfig.setPassword("Boston");
+		encryptorConfig.setPassword("Lancer");
 		// encryptorConfig.setStringOutputType("hexadecimal");
 		// encryptorConfig.setSaltGenerator(new
 		// StringFixedSaltGenerator("mySalt"));
@@ -169,7 +169,7 @@ public class ApplicationContextConfig {
 		emailSender.setHost(environment.getProperty("email.host"));
 		emailSender.setPort(Integer.parseInt(environment.getProperty("email.port")));
 		emailSender.setProtocol("smtp");
-		emailSender.setUsername(encryptableProps.getProperty("email.id"));
+		emailSender.setUsername(encryptableProps.getProperty("email.username"));
 		emailSender.setPassword(encryptableProps.getProperty("email.password"));
 		return emailSender;
 	}

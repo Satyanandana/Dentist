@@ -8,12 +8,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>SignUp</title>
 <!-- Bootstrap Core CSS -->
-<link href="<c:url value='resources/css/bootstrap.min.css'/>" rel="stylesheet">
+<link href="<c:url value='resources/css/bootstrap.min.css'/>"
+	rel="stylesheet">
 </head>
 <body>
 	<h2>Sign up Form</h2>
 	<c:url value="/signup/process" var="signUpUrl" />
-	<form:form  id="signupForm" action="${signUpUrl}" method="POST" modelAttribute="patient">
+	<form:form id="signupForm" action="${signUpUrl}" method="POST"
+		modelAttribute="patient">
 		<p>${errorEmail}</p>
 		<p>${errorPassword}</p>
 		<p>${errorFirstName}</p>
@@ -42,9 +44,8 @@
 			</tr>
 			<tr>
 				<td><label for=date>date: </label></td>
-				<td>
-					<input type="text" pattern="\d{1,2}/\d{1,2}/\d{4}" class="datepicker" name="date" value="" />
-				</td>
+				<td><input type="text" pattern="\d{1,2}/\d{1,2}/\d{4}"
+					class="datepicker" name="date" value="" /></td>
 			</tr>
 			<tr>
 				<td><label for=useremail>user email: </label></td>
@@ -67,12 +68,12 @@
 			</tr>
 		</table>
 	</form:form>
-		<!-- script references -->
-	<script	src="<c:url value='/resources/js/jquery-2.2.2.min.js'/>"></script>
+	<!-- script references -->
+	<script src="<c:url value='/resources/js/jquery-2.2.2.min.js'/>"></script>
 	<script src="<c:url value='/resources/js/signup.js'/>"></script>
 	<!-- Bootstrap Core JavaScript -->
 	<script src="<c:url value='/resources/js/bootstrap.min.js'/>"></script>
-	
+
 </body>
 </body>
 </html>

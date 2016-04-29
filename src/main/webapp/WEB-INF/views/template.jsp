@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet" href="<c:url value='/resources/css/font/flaticonteeth12.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/font/flaticonteeth12.css'/>">
 
 <script type="text/template" id="sentMessageTemp">
 
@@ -329,6 +330,20 @@ Amount Paid : {{amountPaid}}
   <label class="control-label" for="disabledInput">Amount Paid</label>
   <input class="form-control" id="amountPaid" name="amountPaid" type="text" placeholder="00" >
 </div> 
+</script>
+<script type="text/template" id="adminAllPatientsTemp">
+ 
+            <tr>
+                <th>{{userID}}</th>
+                <th>{{firstName}}</th>
+                <th>{{middleName}}</th>
+                <th>{{lastName}}</th>
+                <th>{{dateOfBirth}}</th>
+                <th>{{phoneNumber}}</th>
+                <th>{{email}}</th>
+                <th>{{homeAddress.address1}} {{homeAddress.address2}} {{homeAddress.city}} {{homeAddress.state}} {{homeAddress.zipcode}}</th>
+            </tr>
+        
 </script>
 </head>
 

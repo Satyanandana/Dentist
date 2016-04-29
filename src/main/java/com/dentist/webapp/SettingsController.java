@@ -31,10 +31,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dentist.domain.Patient;
+import com.dentist.domain.Role;
 import com.dentist.domain.UserAuthentication;
 import com.dentist.mail.EmailGenerator;
 import com.dentist.mail.EmailStructure;
-import com.dentist.mail.EmailTemplate;
 import com.dentist.service.CustomUserDetails;
 import com.dentist.service.UserServiceInterface;
 
@@ -71,23 +71,26 @@ public class SettingsController {
 			if (validPassword) {
 				authentication.setUserPwd(newPwd);
 				// Prepare and send Welcome Email
-				Patient patient = userServiceInterface.getBasicPatientDetails(user.getUserID());
+
 				Map<String, Object> map1 = new HashMap<String, Object>();
-				if (patient != null) {
+				if (user.getUserRole().equals(Role.ROLE_USER)) {
+					Patient patient = userServiceInterface.getBasicPatientDetails(user.getUserID());
 					map1.put("user", patient.getFirstName() + " " + patient.getLastName());
-					String body1 = emailSender.prepareBody(EmailTemplate.WELCOME_EMAIL, map1);
-					emailStructure.setBody(body1);
-					emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
-					emailStructure.setSubject("Your account password has been changed");
-					emailStructure.addRecipient(patient.getEmail());
+					/*	String body1 = emailSender.prepareBody(EmailTemplate.PASSWORD_CHANGED, map1);
+						emailStructure.setBody(body1);
+						emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
+						emailStructure.setSubject("Your account password has been changed");
+						emailStructure.addRecipient(patient.getEmail());
+						emailSender.sendEmail(emailStructure);*/
 					map.put("Success", "Success");
-				} else {
+				} else if (user.getUserRole().equals(Role.ROLE_ADMIN)) {
 					map1.put("user", "Admin");
-					String body1 = emailSender.prepareBody(EmailTemplate.WELCOME_EMAIL, map1);
+					/*String body1 = emailSender.prepareBody(EmailTemplate.PASSWORD_CHANGED, map1);
 					emailStructure.setBody(body1);
 					emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
 					emailStructure.setSubject("Your account password has been changed");
 					emailStructure.addRecipient(user.getUserEmail());
+					emailSender.sendEmail(emailStructure);*/
 					map.put("Success", "Success");
 				}
 
