@@ -169,6 +169,7 @@ public class SignUpController {
 				// Prepare and send AccountVerification Email
 				map.clear();
 				map.put("user", patientCreated.getFirstName() + " " + patientCreated.getLastName());
+				map.put("url", encryptableProps.getProperty("website.domain"));
 				map.put("id", UrlSafeEncryption.encrypt(encryptor.encrypt(patientCreated.getUserAuth().getUserEmail())));
 				map.put("key", UrlSafeEncryption.encrypt(encryptor.encrypt(patientCreated.getUserAuth().getVerifyKey())));
 				LOGGER.debug(map.get("key"));

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.jasypt.hibernate4.encryptor.HibernatePBEStringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ import com.dentist.service.UserServiceInterface;
  * Handles requests for the application home page.
  */
 @Controller
+@EnableAsync
 @Transactional
 public class HomeController {
 	@Autowired

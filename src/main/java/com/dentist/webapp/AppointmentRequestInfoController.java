@@ -1,10 +1,13 @@
 package com.dentist.webapp;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
@@ -14,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +36,7 @@ import com.dentist.domain.Patient;
 import com.dentist.googlecalendar.CalendarEventHandler;
 import com.dentist.mail.EmailGenerator;
 import com.dentist.mail.EmailStructure;
+import com.dentist.mail.EmailTemplate;
 import com.dentist.service.CustomUserDetails;
 import com.dentist.service.UserServiceInterface;
 import com.dentist.util.WebUtility;
@@ -49,6 +54,7 @@ import com.google.api.services.calendar.model.Event;
  */
 
 @RestController
+@EnableAsync
 @Transactional
 @RequestMapping("/appointmentrequests")
 public class AppointmentRequestInfoController {
@@ -81,6 +87,17 @@ public class AppointmentRequestInfoController {
 		LOGGER.info("processing get request to /appointmentrequests/patient/{patientID}");
 		List<AppointmentRequest> appointmentRequests = userServiceInterface.getAppointmentRequestsByPatientID(patientID);
 		return new ResponseEntity<List<AppointmentRequest>>(appointmentRequests, HttpStatus.OK);
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/allappointmentrequests", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> getAllAppointmentRequests() {
+		LOGGER.info("processing get request to /appointmentrequests/allappointmentrequests");
+		Map<String, Object> map = new HashMap<>();
+		List<AppointmentRequest> appointmentRequests = userServiceInterface.getAllAppointmentRequests();
+		Collections.reverse(appointmentRequests);
+		map.put("data", appointmentRequests);
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
 
 	/*******************************************************
@@ -120,15 +137,15 @@ public class AppointmentRequestInfoController {
 
 			// Prepare and send appointment request created email to admin
 			Map<String, Object> emailMap = new HashMap<String, Object>();
-			map.put("user", patient.getFirstName() + " " + patient.getLastName());
-			map.put("appointmentRequest", appointmentRequest);
+			emailMap.put("user", "Admin");
+			emailMap.put("appointmentRequest", appointmentRequest);
 
-			/*String body = emailSender.prepareBody(EmailTemplate.APPOINTMENTREQUEST_CREATED, emailMap);
+			String body = emailSender.prepareBody(EmailTemplate.APPOINTMENTREQUEST_CREATED, emailMap);
 			emailStructure.setBody(body);
 			emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
 			emailStructure.setSubject("New Appointment Request");
 			emailStructure.addRecipient(encryptableProps.getProperty("admin.email"));
-			emailSender.sendEmail(emailStructure);*/
+			emailSender.sendEmail(emailStructure);
 
 			map.put("Success", "Success");
 
@@ -175,11 +192,21 @@ public class AppointmentRequestInfoController {
 			appointmentRequest.setStatus(AppointmentRequestStatus.ACCEPTED);
 			DateTime startTime = appointmentRequest.getAppointmentStartTime().toDateTime(DateTimeZone.forID("America/New_York"));
 			Patient patient = userServiceInterface.getPatientInfoById(patientID);
-			Event actualEvent = calendarEventHandler.insertActualEvent(startTime, patient.getEmail());
-			Event fakeEvent = calendarEventHandler.insertFakeEvent(startTime);
+			Future<Event> actualEvent = calendarEventHandler.insertActualEvent(startTime, patient.getEmail());
+			Future<Event> fakeEvent = calendarEventHandler.insertFakeEvent(startTime);
 			Appointment appointment = new Appointment();
-			appointment.setActualCalEventID(actualEvent.getId());
-			appointment.setFakeCalEventID(fakeEvent.getId());
+			try {
+				while (!actualEvent.isDone() || !fakeEvent.isDone()) {
+
+					Thread.sleep(10); // 10-millisecond pause between each check
+
+				}
+				appointment.setActualCalEventID(actualEvent.get().getId());
+				appointment.setFakeCalEventID(fakeEvent.get().getId());
+			} catch (InterruptedException | ExecutionException e) {
+				LOGGER.error("unable to insert calander event", e);
+			}
+
 			appointment.setAppointmentInsertedTime(new DateTime(DateTimeZone.forID("America/New_York")));
 			appointment.setAppointmentPatient(patient);
 			appointment.setAppointmentRequest(appointmentRequest);
@@ -196,15 +223,15 @@ public class AppointmentRequestInfoController {
 			// Prepare and send an email regarding the acceptance of appointment
 			// request.
 			Map<String, Object> emailMap = new HashMap<String, Object>();
-			map.put("user", patient.getFirstName() + " " + patient.getLastName());
-			map.put("appointmentRequest", appointment);
+			emailMap.put("user", patient.getFirstName() + " " + patient.getLastName());
+			emailMap.put("appointment", appointment);
 
-			/*String body = emailSender.prepareBody(EmailTemplate.APPOINTMENT_CONFIRMED, emailMap);
+			String body = emailSender.prepareBody(EmailTemplate.APPOINTMENT_CONFIRMED, emailMap);
 			emailStructure.setBody(body);
 			emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
 			emailStructure.setSubject("Appointment Confirmation");
 			emailStructure.addRecipient(patient.getEmail());
-			emailSender.sendEmail(emailStructure);*/
+			emailSender.sendEmail(emailStructure);
 
 			map.put("Success", "Success");
 		} else {
@@ -228,15 +255,15 @@ public class AppointmentRequestInfoController {
 			// request.
 			Patient patient = userServiceInterface.getBasicPatientDetails(patientID);
 			Map<String, Object> emailMap = new HashMap<String, Object>();
-			map.put("user", patient.getFirstName() + " " + patient.getLastName());
-			map.put("appointmentRequest", appointmentRequest);
+			emailMap.put("user", patient.getFirstName() + " " + patient.getLastName());
+			emailMap.put("appointmentRequest", appointmentRequest);
 
-			/*String body = emailSender.prepareBody(EmailTemplate.APPOINTMENT_DECLINED, emailMap);
+			String body = emailSender.prepareBody(EmailTemplate.APPOINTMENT_DECLINED, emailMap);
 			emailStructure.setBody(body);
 			emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
-			emailStructure.setSubject("Appointment Confirmation");
+			emailStructure.setSubject("Appointment Request Declined");
 			emailStructure.addRecipient(patient.getEmail());
-			emailSender.sendEmail(emailStructure);*/
+			emailSender.sendEmail(emailStructure);
 
 			map.put("Success", "Success");
 

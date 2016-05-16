@@ -1,4 +1,4 @@
-package com.dentist.googlecalendar;
+package com.dentist.util;
 
 import java.io.IOException;
 
@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
  */
 public class CustomJodaDateTimeSerializer extends JsonSerializer<DateTime> {
 
-	DateTimeFormatter format = DateTimeFormat.forPattern("MM-dd-yyyy : HH:mm");
+	DateTimeFormatter format = DateTimeFormat.forPattern("d  MMMM,  yyyy  hh:mm:ss  a");
 
 	@Override
 	public void serialize(DateTime value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {

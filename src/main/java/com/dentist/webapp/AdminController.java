@@ -1,6 +1,7 @@
 package com.dentist.webapp;
 
 import org.apache.log4j.Logger;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +33,7 @@ import com.dentist.service.CustomUserDetails;
  */
 
 @Controller
+@EnableAsync
 @Transactional
 @RequestMapping(value = "/admin")
 public class AdminController {
@@ -39,18 +41,17 @@ public class AdminController {
 	private static final Logger LOGGER = Logger.getLogger(AdminController.class);
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/dashbord", method = RequestMethod.GET)
+	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String getAdminDashbord(Model model) {
 		LOGGER.debug("processing GET request to /admin/dashbord ....");
 		return "admindashboard";
-
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/appointments", method = RequestMethod.GET)
 	public String getAdminAppointments(Model model) {
 		LOGGER.debug("processing GET request to /admin/dashbord ....");
-		return "appointments";
+		return "adminappointments";
 
 	}
 
@@ -58,7 +59,7 @@ public class AdminController {
 	@RequestMapping(value = "/appointmentrequests", method = RequestMethod.GET)
 	public String getAdminAppointmentRequests(Model model) {
 		LOGGER.debug("processing GET request to /admin/dashbord ....");
-		return "appointmentrequests";
+		return "adminappointmentrequests";
 
 	}
 
@@ -66,7 +67,7 @@ public class AdminController {
 	@RequestMapping(value = "/receivedmessages", method = RequestMethod.GET)
 	public String getAdminReceivedMessages(Model model) {
 		LOGGER.debug("processing GET request to /admin/dashbord ....");
-		return "receivedmessages";
+		return "adminreceivedmessages";
 
 	}
 
@@ -74,7 +75,7 @@ public class AdminController {
 	@RequestMapping(value = "/receiveddocuments", method = RequestMethod.GET)
 	public String getAdminReceivedDocuments(Model model) {
 		LOGGER.debug("processing GET request to /admin/dashbord ....");
-		return "receiveddocuments";
+		return "adminreceiveddocuments";
 
 	}
 

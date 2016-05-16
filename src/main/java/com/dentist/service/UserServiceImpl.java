@@ -173,6 +173,12 @@ public class UserServiceImpl implements UserServiceInterface {
 		return userDaoInterface.getAppointmentsByPatientID(patientID);
 	}
 
+	@Override
+	public List<Appointment> getAllAppointments() {
+
+		return userDaoInterface.getAllAppointments();
+	}
+
 	/*
 	 * DAO methods on Insurance.class
 	 */
@@ -225,6 +231,11 @@ public class UserServiceImpl implements UserServiceInterface {
 		return userDaoInterface.getSentMessagesByPatientID(patientID);
 	}
 
+	@Override
+	public List<SentMessage> getAllSentMessages() {
+		return userDaoInterface.getAllSentMessages();
+	}
+
 	/*
 	 * DAO methods on ReceivedMessage.class
 	 */
@@ -246,6 +257,11 @@ public class UserServiceImpl implements UserServiceInterface {
 	@Override
 	public List<ReceivedMessage> getReceivedMessagesByPatientID(long patientID) {
 		return userDaoInterface.getReceivedMessagesByPatientID(patientID);
+	}
+
+	@Override
+	public List<ReceivedMessage> getAllReceivedMessages() {
+		return userDaoInterface.getAllReceivedMessages();
 	}
 
 	/**
@@ -277,6 +293,11 @@ public class UserServiceImpl implements UserServiceInterface {
 		return userDaoInterface.getSentDocumentsByPatientID(patientID);
 	}
 
+	@Override
+	public List<SentDocument> getAllSentDocuments() {
+		return userDaoInterface.getAllSentDocuments();
+	}
+
 	/**
 	 * call DAO methods on ReceivedDocument.class
 	 **/
@@ -304,6 +325,11 @@ public class UserServiceImpl implements UserServiceInterface {
 	@Override
 	public List<ReceivedDocument> getReceivedDocumentsByPatientID(long patientID) {
 		return userDaoInterface.getReceivedDocumentsByPatientID(patientID);
+	}
+
+	@Override
+	public List<ReceivedDocument> getAllreceivedDocuments() {
+		return userDaoInterface.getAllreceivedDocuments();
 	}
 
 	/*

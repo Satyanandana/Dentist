@@ -46,14 +46,12 @@ public class SessionHandler {
 
 		List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(user.getUserRole().toString());
 		UserDetails userDetails = new CustomUserDetails(user);
-
 		Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, user.getUserPwd(), authorities);
 
 		Iterator<SessionInformation> i = sessionRegistry.getAllSessions(auth.getPrincipal(), true).iterator();
 		while (i.hasNext()) {
 			SessionInformation si = i.next();
 			si.expireNow();
-
 		}
 		sessionRegistry.registerNewSession(request.getSession().getId(), auth.getPrincipal());
 		LOGGER.debug("added user to the spring session registry");

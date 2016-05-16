@@ -56,20 +56,7 @@
 						</div>
 					</div>
 
-					<div class="col-sm-6 col-md-4">
-						<div class="thumbnail">
-							<center>
-								<div class="caption">
-									<h3>Cosmetic Bonding</h3>
-
-									<i class=flaticon-icon-65570 style="color: lightblue;"
-										data-toggle="modal" data-target="#cosmeticBonding"></i>
-
-
-								</div>
-							</center>
-						</div>
-					</div>
+					
 					<div class="col-sm-6 col-md-4">
 						<div class="thumbnail">
 							<center>
@@ -106,20 +93,7 @@
 						</div>
 					</div>
 
-					<div class="col-sm-6 col-md-4">
-						<div class="thumbnail">
-							<center>
-								<div class="caption">
-									<h3>Inlays and Onlays</h3>
-
-									<i class=flaticon-medical-22 style="color: lightblue;"
-										data-toggle="modal" data-target="#inlays"></i>
-
-
-								</div>
-							</center>
-						</div>
-					</div>
+					
 					<div class="col-sm-6 col-md-4">
 						<div class="thumbnail">
 							<center>

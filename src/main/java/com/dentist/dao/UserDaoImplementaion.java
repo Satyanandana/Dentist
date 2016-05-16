@@ -26,6 +26,7 @@ import com.dentist.domain.Patient;
 import com.dentist.domain.PatientTeethStatus;
 import com.dentist.domain.ReceivedDocument;
 import com.dentist.domain.ReceivedMessage;
+import com.dentist.domain.Role;
 import com.dentist.domain.SentDocument;
 import com.dentist.domain.SentMessage;
 import com.dentist.domain.Teeth;
@@ -103,7 +104,8 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Patient> getAllPatients() {
-		Criteria criteria = getSession().createCriteria(Patient.class);
+		Criteria criteria = getSession().createCriteria(Patient.class).createAlias("userAuth", "user")
+				.add(Restrictions.eq("user.userRole", Role.ROLE_USER));
 		return criteria.list();
 	}
 
@@ -189,6 +191,13 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Appointment> getAllAppointments() {
+		Criteria criteria = getSession().createCriteria(Appointment.class);
+		return criteria.list();
+	}
+
 	/*
 	 * DAO methods on Insurance.class
 	 */
@@ -249,6 +258,13 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SentMessage> getAllSentMessages() {
+		Criteria criteria = getSession().createCriteria(SentMessage.class);
+		return criteria.list();
+	}
+
 	/*
 	 * DAO methods on ReceivedMessage.class
 	 */
@@ -272,6 +288,13 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 	@SuppressWarnings("unchecked")
 	public List<ReceivedMessage> getReceivedMessagesByPatientID(long patientID) {
 		Criteria criteria = getSession().createCriteria(ReceivedMessage.class).add(Restrictions.eq("receiver.userID", patientID));
+		return criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ReceivedMessage> getAllReceivedMessages() {
+		Criteria criteria = getSession().createCriteria(ReceivedMessage.class);
 		return criteria.list();
 	}
 
@@ -309,6 +332,12 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 		return criteria.list();
 	}
 
+	@Override
+	public List<SentDocument> getAllSentDocuments() {
+		Criteria criteria = getSession().createCriteria(SentDocument.class);
+		return criteria.list();
+	}
+
 	/**
 	 * DAO Methods on ReceivedDocument.class
 	 **/
@@ -340,6 +369,13 @@ public class UserDaoImplementaion extends DbDao implements UserDaoInterface {
 	@Override
 	public List<ReceivedDocument> getReceivedDocumentsByPatientID(long patientID) {
 		Criteria criteria = getSession().createCriteria(ReceivedDocument.class).add(Restrictions.eq("receiver.userID", patientID));
+		return criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ReceivedDocument> getAllreceivedDocuments() {
+		Criteria criteria = getSession().createCriteria(ReceivedDocument.class);
 		return criteria.list();
 	}
 

@@ -4,7 +4,7 @@
 function postAppointmentStatus(appointmentID, patientId, value) {
 
 	$('#appointmentID').attr("value", appointmentID);
-
+	$('#patientID').html(patientId);
 	$('#confirmededAppointmentStatusModal').modal('show');
 
 }
@@ -16,6 +16,7 @@ function postRequestedAppointmentStatus(appointmentRequestID, patientId, note,
 
 	$('#noteTemp').attr("value", note);
 
+	$('#patientID').html(patientId);
 	$('#requestedAppointmentStatusModal').modal('show');
 }
 

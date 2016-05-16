@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +28,7 @@ import com.dentist.domain.ReceivedMessage;
 import com.dentist.domain.SentMessage;
 import com.dentist.mail.EmailGenerator;
 import com.dentist.mail.EmailStructure;
+import com.dentist.mail.EmailTemplate;
 import com.dentist.service.CustomUserDetails;
 import com.dentist.service.UserServiceInterface;
 
@@ -42,6 +44,7 @@ import com.dentist.service.UserServiceInterface;
  */
 
 @RestController
+@EnableAsync
 @Transactional
 @RequestMapping("/sentmessages")
 public class SentMessageController {
@@ -74,6 +77,16 @@ public class SentMessageController {
 		return new ResponseEntity<List<SentMessage>>(sentMessages, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')") // change to ROLE_ADMIN
+	@RequestMapping(value = "/allmessagestodoc", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> getAllSentMessages() {
+		LOGGER.info("processing get request to /sentmessages/allmessagestodoc");
+		Map<String, Object> map = new HashMap<>();
+		List<SentMessage> sentMessages = userServiceInterface.getAllSentMessages();
+		map.put("data", sentMessages);
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	}
+
 	/*******************************************************
 	 * POST API END POINTS FOR SENDING MESSAGES
 	 ******************************************************/
@@ -104,15 +117,15 @@ public class SentMessageController {
 			// Prepare and send an email to Admin to notify him about the new
 			// message.
 			Map<String, Object> emailMap = new HashMap<String, Object>();
-			map.put("user", "Admin");
+			emailMap.put("user", "Admin");
 
-			/*String body = emailSender.prepareBody(EmailTemplate.NEW_MESSAGE_NOTIFICATION, emailMap);
+			String body = emailSender.prepareBody(EmailTemplate.NEW_MESSAGE_NOTIFICATION, emailMap);
 			emailStructure.setBody(body);
 			emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
 			emailStructure.setSubject("You received a new message");
 			emailStructure.addRecipient(encryptableProps.getProperty("admin.email"));
 			emailSender.sendEmail(emailStructure);
-			map.put("success", "success");*/
+			map.put("success", "success");
 		}
 
 		return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
@@ -145,14 +158,14 @@ public class SentMessageController {
 				// Prepare and send an email to patient to notify him about the
 				// new message.
 				Map<String, Object> emailMap = new HashMap<String, Object>();
-				map.put("user", patient.getFirstName() + " " + patient.getLastName());
+				emailMap.put("user", patient.getFirstName() + " " + patient.getLastName());
 
-				/* String body = emailSender.prepareBody(EmailTemplate.NEW_MESSAGE_NOTIFICATION, emailMap);
+				String body = emailSender.prepareBody(EmailTemplate.NEW_MESSAGE_NOTIFICATION, emailMap);
 				emailStructure.setBody(body);
 				emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
 				emailStructure.setSubject("You received a new message");
 				emailStructure.addRecipient(patient.getEmail());
-				emailSender.sendEmail(emailStructure); */
+				emailSender.sendEmail(emailStructure);
 				map.put("success", "success");
 			} else {
 				map.put("error", "Invalid Patient ID");

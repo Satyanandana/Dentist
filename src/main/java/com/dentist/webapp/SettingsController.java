@@ -21,6 +21,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,10 +36,12 @@ import com.dentist.domain.Role;
 import com.dentist.domain.UserAuthentication;
 import com.dentist.mail.EmailGenerator;
 import com.dentist.mail.EmailStructure;
+import com.dentist.mail.EmailTemplate;
 import com.dentist.service.CustomUserDetails;
 import com.dentist.service.UserServiceInterface;
 
 @RestController
+@EnableAsync
 @Transactional
 @RequestMapping(value = "/settings")
 public class SettingsController {
@@ -73,24 +76,26 @@ public class SettingsController {
 				// Prepare and send Welcome Email
 
 				Map<String, Object> map1 = new HashMap<String, Object>();
+				map.put("username", authentication.getUserEmail());
+				map.put("password", authentication.getUserPwd());
 				if (user.getUserRole().equals(Role.ROLE_USER)) {
 					Patient patient = userServiceInterface.getBasicPatientDetails(user.getUserID());
 					map1.put("user", patient.getFirstName() + " " + patient.getLastName());
-					/*	String body1 = emailSender.prepareBody(EmailTemplate.PASSWORD_CHANGED, map1);
-						emailStructure.setBody(body1);
-						emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
-						emailStructure.setSubject("Your account password has been changed");
-						emailStructure.addRecipient(patient.getEmail());
-						emailSender.sendEmail(emailStructure);*/
+					String body1 = emailSender.prepareBody(EmailTemplate.PASSWORD_CHANGED, map1);
+					emailStructure.setBody(body1);
+					emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
+					emailStructure.setSubject("Your account password has been changed");
+					emailStructure.addRecipient(patient.getEmail());
+					emailSender.sendEmail(emailStructure);
 					map.put("Success", "Success");
 				} else if (user.getUserRole().equals(Role.ROLE_ADMIN)) {
 					map1.put("user", "Admin");
-					/*String body1 = emailSender.prepareBody(EmailTemplate.PASSWORD_CHANGED, map1);
+					String body1 = emailSender.prepareBody(EmailTemplate.PASSWORD_CHANGED, map1);
 					emailStructure.setBody(body1);
 					emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
 					emailStructure.setSubject("Your account password has been changed");
 					emailStructure.addRecipient(user.getUserEmail());
-					emailSender.sendEmail(emailStructure);*/
+					emailSender.sendEmail(emailStructure);
 					map.put("Success", "Success");
 				}
 

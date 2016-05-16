@@ -160,9 +160,8 @@ public class LoginController {
 						SessionHandler.handleSession(sessionRegistry, successHandler, request, response, userAuth, encryptor, patient);
 						// get the location of user with IP address
 						String IpAddress = WebUtility.getIpAddress(request);
-						// uncomment the below line in production
-						// ServerLocation serverLocation
-						// =geoLocation.getLocation(IpAddress);
+						/* uncomment the below line in production 
+						ServerLocation serverLocation =geoLocation.getLocation(IpAddress); */
 						// Comment the below line in production
 						ServerLocation serverLocation = geoLocation.getLocation(IpAddress);
 
@@ -189,14 +188,20 @@ public class LoginController {
 						model.addAttribute("error", "Please verify your email Id by clicking on the link that we sent to your email");
 						// Prepare and send email for verifying email
 						Map<String, Object> map = new HashMap<String, Object>();
-						map.put("user", patient.getFirstName() + " " + patient.getLastName());
-						map.put("verifyKey", userAuth.getVerifyKey());
 
-						String body = emailSender.prepareBody(EmailTemplate.VERIFY_ACCOUNT_EMAIL, map);
-						emailStructure.setBody(body);
+						map.put("user", patient.getFirstName() + " " + patient.getLastName());
+						map.put("url", encryptableProps.getProperty("website.domain"));
+						map.put("id", UrlSafeEncryption.encrypt(encryptor.encrypt(patient.getUserAuth().getUserEmail())));
+						map.put("key", UrlSafeEncryption.encrypt(encryptor.encrypt(patient.getUserAuth().getVerifyKey())));
+						LOGGER.debug(map.get("key"));
+						LOGGER.debug(encryptor.decrypt(UrlSafeEncryption.decrypt((String) map.get("key"))));
+						LOGGER.debug(map.get("id"));
+						LOGGER.debug(encryptor.decrypt(UrlSafeEncryption.decrypt((String) map.get("id"))));
+						String body2 = emailSender.prepareBody(EmailTemplate.VERIFY_ACCOUNT_EMAIL, map);
+						emailStructure.setBody(body2);
 						emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
-						emailStructure.setSubject("Verify your email account");
-						emailStructure.addRecipient(userAuth.getUserEmail());
+						emailStructure.setSubject("Verify your account with Dr.Kang Dentistry");
+						emailStructure.addRecipient(patient.getEmail());
 						emailSender.sendEmail(emailStructure);
 
 					} else if (userAuth.getAccountStatus().equals(AccountStatus.BLOCKED)) {
@@ -263,14 +268,14 @@ public class LoginController {
 				String deCryptVerifyKey = userAuth.getVerifyKey();
 				if (deCryptVerifyKey.equals(decryptKey)) {
 					userAuth.setAccountStatus(AccountStatus.ACTIVE);
-					model.addAttribute("success", "Successfully activate your account.Please login");
+					model.addAttribute("success", "Successfully activated your account.Please, try to login");
 				}
 			}
 		} catch (Exception e) {
 			LOGGER.error("", e);
 			model.addAttribute("error", "unable to activate your account.Please try again");
 		}
-		return null;
+		return "verifyemail";
 	}
 
 }

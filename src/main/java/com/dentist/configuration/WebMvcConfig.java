@@ -33,9 +33,6 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.dentist.googlecalendar.CustomJodaDateTimeSerializer;
-import com.dentist.googlecalendar.CustomJodaLocalDateSerializer;
-
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
@@ -72,27 +69,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		return viewResolver;
 	}
 
-	@Bean(name = "multipartResolver")
-	public CommonsMultipartResolver getMultipartResolver() {
-		CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
-		commonsMultipartResolver.setMaxUploadSize(1024 * 1024 * 10); // 10 MB
-		commonsMultipartResolver.setMaxUploadSizePerFile(1024 * 1024 * 10); // 10
-																			// MB
-		return commonsMultipartResolver;
-
-	}
-
-	/*
-	 * ViewResolver bean for velocity templates, will resove the forward URL by
-	 * adding prefix and suffix
-	 */
-	/*
-	 * @Bean public VelocityViewResolver getVelocityViewResolver() {
-	 * VelocityViewResolver viewResolver = new VelocityViewResolver();
-	 * viewResolver.setCache(true); viewResolver.setPrefix("");
-	 * viewResolver.setSuffix(""); return viewResolver; }
-	 */
-
 	/*
 	 * ResourceHandlerRegistry will handle all the requests to resource files
 	 * like js,CSS,images etc
@@ -107,11 +83,21 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		configurer.enable();
 	}
 
+	@Bean(name = "multipartResolver")
+	public CommonsMultipartResolver getMultipartResolver() {
+		CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
+		commonsMultipartResolver.setMaxUploadSize(1024 * 1024 * 10); // 10 MB
+		commonsMultipartResolver.setMaxUploadSizePerFile(1024 * 1024 * 10); // 10
+																			// MB
+		return commonsMultipartResolver;
+
+	}
+
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
-		builder.indentOutput(true).serializerByType(LocalDate.class, new CustomJodaLocalDateSerializer()).serializerByType(DateTime.class,
-				new CustomJodaDateTimeSerializer());;
+		builder.indentOutput(true).serializerByType(LocalDate.class, new com.dentist.util.CustomJodaLocalDateSerializer())
+				.serializerByType(DateTime.class, new com.dentist.util.CustomJodaDateTimeSerializer());;
 		converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
 
 	}

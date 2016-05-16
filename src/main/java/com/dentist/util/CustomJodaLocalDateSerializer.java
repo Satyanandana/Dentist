@@ -1,4 +1,4 @@
-package com.dentist.googlecalendar;
+package com.dentist.util;
 
 import java.io.IOException;
 

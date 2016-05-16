@@ -1,6 +1,7 @@
 package com.dentist.webapp;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +30,7 @@ import com.dentist.domain.Patient;
 import com.dentist.googlecalendar.CalendarEventHandler;
 import com.dentist.mail.EmailGenerator;
 import com.dentist.mail.EmailStructure;
+import com.dentist.mail.EmailTemplate;
 import com.dentist.service.CustomUserDetails;
 import com.dentist.service.UserServiceInterface;
 
@@ -43,6 +46,7 @@ import com.dentist.service.UserServiceInterface;
  */
 
 @RestController
+@EnableAsync
 @Transactional
 @RequestMapping("/appointments")
 public class AppointmentInfoController {
@@ -74,7 +78,19 @@ public class AppointmentInfoController {
 	public ResponseEntity<List<Appointment>> getAppointmentsByPatientID(@PathVariable("patientID") long patientID) {
 		LOGGER.info("processing get request to /appointments/patient/{patientID}");
 		List<Appointment> appointments = userServiceInterface.getAppointmentsByPatientID(patientID);
+		Collections.reverse(appointments);
 		return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/allappointments", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> getAllAppointments() {
+		LOGGER.info("processing get request to /appointments/allpatients");
+		Map<String, Object> map = new HashMap<>();
+		List<Appointment> appointments = userServiceInterface.getAllAppointments();
+		Collections.reverse(appointments);
+		map.put("data", appointments);
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
 
 	/*******************************************************
@@ -123,15 +139,16 @@ public class AppointmentInfoController {
 			map1.put("user", patient.getFirstName() + " " + patient.getLastName());
 			map1.put("appointment", appointment);
 
-			/*String body = emailSender.prepareBody(EmailTemplate.APPOINTMENT_CANCELLED, map1);
+			String body = emailSender.prepareBody(EmailTemplate.APPOINTMENT_CANCELLED, map1);
 			emailStructure.setBody(body);
 			emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
-			emailStructure.setSubject("Last login info");
+			emailStructure.setSubject("Appointment Cancelled");
 			emailStructure.addRecipient(patient.getEmail());
-			emailSender.sendEmail(emailStructure);*/
+			emailSender.sendEmail(emailStructure);
 
 			calendarEventHandler.deleteActualEvent(appointment.getActualCalEventID());
 			calendarEventHandler.deleteFakeEvent(appointment.getFakeCalEventID());
+
 			map.put("Success", "Success");
 		} else {
 			map.put("error", "Invalid appoint id or patient id");

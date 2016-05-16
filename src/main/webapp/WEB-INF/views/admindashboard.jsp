@@ -20,6 +20,7 @@
 		<h1>Admin Panel</h1>
 		<br />
 <div class="row">
+<a href="<c:url value='/admin/appointments'/>" target="_blank">
 <div class="col-xs-6">
 
 <div class="thumbnail">
@@ -35,6 +36,8 @@
     </div>
     
 </div>
+</a>
+<a href="<c:url value='/admin/appointmentrequests'/>" target="_blank">
 <div class="col-xs-6">
 <div class="thumbnail">
     <center>
@@ -47,9 +50,11 @@
       </center>
     </div>
 </div>
+</a>
 </div>
 
 <div class="row">
+<a href="<c:url value='/admin/receivedmessages'/>" target="_blank">
 <div class="col-xs-6">
  
     <div class="thumbnail">
@@ -64,6 +69,8 @@
     </div>
  
 </div>
+</a>
+<a href="<c:url value='/admin/receiveddocuments'/>" target="_blank">
 <div class="col-xs-6">
  
     <div class="thumbnail">
@@ -78,6 +85,7 @@
     </div>
  
 </div>
+</a>
 </div>
 
 <div class="row">

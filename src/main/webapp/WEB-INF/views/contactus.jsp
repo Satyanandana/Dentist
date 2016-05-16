@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -38,8 +40,11 @@
 </style>
 </head>
 <body>
+<script type="text/javascript"
+	src="<c:url value='/resources/js/contactusTemp.js'/>"></script>
 
 	<%@include file="dynamicheader.jsp"%>
+	
 	<div class="container">
 
 		<br />
@@ -49,33 +54,36 @@
 		<div class="row">
 			<div class="col-sm-6">
 
-				<form class="form-horizontal">
+				<form class="form-horizontal" name="contactus" id="contactus">
 					<fieldset>
 
 
 						<div class="form-group">
-							<div class="alert alert-dismissible alert-success">
+							<div class="alert alert-dismissible alert-success" style="display: none;"  id="success">
 
 								<strong>Well done!</strong> Your message has been sent.</a>.
 							</div>
+							<div class="alert alert-dismissible alert-danger" style="display: none;" id="error">
+  
+ Something Went Wrong ! Send it again .
+</div>
 							<label for="inputPassword" class="col-lg-2 control-label">Name</label>
 							<div class="col-lg-10">
-								<input type="password" class="form-control" id="inputPassword"
-									placeholder="Name">
+								<input type="text" class="form-control" name="name" id="name" placeholder="Name">
 
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputEmail" class="col-lg-2 control-label">Email</label>
 							<div class="col-lg-10">
-								<input type="text" class="form-control" id="inputEmail"
+								<input type="text" class="form-control" id="email" name="email"
 									placeholder="Email">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputPassword" class="col-lg-2 control-label">Number</label>
 							<div class="col-lg-10">
-								<input type="number" class="form-control" id="inputPassword"
+								<input type="number" class="form-control" id="number" name="number"
 									placeholder="Number">
 
 							</div>
@@ -84,21 +92,24 @@
 						<div class="form-group">
 							<label for="textArea" class="col-lg-2 control-label">Summary</label>
 							<div class="col-lg-10">
-								<textarea class="form-control" rows="3" id="textArea"></textarea>
+								<textarea class="form-control" rows="3" id="summary" name="summary"> </textarea>
 								<span class="help-block">Please tell us your reason for
 									contacting us .</span>
 							</div>
 						</div>
-
+						<input type="hidden" name="${_csrf.parameterName}"
+									value="${_csrf.token}" />
+						</fieldset>
+</form>
 
 						<div class="form-group">
 							<div class="col-lg-10 col-lg-offset-2">
 								<button type="reset" class="btn btn-default">Cancel</button>
-								<button type="submit" class="btn btn-primary">Send</button>
+								<button type="submit" class="btn btn-primary" onclick="contactusTemp.sendInquiry('visitor/contactinfo')">Send</button>
 							</div>
 						</div>
-					</fieldset>
-				</form>
+					
+				
 			</div>
 			<div class="col-sm-6">
 
@@ -129,6 +140,8 @@
 	</div>
 
 	<%@include file="footer.jsp"%>
+	
+	
 
 </body>
 </html>

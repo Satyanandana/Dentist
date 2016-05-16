@@ -425,7 +425,7 @@
 								</div>
 
 								<div class="form-group">
-									<a onclick="showEmergencyForm()" href="javascript:void(0);"><i
+									<a onclick="showEmergencyForm(event)" href="javascript:void(0);"><i
 										class="fa fa-plus-circle"
 										style="font-size: 30px; color: #2c3e50;"></i></a>
 								</div>

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,6 +35,7 @@ import com.dentist.domain.ReceivedDocument;
 import com.dentist.domain.SentDocument;
 import com.dentist.mail.EmailGenerator;
 import com.dentist.mail.EmailStructure;
+import com.dentist.mail.EmailTemplate;
 import com.dentist.service.CustomUserDetails;
 import com.dentist.service.UserServiceInterface;
 
@@ -49,6 +51,7 @@ import com.dentist.service.UserServiceInterface;
  */
 
 @RestController
+@EnableAsync
 @Transactional
 @RequestMapping(value = "/doc")
 public class DocumentController {
@@ -121,14 +124,14 @@ public class DocumentController {
 			// Prepare and send an email to Admin to notify him about the new
 			// document.
 			Map<String, Object> emailMap = new HashMap<String, Object>();
-			map.put("user", "Admin");
+			emailMap.put("user", "Admin");
 
-			/*String body = emailSender.prepareBody(EmailTemplate.NEW_DOCUMENT_NOTIFICATION, emailMap);
+			String body = emailSender.prepareBody(EmailTemplate.NEW_DOCUMENT_NOTIFICATION, emailMap);
 			emailStructure.setBody(body);
 			emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
 			emailStructure.setSubject("You received a new document");
 			emailStructure.addRecipient(encryptableProps.getProperty("admin.email"));
-			emailSender.sendEmail(emailStructure);*/
+			emailSender.sendEmail(emailStructure);
 
 			map.put("Success", "Success");
 		}
@@ -151,12 +154,34 @@ public class DocumentController {
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/allreceiveddocuments", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> getAllReceivedDocs() {
+		LOGGER.debug("processing request to get /doc/allreceiveddocuments ...");
+		Map<String, Object> map = new HashMap<>();
+		List<SentDocument> sentDocuments = userServiceInterface.getAllSentDocuments();
+		map.put("data", sentDocuments);
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/sentdocuments/{patientID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ReceivedDocument>> getSentDocsPatient(Model model, @PathVariable("patientID") long patientID) {
 		LOGGER.debug("processing request to get sent documents ...");
 
 		List<ReceivedDocument> received = userServiceInterface.getReceivedDocumentsByPatientID(patientID);
 		return new ResponseEntity<List<ReceivedDocument>>(received, HttpStatus.OK);
+
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/allsentdocuments", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> getAllSentDocs() {
+		LOGGER.debug("processing request to get /doc/allsentdocuments ...");
+		Map<String, Object> map = new HashMap<>();
+		List<ReceivedDocument> receivedDocument = userServiceInterface.getAllreceivedDocuments();
+		map.put("data", receivedDocument);
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 
 	}
 
@@ -211,14 +236,14 @@ public class DocumentController {
 			// Prepare and send an email to patient to notify him about the new
 			// document.
 			Map<String, Object> emailMap = new HashMap<String, Object>();
-			map.put("user", patient.getFirstName() + " " + patient.getLastName());
+			emailMap.put("user", patient.getFirstName() + " " + patient.getLastName());
 
-			/*	String body = emailSender.prepareBody(EmailTemplate.NEW_DOCUMENT_NOTIFICATION, emailMap);
-				emailStructure.setBody(body);
-				emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
-				emailStructure.setSubject("You received a new document");
-				emailStructure.addRecipient(patient.getEmail());
-				emailSender.sendEmail(emailStructure);*/
+			String body = emailSender.prepareBody(EmailTemplate.NEW_DOCUMENT_NOTIFICATION, emailMap);
+			emailStructure.setBody(body);
+			emailStructure.setSenderEmail(encryptableProps.getProperty("email.id"));
+			emailStructure.setSubject("You received a new document");
+			emailStructure.addRecipient(patient.getEmail());
+			emailSender.sendEmail(emailStructure);
 
 			map.put("Success", "Success");
 		}

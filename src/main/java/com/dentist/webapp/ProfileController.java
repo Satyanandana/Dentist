@@ -1,6 +1,7 @@
 package com.dentist.webapp;
 
 import org.apache.log4j.Logger;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +31,7 @@ import com.dentist.service.CustomUserDetails;
  * 
  */
 @Controller
+@EnableAsync
 @Transactional
 @RequestMapping(value = "/profile")
 public class ProfileController {

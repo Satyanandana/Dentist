@@ -163,51 +163,22 @@
 										</c:when>
 										<c:otherwise>
 
-											<li><a href="#"> <i
+											<li><a href="<c:url  value="/admin/dashboard" />"> <i
 													class="glyphicon glyphicon-th-large"
 													style="font-size: 13px !important; display: inline !important;"></i></i>
 													Dashboard
 											</a></li>
-											<li><a href="<c:url  value="/profileborrower.html" />">
-													<i class="glyphicon glyphicon-edit"
-													style="font-size: 13px !important; display: inline !important;"></i></i>
-													Borrower Profile
-											</a></li>
-											<li><a href="<c:url  value="/profilecosigner.html" />">
-													<i class="glyphicon glyphicon-edit"
-													style="font-size: 13px !important; display: inline !important;"></i></i>
-													Co-Signer Profile
-											</a></li>
+										<li class="divider"></li>
+											<li><c:url value="/logout" var="logout" />
+												<form action="${logout}" method="POST" id="logoutForm">
+													<input type="hidden" name="${_csrf.parameterName}"
+														value="${_csrf.token}" />
 
+												</form> <a href="#" onclick="submitLogout()"><i
+													class="fa fa-sign-out"></i>&nbsp;&nbsp;Logout </a></li>
 
-											<li><a
-												href="<c:url  value="/displayborrowerloans.html" />"> <i
-													class="glyphicon glyphicon-edit"
-													style="font-size: 13px !important; display: inline !important;"></i></i>
-													Check Loans
-											</a></li>
-											<li><a
-												href="<c:url  value="/displaycosignerloans.html" />"> <i
-													class="glyphicon glyphicon-edit"
-													style="font-size: 13px !important; display: inline !important;"></i></i>
-													Co-Sign Loans
-											</a></li>
-
-											<li class="divider"></li>
-											<li><a href="#"> <i class="glyphicon glyphicon-cog"
-													style="font-size: 13px !important; display: inline !important;"></i></i>
-													Settings
-											</a></li>
-											<li><a href="#"> <i
-													class="glyphicon glyphicon-log-out"
-													style="font-size: 13px !important; display: inline !important;"></i></i>
-													<c:url value="/logout" var="logout" />
-													<form action="${logout}" method="POST">
-														<input type="hidden" name="${_csrf.parameterName}"
-															value="${_csrf.token}" /> <input type="submit">Logout
-														</>
-													</form>
-											</a></li>
+										
+											
 										</c:otherwise>
 									</c:choose>
 

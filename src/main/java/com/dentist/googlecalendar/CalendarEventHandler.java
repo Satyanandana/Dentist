@@ -11,6 +11,7 @@ package com.dentist.googlecalendar;
  */
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.concurrent.Future;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTimeZone;
@@ -18,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import com.google.api.client.util.DateTime;
@@ -45,7 +48,8 @@ public class CalendarEventHandler {
 		this.calendar = calendar;
 	}
 
-	public Event insertFakeEvent(org.joda.time.DateTime startDate) {
+	@Async
+	public Future<Event> insertFakeEvent(org.joda.time.DateTime startDate) {
 		org.joda.time.DateTime createdDate = new org.joda.time.DateTime(DateTimeZone.forID("America/New_York"));
 		EventDateTime start = getStartDate(startDate);
 		EventDateTime end = getEndDate(startDate);
@@ -57,21 +61,22 @@ public class CalendarEventHandler {
 		} catch (IOException e) {
 			LOGGER.error("unable to insert a fake event", e);
 		}
-		return event;
+		return new AsyncResult<Event>(event);
 	}
 
-	public Boolean deleteFakeEvent(String fakeEventID) {
-		boolean valid = false;
+	@Async
+	public Future<Boolean> deleteFakeEvent(String fakeEventID) {
+		Boolean deleted = new Boolean(false);
 		try {
-			calendar.events().delete(getFakeCalendarId(), fakeEventID);
-			valid = true;
+			calendar.events().delete(getFakeCalendarId(), fakeEventID).execute();
+			deleted = true;
 		} catch (Exception e) {
 			LOGGER.error("unable to delete fake event");
 		}
-		return valid;
+		return new AsyncResult<Boolean>(deleted);
 	}
 
-	public Event insertActualEvent(org.joda.time.DateTime startDate, String attendeeEmail) {
+	public Future<Event> insertActualEvent(org.joda.time.DateTime startDate, String attendeeEmail) {
 		org.joda.time.DateTime createdDate = new org.joda.time.DateTime(DateTimeZone.forID("America/New_York"));
 		EventDateTime start = getStartDate(startDate);
 		EventDateTime end = getEndDate(startDate);
@@ -91,18 +96,20 @@ public class CalendarEventHandler {
 		} catch (IOException e) {
 			LOGGER.error("unable to insert an event", e);
 		}
-		return event;
+		return new AsyncResult<Event>(event);
 	}
 
-	public Boolean deleteActualEvent(String actualEventID) {
-		boolean valid = false;
+	@Async
+	public Future<Boolean> deleteActualEvent(String actualEventID) {
+
+		Boolean deleted = new Boolean(false);
 		try {
-			calendar.events().delete(getActualCalendarId(), actualEventID);
-			valid = true;
+			calendar.events().delete(getActualCalendarId(), actualEventID).execute();
+			deleted = true;
 		} catch (Exception e) {
 			LOGGER.error("unable to delete actual event");
 		}
-		return valid;
+		return new AsyncResult<Boolean>(deleted);
 	}
 
 	public EventDateTime getStartDate(org.joda.time.DateTime startDate) {

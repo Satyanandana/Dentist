@@ -84,6 +84,8 @@ public interface UserServiceInterface {
 
 	public List<Appointment> getAppointmentsByPatientID(long patientID);
 
+	public List<Appointment> getAllAppointments();
+
 	/* Call DAO methods on Insurance.class */
 	public void setInsurance(Insurance insurance);
 
@@ -104,6 +106,8 @@ public interface UserServiceInterface {
 
 	public List<SentMessage> getSentMessagesByPatientID(long patientID);
 
+	public List<SentMessage> getAllSentMessages();
+
 	/* Call DAO methods on ReceivedMessage.class */
 	public void setReceivedMessage(ReceivedMessage receivedMessage);
 
@@ -112,6 +116,8 @@ public interface UserServiceInterface {
 	public ReceivedMessage getReceivedMessageByID(long receivedMessageID);
 
 	public List<ReceivedMessage> getReceivedMessagesByPatientID(long patientID);
+
+	public List<ReceivedMessage> getAllReceivedMessages();
 
 	/* call DAO methods on SentDocument.class */
 	public void setSentDocument(SentDocument sentDocument);
@@ -124,6 +130,8 @@ public interface UserServiceInterface {
 
 	public List<SentDocument> getSentDocumentsByPatientID(long patientID);
 
+	public List<SentDocument> getAllSentDocuments();
+
 	/* call DAO methods on ReceivedDocument.class */
 	public void setReceivedDocument(ReceivedDocument receivedDocument);
 
@@ -134,6 +142,8 @@ public interface UserServiceInterface {
 	public ReceivedDocument getReceivedDocumentByIDandPatientID(long receivedDocumentID, long patientID);
 
 	public List<ReceivedDocument> getReceivedDocumentsByPatientID(long patientID);
+
+	public List<ReceivedDocument> getAllreceivedDocuments();
 
 	/* call DAO methods on Treatment.class */
 	public void setTreatment(Treatment treatment);
