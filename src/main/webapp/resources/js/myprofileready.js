@@ -9,7 +9,26 @@ $(document).ready(function(){
 	
 	
 	 
-	
+	$("#hidePersonalForm1").on("submit", function (e) {
+	    e.preventDefault();
+	    myprofile.sendPersonalProfileData('../patient/update/personalinfo');
+	    
+	});
+	$("#hideAddressForm1").on("submit", function (e) {
+	    e.preventDefault();
+	    myprofile.sendAddressProfileData('../patient/update/addressinfo')
+	    
+	});
+	$("#hideContactForm1").on("submit", function (e) {
+	    e.preventDefault();
+	    myprofile.sendContactProfileData('../patient/update/contactinfo')
+	    
+	});
+	$("#hideEmergencyForm1").on("submit", function (e) {
+	    e.preventDefault();
+	    myprofile.sendEmergencyProfileData('../patient/update/emergencycontactinfo');
+	    
+	});
 	
  	 
 

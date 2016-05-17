@@ -194,35 +194,35 @@
 								<div class="form-group">
 									<label class="control-label" for="disabledInput">First
 										Name</label> <input class="form-control" id="firstName" type="text"
-										placeholder="" name="firstName">
+										placeholder="" name="firstName" required="required">
 								</div>
 								<div class="form-group">
 									<label class="control-label" for="disabledInput">Middle
 										Name</label> <input class="form-control" id="middleName" type="text"
-										placeholder="" name="middleName">
+										placeholder="" name="middleName" required="required">
 								</div>
 								<div class="form-group">
 									<label class="control-label" for="disabledInput">Last
 										Name</label> <input class="form-control" id="lastName" type="text"
-										placeholder="" name="lastName">
+										placeholder="" name="lastName" required="required">
 								</div>
 								<div class="form-group">
 									<label class="control-label" for="disabledInput">Date
 										Of Birth</label> <input class="form-control" id="dob" type="text"
-										placeholder="" name="dob">
+										placeholder="" name="dob" required="required">
 								</div>
 
 
 								<input type="hidden" name="${_csrf.parameterName}"
 									value="${_csrf.token}" />
-							</div>
-						</form>
-						<div class="form-group">
-							<button class="btn btn-primary" id="updatePersonal"
-								onclick="myprofile.sendPersonalProfileData('../patient/update/personalinfo')">Update</button>
+									<div class="form-group">
+							<button class="btn btn-primary" id="updatePersonal">Update</button>
 							&nbsp;&nbsp;<i class="fa fa-spinner fa-pulse"
 								style="font-size: 30px; visibility: hidden;" id="spinner"></i>
 						</div>
+							</div>
+						</form>
+						
 					</div>
 
 
@@ -288,40 +288,41 @@
 								<div class="form-group">
 									<label class="control-label" for="disabledInput">Address
 										1</label> <input class="form-control" id="address1" name="address1"
-										type="text" placeholder="">
+										type="text" placeholder="" required="required">
 								</div>
 								<div class="form-group">
 									<label class="control-label" for="disabledInput">Address
 										2</label> <input class="form-control" id="address2" name="address2"
-										type="text" placeholder="">
+										type="text" placeholder="" required="required">
 								</div>
 								<div class="form-group">
 									<label class="control-label" for="disabledInput">City</label> <input
 										class="form-control" id="city" name="city" type="text"
-										placeholder="">
+										placeholder="" required="required">
 								</div>
 								<div class="form-group">
 									<label class="control-label" for="disabledInput">State</label>
 									<input class="form-control" id="state" name="state" type="text"
-										placeholder="">
+										placeholder="" required="required">
 								</div>
 								<div class="form-group">
 									<label class="control-label" for="disabledInput">Zip
 										Code</label> <input class="form-control" id="zipcode" name="zipcode"
-										type="number" placeholder="">
+										type="number" placeholder="" required="required">
 								</div>
 								<input type="hidden" name="${_csrf.parameterName}"
 									value="${_csrf.token}" />
+									
+									<div class="form-group">
+							<button class="btn btn-primary" id="updateAddress">Update</button>
+							&nbsp;&nbsp;<i class="fa fa-spinner fa-pulse"
+								style="font-size: 30px; visibility: hidden;" id="spinner"></i>
+						</div>
 
 
 							</div>
 						</form>
-						<div class="form-group">
-							<button class="btn btn-primary" id="updateAddress"
-								onclick="myprofile.sendAddressProfileData('../patient/update/addressinfo')">Update</button>
-							&nbsp;&nbsp;<i class="fa fa-spinner fa-pulse"
-								style="font-size: 30px; visibility: hidden;" id="spinner"></i>
-						</div>
+						
 					</div>
 
 
@@ -379,17 +380,17 @@
 								<div class="form-group">
 									<label class="control-label" for="disabledInput">Number</label>
 									<input class="form-control" id="phoneNumber" name="phoneNumber"
-										type="text" placeholder="">
+										type="number" placeholder=""  required="required">
 								</div>
 								<input type="hidden" name="${_csrf.parameterName}"
 									value="${_csrf.token}" />
-							</form>
-							<div class="form-group">
-								<button class="btn btn-primary" id="updateContact"
-									onclick="myprofile.sendContactProfileData('../patient/update/contactinfo')">Update</button>
+									<div class="form-group">
+								<button class="btn btn-primary" id="updateContact">Update</button>
 								&nbsp;&nbsp;<i class="fa fa-spinner fa-pulse"
 									style="font-size: 30px; visibility: hidden;" id="spinner"></i>
 							</div>
+							</form>
+							
 						</div>
 
 
@@ -449,13 +450,13 @@
 									<label class="control-label" for="disabledInput">Emergency
 										Contact Name</label> <input class="form-control"
 										id="emergencyContactName" name="emergencyContactName"
-										type="text" placeholder="">
+										type="text" placeholder="" required="required">
 								</div>
 								<div class="form-group">
 									<label class="control-label" for="disabledInput">Emergency
 										Contact Number</label> <input class="form-control"
 										id="emergencyContactNumber" name="emergencyContactNumber"
-										type="text" placeholder="">
+										type="number" placeholder="" required="required">
 								</div>
 								<div class="form-group">
 									<label for="relation">Relation</label> <select
@@ -478,13 +479,14 @@
 							</div>
 							<input type="hidden" name="${_csrf.parameterName}"
 								value="${_csrf.token}" />
-						</form>
-						<div class="form-group">
+								<div class="form-group">
 							<button class="btn btn-primary" id="updateEmergency"
-								onclick="myprofile.sendEmergencyProfileData('../patient/update/emergencycontactinfo')">Update</button>
+								>Update</button>
 							&nbsp;&nbsp;<i class="fa fa-spinner fa-pulse"
 								style="font-size: 30px; visibility: hidden;" id="spinner"></i>
 						</div>
+						</form>
+						
 					</div>
 
 

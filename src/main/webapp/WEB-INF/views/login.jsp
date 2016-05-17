@@ -88,7 +88,7 @@
 
 
 								<form:input type="text" class="form-control" path="firstName"
-									id="firstName" />
+									id="firstName" required="required"/>
 							</div>
 						</div>
 						<div class="col-sm-4">
@@ -97,7 +97,7 @@
 
 
 								<form:input type="text" class="form-control" path="middleName"
-									id="middleName" />
+									id="middleName" required="required"/>
 							</div>
 						</div>
 						<div class="col-sm-4">
@@ -105,7 +105,7 @@
 								<label for="last-name">Last Name</label>
 
 								<form:input type="text" class="form-control" path="lastName"
-									id="lastName" />
+									id="lastName" required="required" />
 							</div>
 						</div>
 						<div class="col-sm-12">
@@ -113,7 +113,7 @@
 								<label for="email">Email</label>
 
 								<form:input type="text" class="form-control"
-									path="userAuth.userEmail" id="userEmail" />
+									path="userAuth.userEmail" id="userEmail" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" title="Please enter your email address in xyz@yahoo.com format."  required="required" />
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -122,13 +122,13 @@
 
 
 								<form:input type="password" class="form-control"
-									path="userAuth.userPwd" id="userpassword" />
+									path="userAuth.userPwd" id="userpassword" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,10}" title="Atleast one upper case,one lowercase,on number and the length between 6 to 10" required="required" />
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="password">Re-enter Password</label> <input
-									type="password" class="form-control" name="repassword">
+									type="password"  class="form-control" name="repassword" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,10}" title="Atleast one upper case,one lowercase,on number and the length between 6 to 10" required="required">
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -136,7 +136,7 @@
 								<label for="major">Phone Number</label>
 
 								<form:input type="text" class="form-control"
-									placeholder="xxx-xxx-xxxx" path="phoneNumber" id="phoneNumber" />
+									placeholder="xxx-xxx-xxxx" path="phoneNumber" id="phoneNumber" required="required" />
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -159,7 +159,7 @@
 								value="${_csrf.token}" />
 							<button type="submit" class="btn btn-primary">Register</button>
 							<div style="float: right; font-size: large;">
-								<a class="loginlink" style="margin-right: 20px;">Login</a> <a
+								<a  class="loginlink" style="margin-right: 20px;">Login</a> <a
 									class="forgotlink">Forgot Password</a>
 							</div>
 
@@ -183,17 +183,18 @@
 						<form id="forgotPasswordForm">
 							<div class="form-group">
 								<label for="first-name">Enter Your Email</label> <input
-									type="text" class="form-control" name="email" />
+									type="text" class="form-control" name="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" title="Please enter your email address in xyz@yahoo.com format."  required="required"  />
 							</div>
 							<input type="hidden" name="${_csrf.parameterName}"
 								value="${_csrf.token}" />
+								
+								<button type="submit" class="btn btn-primary">Send
+							Me An Email</button>
 
 
 						</form>
 
-						<button type="submit" class="btn btn-primary"
-							onclick="forgotPassword.sendEmailPassword('../login/forgotpassword')">Send
-							Me An Email</button>
+					
 
 						<div style="float: right; font-size: large;">
 							<a class="loginlink" style="margin-right: 20px;">Login</a> <a
@@ -274,6 +275,11 @@
 			}
 
 			$(document).ready(function() {
+				//prevent submit event and send ajax call ..
+				$("#forgotPasswordForm").on("submit", function (e) {
+				    e.preventDefault();
+				    forgotPassword.sendEmailPassword('../login/forgotpassword');
+				});
 
 				$(".signuplink").on('click', signup);
 				$(".loginlink").on('click', login);

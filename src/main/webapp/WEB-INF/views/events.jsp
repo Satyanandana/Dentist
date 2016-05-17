@@ -193,7 +193,7 @@
 									<label for="inputEmail" class="col-lg-2 control-label">Date</label>
 									<div class="col-lg-10">
 										<input type="text" class="form-control" id="datepick"
-											name="appointmentdate" placeholder="mm/dd/yyyy">
+											name="appointmentdate" placeholder="mm/dd/yyyy" required="required">
 
 									</div>
 								</div>
@@ -220,7 +220,7 @@
 									<label for="textArea" class="col-lg-2 control-label">Note</label>
 									<div class="col-lg-10">
 										<textarea class="form-control" rows="3" id="note" name="note"
-											placeholder="Max 250 words"></textarea>
+											placeholder="Max 250 words" required="required"></textarea>
 										<span class="help-block">Please tell us briefly the
 											reason behind appointment . </span>
 									</div>
@@ -234,15 +234,17 @@
 
 							<input type="hidden" name="${_csrf.parameterName}"
 								value="${_csrf.token}" />
-						</form>
-						<div class="form-group">
+								
+								<div class="form-group">
 							<div class="col-lg-10 col-lg-offset-2">
 								<button type="reset" class="btn btn-default">Cancel</button>
 								<button class="btn btn-primary"
-									onclick="requestedappointments.sendRequestedAppointment('../appointmentrequests/create')">Book
+									>Book
 									Appointment</button>
 							</div>
 						</div>
+						</form>
+						
 
 					</div>
 
@@ -296,6 +298,21 @@
 
 
 	<%@include file="footer.jsp"%>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		 
+		 
+		   
+		
+		
+		 
+		$("#appointmentRequestForm").on("submit", function (e) {
+		    e.preventDefault();
+		    requestedappointments.sendRequestedAppointment('../appointmentrequests/create');
+		    
+		});
+	}
+	</script>
 
 	<script type="text/javascript"
 		src="<c:url value='/resources/js/bootstrap-datepicker.js'/>"></script>
