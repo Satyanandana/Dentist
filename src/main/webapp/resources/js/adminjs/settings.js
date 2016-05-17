@@ -4,27 +4,23 @@
 var settings = (function() {
    
     var postNewPassword = function(path) {
-    	 alert($('#newPasswordForm').serialize());
+    	 alert($('#changePasswordAdmin').serialize());
        $.ajax({
             url: path,
             method: 'POST',
-            data: $('#newPasswordForm').serialize(),
+            data: $('#changePasswordAdmin').serialize(),
             contentType: "application/x-www-form-urlencoded; charset=UTF-8"
         }).then(function(data) {
         	if(data.Success)
         	{
-        	showSettings();
-        	/*$('#newPasswordForm').hide();*/
-        	$("#oldPwd").val("");
-  		  $("#newPwd").val("");
-        	$('#successDiv').show();
+        	
+        	alert("Password Changed Successfully . ");
+        	
+        
         	}else
         		{
-        		  $("#oldPwd").val("");
-        		  $("#newPwd").val("");
-        		$('#errorDiv p').html(data.error);
-        		$('#errorDiv').show();
-        		
+        			
+        		alert("Something went wrong . try again .");
         		}
         	
         	

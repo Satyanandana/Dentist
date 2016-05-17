@@ -245,8 +245,9 @@
 
 
 		</div>
-
+</div>
 		<%@include file="footer.jsp"%>
+
 		<script type="text/javascript"
 			src="<c:url value='/resources/js/bootstrap-datepicker.js'/>"></script>
 		<script type="text/javascript"

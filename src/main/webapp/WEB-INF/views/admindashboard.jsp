@@ -17,7 +17,7 @@
 	<%@include file="dynamicheader.jsp"%>
 <div class="container-fluid">
 		<br />
-		<h1>Admin Panel</h1>
+		<h1>Admin Panel <a data-toggle="modal" data-target="#changePasswordModal"><small>(Change Password)</small></a></h1>
 		<br />
 <div class="row">
 <a href="<c:url value='/admin/appointments'/>" target="_blank">
@@ -145,6 +145,7 @@
 <script type="text/javascript" src="<c:url value='https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/mustache.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/admin.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/adminjs/settings.js'/>"></script>
 
 
 
@@ -176,5 +177,49 @@ $(document).ready(function() {
 	
 } );
 </script>
+
+	<!-- Modal change password -->
+	<div class="modal fade" id="changePasswordModal" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Change Your Password</h4>
+				</div>
+				<div class="modal-body">
+					<form name="changePasswordAdmin" id="changePasswordAdmin">
+							<div class="form-group">
+										<label for="first-name">Your Old Password</label> <input
+											type="password" class="form-control" name="oldPwd"
+											id="oldPwd" value="" />
+									</div>
+									<div class="form-group">
+										<label for="first-name">New Password</label> <input
+											type="password" class="form-control" name="newPwd"
+											id="newPwd" value="" />
+									</div>
+
+					
+					
+					
+												<input name="${_csrf.parameterName}" type="hidden"
+							value="${_csrf.token}">
+					</form>
+				
+				
+				</div>
+				<div class="modal-footer">
+						<div class="form-group">
+					<button type="submit" class="btn btn-primary"
+									onclick="settings.postNewPassword('../settings/updatepassword')">Change
+									Password</button>
+									</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
 </body>
 </html>

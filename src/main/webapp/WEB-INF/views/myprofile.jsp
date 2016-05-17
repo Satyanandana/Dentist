@@ -843,11 +843,11 @@
 
 		<!-- All Forms Needed In Patient Profile  Ends-->
 
-<%@include file="footer.jsp"%>
+
 
 
 	</div>
-
+<%@include file="footer.jsp"%>
 
 	<div class="modal fade" id="messageModal" role="dialog">
 		<div class="modal-dialog">
