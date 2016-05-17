@@ -198,7 +198,7 @@
 
 	<!-- Modal Getting To The Office Video-->
 	<div class="modal fade" id="officeVideoModal" role="dialog"
-		style="height: 600px; width: 900px;">
+		>
 		<div class="modal-dialog">
 
 			<!-- Modal content-->
@@ -208,7 +208,7 @@
 					<h4 class="modal-title">Getting To The Office</h4>
 				</div>
 				<div class="modal-body">
-					<video width="320" height="240" controls>
+					<video width=100% height=30% controls autoplay>
 						<source
 							src="<c:url value='/resources/video/gettingtoDrKangsoffice.mov'/>"
 							type="video/webm">
@@ -218,9 +218,7 @@
 
 
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary">Got It.</button>
-				</div>
+			
 			</div>
 
 		</div>
