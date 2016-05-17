@@ -56,7 +56,7 @@
 						</div>
 					</div>
 
-					
+
 					<div class="col-sm-6 col-md-4">
 						<div class="thumbnail">
 							<center>
@@ -65,6 +65,21 @@
 
 									<i class=flaticon-medical-6 style="color: lightblue;"
 										data-toggle="modal" data-target="#whiteComposite"></i>
+
+								</div>
+							</center>
+						</div>
+					</div>
+
+					<div class="col-sm-6 col-md-4">
+						<div class="thumbnail">
+							<center>
+								<div class="caption">
+									<h3>Implant Restorations</h3>
+
+									<i class=flaticon-medical-16 style="color: lightblue;"
+										data-toggle="modal" data-target="#implants"></i>
+
 
 								</div>
 							</center>
@@ -93,7 +108,7 @@
 						</div>
 					</div>
 
-					
+
 					<div class="col-sm-6 col-md-4">
 						<div class="thumbnail">
 							<center>
@@ -107,16 +122,7 @@
 							</center>
 						</div>
 					</div>
-				</div>
 
-
-			</div>
-
-			<div id="howitworks">
-
-
-				<!-- Thumbnail  -->
-				<div class="row">
 					<div class="col-sm-6 col-md-4">
 						<div class="thumbnail">
 							<center>
@@ -130,20 +136,21 @@
 						</div>
 					</div>
 
-					<div class="col-sm-6 col-md-4">
-						<div class="thumbnail">
-							<center>
-								<div class="caption">
-									<h3>Dental Implants</h3>
 
-									<i class=flaticon-medical-16 style="color: lightblue;"
-										data-toggle="modal" data-target="#implants"></i>
+				</div>
 
 
-								</div>
-							</center>
-						</div>
-					</div>
+			</div>
+
+			<div id="howitworks">
+
+
+				<!-- Thumbnail  -->
+				<div class="row">
+
+
+					.
+					<div class="col-sm-6 col-md-2"></div>
 					<div class="col-sm-6 col-md-4">
 						<div class="thumbnail">
 							<center>
@@ -157,6 +164,23 @@
 							</center>
 						</div>
 					</div>
+
+
+					<div class="col-sm-6 col-md-4">
+
+						<div class="thumbnail">
+							<center>
+								<div class="caption">
+									<h3>Root Canal Therapy</h3>
+
+									<i class=flaticon-icon-31045 style="color: lightblue;"
+										data-toggle="modal" data-target="#rootcanaltherapy"></i>
+
+								</div>
+							</center>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-2"></div>
 				</div>
 
 
@@ -218,15 +242,21 @@
 						</h4>
 					</div>
 					<div class="modal-body">
-						<p>Do you want a beautiful smile? Whitening your teeth is one
-							of the easiest things you can do to improve your smile and boost
-							your self-confidence. Imagine, a single whitening procedure can
-							counteract years of exposure to coffee, tea, red wine, cola and
-							smoking, giving you the smile you've always dreamed of!</p>
+						<p>Many patients are interested in getting their teeth
+							whitened. I believe it is my duty to inform and educate patients
+							how teeth whitening works. Whitening procedure is most effective
+							on stains accumulated exogenously, meaning stains from darker
+							food, red wine, coffee, tea, tobacco products, etc. The type I
+							use in my clinic is peroxide based methods which it literally
+							'strips off' dark stain layer from the tooth surface. It is
+							extremely important that after the whitening procedures are
+							completed, patients must stay away from the aforementioned dark
+							staining sources for few days to prevent relapse of stain
+							accumulations.</p>
 					</div>
 					<div class="modal-footer">
 
-						<a href="events.jsp" class="btn btn-primary">Schedule
+						<a href="profile/scheduleappointment" class="btn btn-primary">Schedule
 							Appointment</a>
 					</div>
 				</div>
@@ -249,26 +279,22 @@
 						</h4>
 					</div>
 					<div class="modal-body">
-						<p>Teeth are often restored using silver or porcelain
-							fillings. However, when too much of a tooth's structure is
-							removed to support a filling, a crown or "cap" may be needed. A
-							crown may be needed to:</p>
-						<p>Restore a tooth when it is unable to support a large
-							filling</p>
-						<p>Attach bridges</p>
-						<p>Protect a weak tooth from fracturing or restore fractured
-							teeth</p>
-						<p>Cover badly shaped or discolored teeth</p>
-						<p>Cover dental implants</p>
-						<p>A crown essentially covers a tooth to restore it to its
-							natural shape and size. This permanent covering fits over your
-							original tooth to strengthen or improve the appearance of the
-							tooth. Fitting a crown generally requires at least two visits to
-							the dentist's office.</p>
+						<p>Restorative dentistry is replacing missing tooth structure
+							due to fracture or decay with man-made material to replace the
+							function, shape and esthetics of the tooth. When there is
+							substantial amount of tooth structure missing, filling
+							restorations do not provide functional replacement that can last
+							long term. When that happens, a cap in a shape of the restoring
+							toothis used to be placed on a top of a 1-2 mm shaven reduced
+							tooth structure. I prefer to use all ceramic crowns that do not
+							contain any metals. I believe that presence of nickel among other
+							metal elements in the old crowns do and can affect the health of
+							adjacent gingival health. Metalfree margin also will provide
+							potentially better esthetics</p>
 					</div>
 					<div class="modal-footer">
 
-						<a href="events.jsp" class="btn btn-primary">Schedule
+						<a href="profile/scheduleappointment" class="btn btn-primary">Schedule
 							Appointment</a>
 					</div>
 				</div>
@@ -291,17 +317,22 @@
 						</h4>
 					</div>
 					<div class="modal-body">
-						<p>Until recently, dentists used a silver and mercury amalgam
-							to fill and seal cavities. Because a larger amount of the
-							original tooth must be removed, these types of fillings often
-							weaken teeth. Recent innovations now allow us to replace old
-							silver fillings with composite or porcelain fillings that are
-							stronger, safer and more natural looking. Say goodbye to "metal
-							mouth" and hello to a beautiful new smile.</p>
+						<p>At my office, I exclusively use composite materials for
+							filling or restorative procedures. I do place patients concerns
+							about mercury presence in old amalgam or alloy based metal
+							restorative material. However, that is not the main reason I
+							choose to use composite material. Composite restoration allows
+							active bonding thus seal between the filling material and tooth
+							structure. Also, the material is becoming more and more similar
+							to natural tooth structure mechanically, meaning the hardness,
+							and 'stretchability' of the material is getting similar to that
+							of natural tooth structure. Active bonding and mechanical
+							property matching of composite material in my opinion helps
+							prevent further loss of tooth structure moving forward.</p>
 					</div>
 					<div class="modal-footer">
 
-						<a href="events.jsp" class="btn btn-primary">Schedule
+						<a href="profile/scheduleappointment" class="btn btn-primary">Schedule
 							Appointment</a>
 					</div>
 				</div>
@@ -341,7 +372,7 @@
 					</div>
 					<div class="modal-footer">
 
-						<a href="events.jsp" class="btn btn-primary">Schedule
+						<a href="profile/scheduleappointment" class="btn btn-primary">Schedule
 							Appointment</a>
 					</div>
 				</div>
@@ -375,7 +406,7 @@
 					</div>
 					<div class="modal-footer">
 
-						<a href="events.jsp" class="btn btn-primary">Schedule
+						<a href="profile/scheduleappointment" class="btn btn-primary">Schedule
 							Appointment</a>
 					</div>
 				</div>
@@ -398,18 +429,26 @@
 						</h4>
 					</div>
 					<div class="modal-body">
-						<p>Healthy and strong teeth support and maintain your jaw
-							alignment. That is why when you lose one or more teeth, your
-							remaining teeth may shift, and the ability to chew and speak may
-							be affected. A bridge replaces missing teeth with artificial
-							teeth, eliminating the gap where those teeth had been. The bridge
-							is bonded onto surrounding teeth for support. Regardless of the
-							type of bridge recommended, its success depends on keeping the
-							surrounding teeth healthy and strong.</p>
+						<p>Bridges is an old form of prosthesis designed to replace
+							missing teeth. Three or more crowns are made and fused together.
+							The end crowns will be attached to existing teeth adjacent to
+							missing tooth/teeth area and middle fused crowns effectively
+							replace missing teeth by fill in the empty spaces. I recommend
+							bridge restorations to patients under specific conditions. There
+							are cases where patients cannot have implant surgeries. In those
+							specific cases, I recommend non-surgical procedures such as
+							bridges or dentures. One biggest drawback of bridges is even if
+							teeth next to empty area are health, they needed to be shaved
+							down to be fitted to have bridge fixed on them. Once a bridge is
+							placed, all teeth involved are marries to each other and even if
+							one goes bad, entire bridge needs to be removed and replaced
+							after the problem is addressed. Therefore, recommendation of
+							bridge placement all factors are considered to make sure the
+							bridge is the right treatment option.</p>
 					</div>
 					<div class="modal-footer">
 
-						<a href="events.jsp" class="btn btn-primary">Schedule
+						<a href="profile/scheduleappointment" class="btn btn-primary">Schedule
 							Appointment</a>
 					</div>
 				</div>
@@ -432,22 +471,26 @@
 						</h4>
 					</div>
 					<div class="modal-body">
-						<p>Missing teeth can create a host of aesthetic and functional
-							problems including sagging facial muscles, inability to eat
-							certain foods and speak. Dentures may be your best solution if
-							you've lost all your natural teeth due to periodontal disease,
-							tooth decay or injury.</p>
-						<p>Fitting a patient for dentures does not have to be a
-							traumatic experience. During the preliminary visit, the remaining
-							teeth are removed and a model is made of the patient's jaw. An
-							immediate denture may be fitted so the patient does not have to
-							be without teeth while the mouth tissue heals. Once the mouth
-							tissue is completely healed, the patient is fitted with their
-							custom dentures.</p>
+						<p>Denture treatment is a non-invasive form of replacing
+							missing teeth. Prosthetic teeth are fixed to polymer plate. Plate
+							is 'clipped' or attached to combinations of remaining existing
+							teeth and gum tissue contour to provide stability. Patients need
+							to be educated that the denture is not exact or even closer
+							replacement of the original teeth. Functionally and
+							comfortability, I always inform patients to expect about 25-30%
+							of the original teeth. Denture use will require most patients to
+							're-learn' how to chew in order to be effective. Upsides to
+							denture are: a) non-invasive/non-surgical, b)provides good
+							esthetics, and c) lower costs. In addition to that, denture is a
+							great prosthetic options for patients to transition during the
+							period between extraction of ailing teeth to replacing them in
+							implant forms. My approach is to make sure my patients get fully
+							informed and educated on dentures before they make their
+							decisions to have dentures made for them.</p>
 					</div>
 					<div class="modal-footer">
 
-						<a href="events.jsp" class="btn btn-primary">Schedule
+						<a href="profile/scheduleappointment" class="btn btn-primary">Schedule
 							Appointment</a>
 					</div>
 				</div>
@@ -465,25 +508,29 @@
 
 						<h4 class="modal-title">
 							<p>
-								<strong>Dental Implants</strong>
+								<strong>Implant Restorations</strong>
 							</p>
 						</h4>
 					</div>
 					<div class="modal-body">
-						<p>When you lose a tooth, a dental implant may be needed to
-							replace the tooth root and crown. Dental implants are simply
-							"anchors" that permanently support replacement teeth. They are
-							secure and durable and can be cleaned and cared for much like
-							your natural teeth.</p>
-						<p>The procedure requires a titanium root be fitted into your
-							jaw to replace the lost tooth's root. Once the implant is
-							anchored into the bone, the bone around the implant requires six
-							weeks to six months of healing. Once the bone has healed, a
-							support post and replacement tooth is anchored onto the implant.</p>
+						<p>In my opinion, implant is the closes replacement of missing
+							teeth in functional sense. Implant system consists of a metal
+							component, that is embedded within the bone, and a crown, that
+							actually replaces missing tooth by fixed to the embedded metal
+							component. Recent advancements in understanding of bone
+							integration onto the implant surface, development of further
+							advanced biocompatible materials as implant materials and
+							surgical technique made implant option more viable. In my office,
+							implant placement surgery is done by a surgeon referred by me.
+							Once the implant healing and integration to bone is complete,
+							implant crown is made and fitted to the implant to complete the
+							restoration of missing dentition. The entire procedure will take
+							between 4-9 months depends on type of procedures needed to place
+							implants.</p>
 					</div>
 					<div class="modal-footer">
 
-						<a href="events.jsp" class="btn btn-primary">Schedule
+						<a href="profile/scheduleappointment" class="btn btn-primary">Schedule
 							Appointment</a>
 					</div>
 				</div>
@@ -506,23 +553,80 @@
 						</h4>
 					</div>
 					<div class="modal-body">
-						<p>There have been major advances in non-surgical periodontal
-							treatment for chronic periodontal disease. Our state-of-the-art
-							ultrasonic scalers have been designed by a periodontist for
-							maximum effectiveness on root surfaces. Antibiotic gels, which
-							are placed below the gum line, reduce the need for periodontal
-							surgery. And the latest innovation, a dental endoscope (camera)
-							which can be placed below the gum line, further reduces the need
-							for surgical treatment of periodontal disease.</p>
-						<p>We take every opportunity to help you control your
-							periodontal disease problem non-surgically and then reevaluate to
-							determine the effectiveness of the treatment. If surgical
-							treatment is required, the treatments maximize your comfort and
-							your ability to regrow lost periodontal support.</p>
+						<p>In most cases, patients that are forced to have full
+							dentures suffer from chronic severe periodontal disease.
+							Periodontal or gum disease, also commonly known, affect all teeth
+							by weakening there bone foundation. This happens because chronic
+							low grade gum infection, which causes gum tissue to swell red,
+							extremely sensitive, painful and bleeding easily, will ultimately
+							causes underlying bone structure to degenerate or 'melt' away. If
+							this periodontal condition is not diagnosed in timely manner and
+							treated appropriately, eventually, teeth will become mobile and
+							non-functional. Treatments of gum diseases are mainly classified
+							as non-surgical therapy, also known as deep scaling and surgical
+							therapy, including laser based surgery. When a patient with
+							periodontal disease presents at my office, I make diagnosis and
+							based on that, 3 major treatment recommendations are made. First
+							is provide patients with non-surgical deep scaling followed by 3
+							month cleaning also known as periodontal maintenance. Second is
+							refer to a periodontist, a specialist that can evaluate and
+							provide surgical treatments. Third is when the teeth are
+							determined non-salvageable, extractions are performed either at
+							my office or by a specialists depends on the type and the level
+							of complications involved with particular extractions. In my
+							opinion, successful outcome of periodontal treatments depends on
+							good patient education, good and timely clinical diagnosis and
+							treatments and patient commitments on diligent home care and 3
+							month periodontal maintenance. I always tell my patients deep
+							scaling is only a small portion of the overall treatment scheme
+							of periodontal disease, persistent home care and perio
+							maintenance is the vital key to successful outcome.</p>
 					</div>
 					<div class="modal-footer">
 
-						<a href="events.jsp" class="btn btn-primary">Schedule
+						<a href="profile/scheduleappointment" class="btn btn-primary">Schedule
+							Appointment</a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="modal fade" id="rootcanaltherapy" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+						<h4 class="modal-title">
+							<p>
+								<strong>Root Canal Therapy</strong>
+							</p>
+						</h4>
+					</div>
+					<div class="modal-body">
+						<p>Large decay of tooth structure that is not treated in time
+							may advance into the nerve chamber inthe center of tooth
+							structure. This cause infection of the nerve that causes severe
+							pain that can also results in acute swelling. Root canal is
+							basically removal of infected nerve within the tooth structure,
+							clean and disinfect the canal space and fill it with polymeric
+							materials to seal the canalspace. At my office, the assessment
+							for the root canal therapy is made to determine, 1) if root canal
+							is a right choice of treatment, 2) if it is, assess if the
+							procedures will require special equipments such as high power
+							microscopes. If the procedure will require such equipments, the
+							case is referred to a root canal specialist. 3) if the case does
+							not require such equipments, the procedure is rendered at the
+							office by Dr Kang.</p>
+
+
+					</div>
+					<div class="modal-footer">
+
+						<a href="profile/scheduleappointment" class="btn btn-primary">Schedule
 							Appointment</a>
 					</div>
 				</div>

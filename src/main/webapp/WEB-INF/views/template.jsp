@@ -113,7 +113,7 @@
 
  
         <button type="submit" class="btn btn-primary btn-sm" onclick="editInsurance({{insuranceID}},'{{insuranceProviderID}}','{{insuranceProviderName}}','{{subscriberID}}','{{subscriberFullName}}',{{patientID}},'{{dateOfBirth}}','{{status}}')">Edit</button>
-        <button type="reset" class="btn btn-default btn-sm">Delete</button>
+     
      
     </li> 
   </ul>

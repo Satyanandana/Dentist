@@ -46,19 +46,20 @@
 						<form method="POST" action="${loginUrl}">
 							<label for="email">Username</label> <input type="text"
 								class="form-control" id="email" name="email"
-								placeholder="Enter username" value="" />
+								placeholder="Enter username" value="" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" title="Please enter your email address in xyz@yahoo.com format."  required="required"/>
 
 							<div class="form-group">
 								<label for="password">Password</label> <input type="password"
-									class="form-control" id="password" name="password"
+									class="form-control" id="password" name="password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,10}" title="Atleast one upper case,one lowercase,on number and the length between 6 to 10" required="required"
 									placeholder="Password" />
 							</div>
 							<input type="hidden" name="${_csrf.parameterName}"
 								value="${_csrf.token}" />
-							<button type="submit" class="btn btn-primary">Login</button>
+						<button type="submit" class="btn btn-primary">Login</button>	
 							<a class="forgotlink" style="margin-left: 20px;"> <u>Forgot
 									Password ?</u></a><br /> <br />
 						</form>
+						
 
 						<a class="signuplink">Don't Have An Account ? <u>Create
 								One</u></a>
