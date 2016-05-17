@@ -17,6 +17,8 @@
 
 	<!-- Page Content -->
 	<div class="container">
+			<br />
+		<br />
 		<br />
 		<h1>Our Office Gallery</h1>
 		<br />

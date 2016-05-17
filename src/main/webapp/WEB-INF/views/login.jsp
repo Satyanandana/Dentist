@@ -22,6 +22,9 @@
 	<!-- Page Content -->
 	<!-- Page Content -->
 	<%@include file="dynamicheader.jsp"%>
+		<br />
+		<br />
+		<br />
 	<div class="container">
 
 		<div class="row">

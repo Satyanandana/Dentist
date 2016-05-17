@@ -18,6 +18,8 @@
 
 	<div class="container">
 		<br />
+		<br />
+		<br />
 		<h1>About Me</h1>
 		<br />
 		<div class="row">

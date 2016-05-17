@@ -69,8 +69,14 @@
 
 
 	<%@include file="dynamicheader.jsp"%>
+	
+<head>
+	<link rel="stylesheet"
+	href="<c:url value='/resources/css/unresponsive.css'/>" media="screen">
+	</head>  
+ 
 	<p id="action" style="visibility: hidden;">${action}</p>
-	<div class="container" style="height: 75%; width: 95%;">
+	<div class="container" style="width: 100%;">
 
 		<br />
 		<h1>My Dash Board</h1>
@@ -84,14 +90,14 @@
 		</div>
 		<!-- <div id="filters">
 <div class="row">
-<div class="col-sm-3">
+<div class="col-xs-3">
 <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search">
         </div>
        </form>
       </div>
-      <div class="col-sm-9">
+      <div class="col-xs-9">
           	<ul style="float: right;" >
           	<br/>
           	<li class="dropdown">
@@ -108,9 +114,9 @@
   </div>
 </div>
 </div> -->
-		<div class="row">
+		<div class="row" style="width: 100%;">
 
-			<div class="col-sm-3">
+			<div class="col-xs-3">
 				<div class="list-group table-of-contents">
 					<a class="list-group-item" onclick="showProfile()"
 						href="javascript:void(0);">My Profile</a> <a
@@ -130,14 +136,14 @@
 
 			<!-- All Forms Needed In Patient Profile start -->
 
-			<div class="col-sm-9">
+			<div class="col-xs-9">
 
 
 				<div id="MyProfile">
 					<div id="showPersonalForm">
 						<form class="form-horizontal" id="showPersonalForm">
 
-							<div class="col-sm-12"
+							<div class="col-xs-12"
 								style="background-color: #F0FFFF; margin-bottom: 20px; padding-left: 30px;">
 								<h2>
 									<i class="fa fa-info"></i>&nbsp; Personal Information
@@ -184,7 +190,7 @@
 						<form class="form-horizontal" id="hidePersonalForm1"
 							name="hidePersonalForm1" class="hidePersonalForm1">
 
-							<div class="col-sm-12"
+							<div class="col-xs-12"
 								style="background-color: #F0FFFF; margin-bottom: 20px; padding-left: 30px;">
 								<h2>
 									<i class="fa fa-info"></i>&nbsp; Personal Information
@@ -229,7 +235,7 @@
 					<div id="showAddressForm">
 						<form class="form-horizontal">
 
-							<div class="col-sm-12"
+							<div class="col-xs-12"
 								style="background-color: #F0FFFF; margin-bottom: 20px; padding-left: 30px;">
 								<h2>
 									<i class="fa fa-map-marker"></i>&nbsp; Address Information
@@ -277,7 +283,7 @@
 						<form class="form-horizontal" id="hideAddressForm1"
 							name="hideAddressForm1" class="hideAddressForm1">
 
-							<div class="col-sm-12"
+							<div class="col-xs-12"
 								style="background-color: #F0FFFF; margin-bottom: 20px; padding-left: 30px;">
 								<h2>
 									<i class="fa fa-map-marker"></i>&nbsp; Address Information
@@ -329,7 +335,7 @@
 					<div id="showContactForm">
 						<form class="form-horizontal">
 
-							<div class="col-sm-12"
+							<div class="col-xs-12"
 								style="background-color: #F0FFFF; margin-bottom: 20px; padding-left: 30px;">
 								<h2>
 									<i class="fa fa-phone"></i> Contact Information
@@ -362,7 +368,7 @@
 					<div id="hideContactForm" class="form-group">
 
 
-						<div class="col-sm-12"
+						<div class="col-xs-12"
 							style="background-color: #F0FFFF; margin-bottom: 20px; padding-left: 30px;">
 							<form class="form-horizontal" id="hideContactForm1"
 								name="hideContactForm1" class="hideContactForm1">
@@ -400,7 +406,7 @@
 					<div id="showEmergencyForm">
 						<form class="form-horizontal">
 
-							<div class="col-sm-12"
+							<div class="col-xs-12"
 								style="background-color: #F0FFFF; margin-bottom: 20px; padding-left: 30px;">
 								<h2>
 									<i class="fa fa-exclamation-triangle"></i>&nbsp; Emergency
@@ -438,7 +444,7 @@
 						<form class="form-horizontal" id="hideEmergencyForm1"
 							name="hideEmergencyForm1" class="hideEmergencyForm1">
 
-							<div class="col-sm-12"
+							<div class="col-xs-12"
 								style="background-color: #F0FFFF; margin-bottom: 20px; padding-left: 30px;">
 								<h2>
 									<i class="fa fa-exclamation-triangle"></i>&nbsp; Emergency
@@ -501,7 +507,7 @@
 
 
 				<div id="Messages">
-					<div class="col-sm-12"
+					<div class="col-xs-12"
 						style="background-color: #F0FFFF; margin-bottom: 20px; padding-left: 30px;">
 
 						<div class="list-group"">
@@ -528,7 +534,7 @@
 
 
 
-					<div class="col-sm-12"
+					<div class="col-xs-12"
 						style="background-color: #F0FFFF; margin-bottom: 20px; padding-left: 30px;">
 
 						<div class="list-group">
@@ -551,7 +557,7 @@
 
 				<div id="Appointments">
 
-					<div class="col-sm-12"
+					<div class="col-xs-12"
 						style="background-color: #F0FFFF; margin-bottom: 20px; padding-left: 30px;">
 						<h2>
 							<i class="fa fa-exclamation-triangle"></i> Requested Appointments
@@ -591,7 +597,7 @@
 						</div>
 
 					</div>
-					<div class="col-sm-12"
+					<div class="col-xs-12"
 						style="background-color: #F0FFFF; margin-bottom: 20px; padding-left: 30px;">
 
 						<div class="list-group"
@@ -633,12 +639,12 @@
 				</div>
 
 
-				<div id="Treatments">
+				<div id="Treatments" style="width: 100%;">
 
-					<div class="col-sm-12"
+					<div class="col-xs-12"
 						style="background-color: #F0FFFF; margin-bottom: 20px; padding-left: 30px;">
 
-						<div class="list-group"">
+						<div class="list-group">
 
 							<h2>
 								<i class="fa fa-gavel"></i> My Treatments
@@ -657,10 +663,10 @@
 										<tr id="treatmentsForTemp1to16">
 										</tr>
 										<tr>
-											<td></br></td>
+											<td><br/></td>
 										</tr>
 										<tr id="treatmentsForTemp17to32">
-										</tr>
+										</tr> 
 
 
 									</tbody>
@@ -669,12 +675,12 @@
 							<br /> <br />
 							<div id="teethTreatment">
 
-								<div class="col-sm-12"
+								<div class="col-xs-12"
 									style="background-color: white; margin-bottom: 20px;">
 
 									<div class="list-group" id="teethDetails"></div>
 								</div>
-								<div class="col-sm-12"
+								<div class="col-xs-12"
 									style="background-color: white; margin-bottom: 20px;">
 
 									<div class="list-group">
@@ -700,7 +706,7 @@
 				<div id="Insurance">
 
 
-					<div class="col-sm-12"
+					<div class="col-xs-12"
 						style="background-color: #F0FFFF; margin-bottom: 20px; padding-left: 30px;">
 
 						<div class="list-group"">
@@ -720,7 +726,7 @@
 
 				<div id="Payment">
 
-					<div class="col-sm-12"
+					<div class="col-xs-12"
 						style="background-color: #F0FFFF; margin-bottom: 20px; padding-left: 30px;">
 
 						<div class="list-group"">
@@ -752,7 +758,7 @@
 
 						</div>
 					</div>
-					<div class="col-sm-12"
+					<div class="col-xs-12"
 						style="background-color: #F0FFFF; margin-bottom: 20px; padding-left: 30px;">
 						<div class="list-group">
 
@@ -784,7 +790,7 @@
 
 				<div id="Settings">
 
-					<div class="col-sm-12"
+					<div class="col-xs-12"
 						style="background-color: #F0FFFF; margin-bottom: 20px; padding-left: 30px;">
 
 						<div class="list-group"">
@@ -794,7 +800,7 @@
 								Settings
 							</h2>
 							<br />
-							<div class="col-sm-6">
+							<div class="col-xs-6">
 								<div class="alert alert-dismissible alert-success"
 									id="successDiv" style="display: none;">
 
@@ -837,6 +843,7 @@
 
 		<!-- All Forms Needed In Patient Profile  Ends-->
 
+<%@include file="footer.jsp"%>
 
 
 	</div>
@@ -1426,13 +1433,14 @@ Request Parameters: text hidden teethID
 					onclick="confirmedappointments.updateConfirmedAppointment('../appointments/update')">Update</button>
 			</div>
 		</div>
+		
 
 	</div>
 
 
 
 
-	<%@include file="footer.jsp"%>
+	
 
 
 </body>

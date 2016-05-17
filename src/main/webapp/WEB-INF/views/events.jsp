@@ -88,6 +88,9 @@
 
 
 	<div class="container">
+		
+	<br />
+		<br />
 		<br />
 		<h1>My Appointments</h1>
 		<br />
@@ -311,7 +314,7 @@
 		    requestedappointments.sendRequestedAppointment('../appointmentrequests/create');
 		    
 		});
-	}
+	});
 	</script>
 
 	<script type="text/javascript"

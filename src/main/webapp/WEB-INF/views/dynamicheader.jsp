@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -8,7 +7,7 @@
 <head>
 <meta charset="utf-8">
 <title>Dr. Kang's Clinic</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
 <link rel="stylesheet"
@@ -57,6 +56,7 @@
 						class="icon-bar"></span>
 				</button>
 			</div>
+			<!--  <div class="navbar-collapse collapse" id="navbar-main"-->
 			<div class="navbar-collapse collapse" id="navbar-main"
 				style="font-size: large;">
 				<ul class="nav navbar-nav">
@@ -96,7 +96,7 @@
 				</ul>
 
 				<!-- dynamic profile menu  -->
-				<ul class="nav navbar-nav navbar-right" style="margin-right: 5px;">
+				<ul class="nav navbar-nav navbar-right" style="margin-right: 5px;display: inline-block;">
 
 
 					<c:choose>
@@ -226,7 +226,6 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-
 function submitLogout()
 {
 	
@@ -235,7 +234,6 @@ function submitLogout()
         document.getElementById("logoutForm").submit();
         
 	}
-
 </script>
 
 

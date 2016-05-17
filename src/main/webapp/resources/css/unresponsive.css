@@ -1,0 +1,20 @@
+/* Custom container */
+.container-full {
+  margin: 0 auto;
+  width: 100%;
+}
+
+/*fix row -15px margin*/
+.container-fluid {
+    padding: 0 15px;
+}
+
+/*fix navbar margin*/
+.navbar{
+  margin: 0 -15px;
+}
+
+/*fix navbar-right margin*/
+.navbar-nav.navbar-right:last-child {
+  margin-right: 0px;
+}
