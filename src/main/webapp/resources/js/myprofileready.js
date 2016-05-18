@@ -30,7 +30,26 @@ $(document).ready(function(){
 	    
 	});
 	
- 	 
+	$("#sendMessage1").on("submit", function (e) {
+	    e.preventDefault();
+	    sentmessages.sendMessage('../sentmessages/sendtodoc');
+	    
+	    
+	});
+	
+	$("#newPasswordForm").on("submit", function (e) {
+	    e.preventDefault();
+	    settings.postNewPassword('../settings/updatepassword');
+	    
+	    
+	});
+	
+		$("#addNewInsurance").on("submit", function (e) {
+	    e.preventDefault();
+	    insurances.addInsurance('../insurances/create');
+	    
+	    
+	});
 
 	  var action = $("#action");
 	  

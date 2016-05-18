@@ -215,7 +215,7 @@
 								<div class="form-group">
 									<label class="control-label" for="disabledInput">Date
 										Of Birth</label> <input class="form-control" id="dob" type="text"
-										placeholder="" name="dob" required="required">
+										placeholder="mm/dd/yyyy" name="dob" required="required" pattern="\d{1,2}/\d{1,2}/\d{4}" title="date should be in mm/dd/yyyy format">
 								</div>
 
 
@@ -386,7 +386,7 @@
 								<div class="form-group">
 									<label class="control-label" for="disabledInput">Number</label>
 									<input class="form-control" id="phoneNumber" name="phoneNumber"
-										type="number" placeholder=""  required="required">
+										type="text" placeholder=""  required="required" pattern="^[0-9]+$" maxlength="10">
 								</div>
 								<input type="hidden" name="${_csrf.parameterName}"
 									value="${_csrf.token}" />
@@ -462,7 +462,7 @@
 									<label class="control-label" for="disabledInput">Emergency
 										Contact Number</label> <input class="form-control"
 										id="emergencyContactNumber" name="emergencyContactNumber"
-										type="number" placeholder="" required="required">
+										type="text" placeholder="" required="required"  pattern="^[0-9]+$" maxlength="10">
 								</div>
 								<div class="form-group">
 									<label for="relation">Relation</label> <select
@@ -818,20 +818,21 @@
 									<div class="form-group">
 										<label for="first-name">Your Old Password</label> <input
 											type="password" class="form-control" name="oldPwd"
-											id="oldPwd" value="" />
+											id="oldPwd" value="" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,10}" title="Atleast one upper case,one lowercase,on number and the length between 6 to 10" required="required" />
 									</div>
 									<div class="form-group">
 										<label for="first-name">New Password</label> <input
 											type="password" class="form-control" name="newPwd"
-											id="newPwd" value="" />
+											id="newPwd" value="" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,10}" title="Atleast one upper case,one lowercase,on number and the length between 6 to 10" required="required"/>
 									</div>
 
 									<input type="hidden" name="${_csrf.parameterName}"
 										value="${_csrf.token}" />
-								</form>
+								
 								<button type="submit" class="btn btn-primary"
-									onclick="settings.postNewPassword('../settings/updatepassword')">Change
-									Password</button>
+									>Change
+									Password</button><small>Atleast one upper case,one lowercase,one number and the length between 6 to 10</small>
+									</form>
 							</div>
 						</div>
 					</div>
@@ -858,27 +859,29 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">Send New Message</h4>
 				</div>
+				<form id="sendMessage1" name="sendMessage1" class="sendMessage1">
 				<div class="modal-body">
 					<div class="form-group">
-						<form id="sendMessage1" name="sendMessage1" class="sendMessage1">
+						
 							<div>
 
 								<textarea class="form-control" rows="3" id="msg" name="msg"
-									placeholder="type your message here.." maxlength="255"></textarea>
-								<span class="help-block">Maximum 255 characters.</span>
+									placeholder="type your message here.." required="required" ></textarea>
+								
 							</div>
 
 
 
 							<input type="hidden" name="${_csrf.parameterName}"
 								value="${_csrf.token}" />
-						</form>
+						
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary"
-						onclick="sentmessages.sendMessage('../sentmessages/sendtodoc')">Send</button>
+					<button type="submit" class="btn btn-primary"
+						>Send</button>
 				</div>
+				</form>
 			</div>
 
 		</div>
@@ -894,31 +897,32 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">Add New Insurance</h4>
 				</div>
+				<form name="addNewInsurance" id="addNewInsurance"
+						class="addNewInsurance">
+				
 				<div class="modal-body">
 
 
-					<form name="addNewInsurance" id="addNewInsurance"
-						class="addNewInsurance">
-
+					
 						<div class="form-group">
 							<label class="control-label" for="disabledInput">Insurance
 								Provider Name</label> <input class="form-control"
 								id="insuranceProviderName" name="insuranceProviderName"
 								type="text"
-								placeholder="Enter Insurance Provider Name With State Name ">
+								placeholder="Enter Insurance Provider Name With State Name " required="required">
 							<span class="help-block">eg : Aetna MA</span>
 						</div>
 						<div class="form-group">
 							<label class="control-label" for="disabledInput">Subscriber
 								ID</label> <input class="form-control" id="subscriberID"
 								name="subscriberID" type="text"
-								placeholder="Enter Subscriber ID Here ">
+								placeholder="Enter Subscriber ID Here " required="required">
 						</div>
 						<div class="form-group">
 							<label class="control-label" for="disabledInput">Insurance
 								Group Name</label> <input class="form-control" id="insuranceProviderID"
 								name="insuranceProviderID" type="text"
-								placeholder="Enter Insurance Group Name Here ">
+								placeholder="Enter Insurance Group Name Here " required="required">
 
 
 						</div>
@@ -927,7 +931,7 @@
 							<label class="control-label" for="disabledInput">Subscriber
 								Full Name</label> <input class="form-control" id="subscriberFullName"
 								name="subscriberFullName" type="text"
-								placeholder="Enter Subscriber Full Name Here">
+								placeholder="Enter Subscriber Full Name Here" required="required">
 
 						</div>
 
@@ -936,7 +940,7 @@
 							<label class="control-label" for="disabledInput">Date Of
 								Birth</label> <input class="form-control" id="dob" name="dob"
 								type="text"
-								placeholder="Enter Date Of Birth in mm/dd/yyyy format">
+								placeholder="Enter Date Of Birth in mm/dd/yyyy format" required="required" pattern="\d{1,2}/\d{1,2}/\d{4}" name="dob" required="required" title="date should be in mm/dd/yyyy format">
 						</div>
 
 						<div class="form-group">
@@ -953,14 +957,15 @@
 						<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
 
-					</form>
+				
 
 
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary"
-						onclick="insurances.addInsurance('../insurances/create')">Add</button>
+					<button type="submit" class="btn btn-primary"
+						>Add</button>
 				</div>
+					</form>
 			</div>
 
 		</div>

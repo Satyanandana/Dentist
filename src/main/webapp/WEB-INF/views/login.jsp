@@ -139,7 +139,7 @@
 								<label for="major">Phone Number</label>
 
 								<form:input type="text" class="form-control"
-									placeholder="xxx-xxx-xxxx" path="phoneNumber" id="phoneNumber" required="required" />
+									placeholder="xxx-xxx-xxxx" path="phoneNumber" id="phoneNumber" required="required" pattern="^[0-9]+$" maxlength="10"/>
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -147,7 +147,7 @@
 							<div class="form-group">
 								<label for="dob12">Date Of Birth</label> <input type="text"
 									class="form-control" id="dob" placeholder="mm/dd/yyyy"
-									pattern="\d{1,2}/\d{1,2}/\d{4}" name="dob">
+									pattern="\d{1,2}/\d{1,2}/\d{4}" name="dob" required="required" title="date should be in mm/dd/yyyy format">
 
 
 							</div>

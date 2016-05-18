@@ -12,10 +12,10 @@
 <body>
 <br/>
 <br/>
-	<div class="container-fluid" style="border:6px solid #add8e6;margin-top: 5px; " >
+	<div class="container-fluid" style="background-color: 	#F8F8FF;">
 	
 
-		<footer>
+		<footer class="footer" >
 			<div class="row">
 				<div class="col-xs-3">
 

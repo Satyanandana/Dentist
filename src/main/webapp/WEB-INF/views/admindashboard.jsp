@@ -186,7 +186,7 @@ $(document).ready(function() {
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Change Your Password</h4>
+					<h4 class="modal-title">Change Your Password (Atleast one upper case,one lowercase,one number and the length between 6 to 10)</h4>
 				</div>
 				<div class="modal-body">
 					<form name="changePasswordAdmin" id="changePasswordAdmin">
