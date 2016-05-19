@@ -71,7 +71,7 @@
 </div>
 							<label for="inputPassword" class="col-lg-2 control-label">Name</label>
 							<div class="col-lg-10">
-								<input type="text" class="form-control" name="name" id="name" placeholder="Name">
+								<input type="text" class="form-control" name="name" id="name" placeholder="Name" required="required">
 
 							</div>
 						</div>
@@ -79,14 +79,14 @@
 							<label for="inputEmail" class="col-lg-2 control-label">Email</label>
 							<div class="col-lg-10">
 								<input type="text" class="form-control" id="email" name="email"
-									placeholder="Email">
+									placeholder="Email" required="required">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputPassword" class="col-lg-2 control-label">Number</label>
 							<div class="col-lg-10">
 								<input type="number" class="form-control" id="number" name="number"
-									placeholder="Number">
+									placeholder="Number" required="required">
 
 							</div>
 						</div>
@@ -94,7 +94,7 @@
 						<div class="form-group">
 							<label for="textArea" class="col-lg-2 control-label">Summary</label>
 							<div class="col-lg-10">
-								<textarea class="form-control" rows="3" id="summary" name="summary"> </textarea>
+								<textarea class="form-control" rows="3" id="summary" name="summary" required="required"> </textarea>
 								<span class="help-block">Please tell us your reason for
 									contacting us .</span>
 							</div>
@@ -102,14 +102,16 @@
 						<input type="hidden" name="${_csrf.parameterName}"
 									value="${_csrf.token}" />
 						</fieldset>
-</form>
-
-						<div class="form-group">
+						
+							<div class="form-group">
 							<div class="col-lg-10 col-lg-offset-2">
-								<button type="reset" class="btn btn-default">Cancel</button>
-								<button type="submit" class="btn btn-primary" onclick="contactusTemp.sendInquiry('visitor/contactinfo')">Send</button>
+							<!-- 	<button type="reset" class="btn btn-default">Cancel</button> -->
+								<button type="submit" class="btn btn-primary" >Send</button>
 							</div>
 						</div>
+</form>
+
+					
 					
 				
 			</div>
@@ -140,6 +142,22 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		 
+		 
+		   
+		
+		
+		 
+		$("#contactus").on("submit", function (e) {
+		    e.preventDefault();
+		    contactusTemp.sendInquiry('visitor/contactinfo');
+		    
+		});
+		
+	});
+	</script>
 
 	<%@include file="footer.jsp"%>
 	
