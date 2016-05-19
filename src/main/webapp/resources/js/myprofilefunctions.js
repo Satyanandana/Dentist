@@ -190,7 +190,7 @@ function statusChanged() {
 		$('#statusModal').modal('hide');
 		$('#appendStatusCompleted').modal('show');
 	} else {
-		alert("send post request ..");
+		//"send post request ..");
 	}
 }
 

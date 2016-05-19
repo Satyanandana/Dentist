@@ -4,7 +4,7 @@
 var contactusTemp = (function() {
 
 	var sendInquiry = function(path) {
-		alert("here");
+		//"here");
 		$.ajax({
 			url : path,
 			method : 'POST',

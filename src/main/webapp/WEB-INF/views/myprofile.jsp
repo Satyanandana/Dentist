@@ -647,7 +647,14 @@
 						<div class="list-group">
 
 							<h2>
-								<i class="fa fa-gavel"></i> My Treatments
+								<i class="fa fa-gavel"></i> My Treatments</h2>
+								
+								<i class="flaticon-icon-Normal" style="color: green;">Normal</i>&nbsp;&nbsp;
+								<i class="flaticon-icon-Extracted" style="color: green;">Extracted</i>&nbsp;&nbsp;
+								<i class="flaticon-icon-Normal" style="color: red;">Treatment Pending</i>&nbsp;&nbsp;
+								
+								
+								<h2> 
 								<div id="" style="float: right; font-size: 70%;">
 									Total Amount Paid
 									<p id="totalPrice"></p>

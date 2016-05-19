@@ -39,7 +39,7 @@ var insurances = (function() {
         });
     }
     var addInsurance = function(path) {
-  	  alert($('#addNewInsurance').serialize());
+  	  //$('#addNewInsurance').serialize());
   	   $.ajax({
              url: path,
              method: 'POST',
@@ -55,7 +55,7 @@ var insurances = (function() {
   }
     
     var updateInsurance = function(path) {
-    	  alert($('#updateInsurance').serialize());
+    	  //$('#updateInsurance').serialize());
     	   $.ajax({
                url: path,
                method: 'POST',

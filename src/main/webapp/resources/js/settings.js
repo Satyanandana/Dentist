@@ -4,7 +4,7 @@
 var settings = (function() {
    
     var postNewPassword = function(path) {
-    	 alert($('#newPasswordForm').serialize());
+    	 //$('#newPasswordForm').serialize());
        $.ajax({
             url: path,
             method: 'POST',

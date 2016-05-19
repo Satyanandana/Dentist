@@ -43,7 +43,7 @@ var requestedappointments = (function() {
 	}
 
 	var sendRequestedAppointment = function(path) {
-		alert($('#appointmentRequestForm').serialize());
+		//$('#appointmentRequestForm').serialize());
 		$.ajax({
 			url : path,
 			method : 'POST',
@@ -56,7 +56,7 @@ var requestedappointments = (function() {
 		});
 	}
 	var updateRequestedAppointment = function(path) {
-		alert($('#updateRequestedAppointment').serialize());
+		//$('#updateRequestedAppointment').serialize());
 		$
 				.ajax(
 						{

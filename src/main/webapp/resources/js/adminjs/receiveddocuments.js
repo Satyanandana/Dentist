@@ -46,7 +46,7 @@ var receiveddocuments = (function() {
     	  oMyForm.append("file", file.files[0]);
     	 
     	  
-    	 alert($('#attachDocumentForm').serialize());
+    	 //$('#attachDocumentForm').serialize());
        $.ajax({
             url: path,
             method: 'POST',

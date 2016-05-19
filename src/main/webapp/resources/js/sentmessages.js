@@ -41,7 +41,7 @@ var sentmessages = (function() {
     }
     
     var sendMessage = function(path) {
-    	 alert("here");
+    	 //"here");
        $.ajax({
             url: path,
             method: 'POST',

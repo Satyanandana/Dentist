@@ -41,12 +41,12 @@ var senddocuments = (function() {
     
     var postdocuments = function(path) {
     	 var oMyForm = new FormData();
-          alert($("#uploadFileName").val());
+          //$("#uploadFileName").val());
     	  oMyForm.append("name",$("#uploadFileName").val());
     	  oMyForm.append("file", file.files[0]);
     	 
     	  
-    	 alert($('#attachDocumentForm').serialize());
+    	 //$('#attachDocumentForm').serialize());
        $.ajax({
             url: path,
             method: 'POST',

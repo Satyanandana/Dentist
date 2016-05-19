@@ -6,7 +6,7 @@ var myprofile = (function() {
 	var displayProfileData = function(data) {
 		console.log(data);
 		if (jQuery.isEmptyObject(data)) {
-			alert("SOMETHING WENT WRONG !");
+			//"SOMETHING WENT WRONG !");
 		} else {
 
 			$("#showPersonalForm #firstName").html(data.firstName);
@@ -66,7 +66,7 @@ var myprofile = (function() {
 	}
 
 	var sendPersonalProfileData = function(path) {
-		alert($('#hidePersonalForm1').serialize());
+		//$('#hidePersonalForm1').serialize());
 		$.ajax({
 			url : path,
 			method : 'POST',
@@ -79,7 +79,7 @@ var myprofile = (function() {
 		});
 	}
 	var sendAddressProfileData = function(path) {
-		alert($('#hideAddressForm1').serialize());
+		//$('#hideAddressForm1').serialize());
 		$.ajax({
 			url : path,
 			method : 'POST',
@@ -93,7 +93,7 @@ var myprofile = (function() {
 		});
 	}
 	var sendContactProfileData = function(path) {
-		alert($('#hideContactForm1').serialize());
+		//$('#hideContactForm1').serialize());
 		$.ajax({
 			url : path,
 			method : 'POST',
@@ -107,7 +107,7 @@ var myprofile = (function() {
 		});
 	}
 	var sendEmergencyProfileData = function(path) {
-		alert($('#hideEmergencyForm1').serialize());
+		//$('#hideEmergencyForm1').serialize());
 		$.ajax({
 			url : path,
 			method : 'POST',

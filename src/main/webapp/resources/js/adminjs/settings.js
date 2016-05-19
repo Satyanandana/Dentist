@@ -4,7 +4,7 @@
 var settings = (function() {
    
     var postNewPassword = function(path) {
-    	 alert($('#changePasswordAdmin').serialize());
+    	 //$('#changePasswordAdmin').serialize());
        $.ajax({
             url: path,
             method: 'POST',
@@ -14,13 +14,13 @@ var settings = (function() {
         	if(data.Success)
         	{
         	
-        	alert("Password Changed Successfully . ");
+        	//"Password Changed Successfully . ");
         	
         
         	}else
         		{
         			
-        		alert("Something went wrong . try again .");
+        		//"Something went wrong . try again .");
         		}
         	
         	

@@ -17,7 +17,7 @@
 
  function showMyTeethDetails(id)
  {
-	 alert("get ajax request for particular " + id);
+	 //"get ajax request for particular " + id);
 	 
 	 document.getElementById("teethNumber").innerHTML = id+".number";
 	 document.getElementById("teethName").innerHTML = id+".teethName";

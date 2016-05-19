@@ -82,7 +82,7 @@ var treatments = (function() {
         });
     }
     var sendTreatment = function(path) {
-    	  alert($('#addNewTreatment').serialize());
+    	  //$('#addNewTreatment').serialize());
     	   $.ajax({
                url: path,
                method: 'POST',
@@ -96,7 +96,7 @@ var treatments = (function() {
            });
     }
     var updateTeethStatus = function(path) {
-  	  alert($('#updateTeethStatus').serialize());
+  	  //$('#updateTeethStatus').serialize());
   	   $.ajax({
              url: path,
              method: 'POST',

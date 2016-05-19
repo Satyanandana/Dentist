@@ -74,7 +74,7 @@ var teethTreatments = (function() {
     }
     
     var updateTeethTreatment = function(path) {
-  	  alert($('#updateTeethTreatment').serialize());
+  	  //$('#updateTeethTreatment').serialize());
   	   $.ajax({
              url: path,
              method: 'POST',

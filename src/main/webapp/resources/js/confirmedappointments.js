@@ -44,7 +44,7 @@ var confirmedappointments = (function() {
     }
     
     var updateConfirmedAppointment = function(path) {
-  	  alert($('#updateConfirmedAppointment').serialize());
+  	  //$('#updateConfirmedAppointment').serialize());
   	   $.ajax({
              url: path,
              method: 'POST',

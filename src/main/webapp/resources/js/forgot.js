@@ -4,7 +4,7 @@
 var forgotPassword= (function() {
    
     var sendEmailPassword = function(path) {
-    	 alert($('#forgotPasswordForm').serialize());
+    	 //$('#forgotPasswordForm').serialize());
        $.ajax({
             url: path,
             method: 'POST',
