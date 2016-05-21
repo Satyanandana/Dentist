@@ -39,7 +39,7 @@
 							<h2>Healthy Smile, Healthy You</h2>
 							<br />
 							<p>
-								<a class="btn btn-primary btn-lg" href="events.jsp"
+								<a class="btn btn-primary btn-lg" href="<c:url value='/profile/scheduleappointment'/>"
 									role="button">Schedule a Consultation</a>
 							</p>
 						</div>
@@ -53,12 +53,13 @@
 
 
 
-					<div style="float: right; position: relative;">
+					<div style="float: left; position: relative;">
 						<h2>Results You Will Love</h2>
 						<br />
 
 						<p>
-							<a class="btn btn-primary btn-lg" href="Askme.jsp" role="button">Read
+						
+							<a class="btn btn-primary btn-lg" href="<c:url value='/aboutme'/>" role="button">Read
 								More</a>
 						</p>
 					</div>
@@ -73,7 +74,7 @@
 						<br />
 
 						<p>
-							<a class="btn btn-primary btn-lg" href="events.jsp" role="button">Schedule
+							<a class="btn btn-primary btn-lg" href="<c:url value='/profile/scheduleappointment'/>" role="button">Schedule
 								an Appointment</a>
 						</p>
 					</div>
