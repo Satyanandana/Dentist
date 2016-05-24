@@ -72,10 +72,10 @@ public class InsuranceInfoController {
 
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, String>> createInsurance(@RequestParam("insuranceProviderID") String insuranceProviderID,
-			@RequestParam("insuranceProviderName") String insuranceProviderName, @RequestParam("subscriberID") String subscriberID,
-			@RequestParam("subscriberFullName") String subscriberFullName, @RequestParam("status") String status,
-			@RequestParam(name = "dob") String dob) {
+	public ResponseEntity<Map<String, String>> createInsurance(@RequestParam("insuranceGroupID") String insuranceGroupID,
+			@RequestParam("insuranceGroupName") String insuranceGroupName, @RequestParam("insuranceProviderName") String insuranceProviderName,
+			@RequestParam("subscriberID") String subscriberID, @RequestParam("subscriberFullName") String subscriberFullName,
+			@RequestParam("status") String status, @RequestParam(name = "dob") String dob) {
 		Map<String, String> map = new HashMap<>();
 		LocalDate dateOfBirth = WebUtility.getLocalDateFromHtmlDate(dob);
 		if (dateOfBirth != null) {
@@ -88,7 +88,8 @@ public class InsuranceInfoController {
 			} else {
 				insurance.setStatus(InsuranceStatus.EXPIRED);
 			}
-			insurance.setInsuranceProviderID(insuranceProviderID);
+			insurance.setInsuranceGroupID(insuranceGroupID);
+			insurance.setInsuranceGroupName(insuranceGroupName);
 			insurance.setInsuranceProviderName(insuranceProviderName);
 			insurance.setSubscriberFullName(subscriberFullName);
 			insurance.setSubscriberID(subscriberID);
@@ -107,10 +108,10 @@ public class InsuranceInfoController {
 
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, String>> updateInsurance(@RequestParam("insuranceProviderID") String insuranceProviderID,
-			@RequestParam("insuranceProviderName") String insuranceProviderName, @RequestParam("subscriberID") String subscriberID,
-			@RequestParam("subscriberFullName") String subscriberFullName, @RequestParam("status") String status,
-			@RequestParam(name = "dob") String dob, @RequestParam(name = "insuranceID") long insuranceID) {
+	public ResponseEntity<Map<String, String>> updateInsurance(@RequestParam("insuranceGroupID") String insuranceGroupID,
+			@RequestParam("insuranceGroupName") String insuranceGroupName, @RequestParam("insuranceProviderName") String insuranceProviderName,
+			@RequestParam("subscriberID") String subscriberID, @RequestParam("subscriberFullName") String subscriberFullName,
+			@RequestParam("status") String status, @RequestParam(name = "dob") String dob, @RequestParam(name = "insuranceID") long insuranceID) {
 		Map<String, String> map = new HashMap<>();
 		LocalDate dateOfBirth = WebUtility.getLocalDateFromHtmlDate(dob);
 		if (dateOfBirth != null) {
@@ -119,7 +120,8 @@ public class InsuranceInfoController {
 			Insurance insurance = userServiceInterface.getInsuranceByIDandPatientID(insuranceID, user.getUserID());
 			if (insurance != null) {
 				insurance.setDateOfBirth(dateOfBirth);
-				insurance.setInsuranceProviderID(insuranceProviderID);
+				insurance.setInsuranceGroupID(insuranceGroupID);
+				insurance.setInsuranceGroupName(insuranceGroupName);
 				insurance.setInsuranceProviderName(insuranceProviderName);
 				insurance.setSubscriberFullName(subscriberFullName);
 				insurance.setSubscriberID(subscriberID);
@@ -147,9 +149,10 @@ public class InsuranceInfoController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/create/{patientID}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, String>> createInsuranceByDoc(@PathVariable("patientID") long patientID,
-			@RequestParam("insuranceProviderID") String insuranceProviderID, @RequestParam("insuranceProviderName") String insuranceProviderName,
-			@RequestParam("subscriberID") String subscriberID, @RequestParam("subscriberFullName") String subscriberFullName,
-			@RequestParam("status") String status, @RequestParam(name = "dob") String dob) {
+			@RequestParam("insuranceGroupID") String insuranceGroupID, @RequestParam("insuranceGroupName") String insuranceGroupName,
+			@RequestParam("insuranceProviderName") String insuranceProviderName, @RequestParam("subscriberID") String subscriberID,
+			@RequestParam("subscriberFullName") String subscriberFullName, @RequestParam("status") String status,
+			@RequestParam(name = "dob") String dob) {
 
 		Map<String, String> map = new HashMap<>();
 		LocalDate dateOfBirth = WebUtility.getLocalDateFromHtmlDate(dob);
@@ -162,7 +165,8 @@ public class InsuranceInfoController {
 			} else {
 				insurance.setStatus(InsuranceStatus.EXPIRED);
 			}
-			insurance.setInsuranceProviderID(insuranceProviderID);
+			insurance.setInsuranceGroupID(insuranceGroupID);
+			insurance.setInsuranceGroupName(insuranceGroupName);
 			insurance.setInsuranceProviderName(insuranceProviderName);
 			insurance.setSubscriberFullName(subscriberFullName);
 			insurance.setSubscriberFullName(subscriberFullName);
@@ -183,9 +187,10 @@ public class InsuranceInfoController {
 	@RequestMapping(value = "/update/{patientID}", method = RequestMethod.POST, params = {
 			"status=Cancel"}, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, String>> updateInsuranceByDoc(@PathVariable("patientID") long patientID,
-			@RequestParam("insuranceProviderID") String insuranceProviderID, @RequestParam("insuranceProviderName") String insuranceProviderName,
-			@RequestParam("subscriberID") String subscriberID, @RequestParam("subscriberFullName") String subscriberFullName,
-			@RequestParam("status") String status, @RequestParam(name = "dob") String dob, @RequestParam(name = "insuranceID") long insuranceID) {
+			@RequestParam("insuranceGroupID") String insuranceGroupID, @RequestParam("insuranceGroupName") String insuranceGroupName,
+			@RequestParam("insuranceProviderName") String insuranceProviderName, @RequestParam("subscriberID") String subscriberID,
+			@RequestParam("subscriberFullName") String subscriberFullName, @RequestParam("status") String status,
+			@RequestParam(name = "dob") String dob, @RequestParam(name = "insuranceID") long insuranceID) {
 
 		Map<String, String> map = new HashMap<>();
 		LocalDate dateOfBirth = WebUtility.getLocalDateFromHtmlDate(dob);
@@ -194,7 +199,8 @@ public class InsuranceInfoController {
 			Insurance insurance = userServiceInterface.getInsuranceByIDandPatientID(insuranceID, patientID);
 			if (insurance != null) {
 				insurance.setDateOfBirth(dateOfBirth);
-				insurance.setInsuranceProviderID(insuranceProviderID);
+				insurance.setInsuranceGroupID(insuranceGroupID);
+				insurance.setInsuranceGroupName(insuranceGroupName);
 				insurance.setInsuranceProviderName(insuranceProviderName);
 				insurance.setSubscriberFullName(subscriberFullName);
 				insurance.setSubscriberID(subscriberID);

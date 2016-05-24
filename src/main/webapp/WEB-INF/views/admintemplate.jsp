@@ -15,7 +15,7 @@
 			<h4 class="panel-title">
 <div class="row">
 <div class="col-xs-5">
-<i class="fa fa-clock-o" aria-hidden="true"></i> Sent Time :  {{sentTime}} 
+<i class="fa fa-clock-o" aria-hidden="true"></i> Sent Time :  {{receivedTime}} 
 </div>
 <div class="col-xs-5">
  <i class="fa fa-envelope" aria-hidden="true"></i>  {{firstMessage}} 
@@ -48,7 +48,7 @@
 			<h4 class="panel-title">
 <div class="row">
 <div class="col-xs-5">
-<i class="fa fa-clock-o" aria-hidden="true"></i> Sent Time :  {{receivedTime}} 
+<i class="fa fa-clock-o" aria-hidden="true"></i> Sent Time :  {{sentTime}} 
 </div>
 <div class="col-xs-5">
  <i class="fa fa-envelope" aria-hidden="true"></i>  {{firstMessage}} 

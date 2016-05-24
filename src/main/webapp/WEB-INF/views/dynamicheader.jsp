@@ -43,8 +43,8 @@
 
 	<div class="container-fluid">
 		<div class="navbar navbar-default navbar-fixed-top">
-			<img src="<c:url value='/resources/img/logo_1.gif'/>" height="70"
-				width="180"
+			<img src="<c:url value='/resources/img/logo_1.gif'/>" height="148"
+				width="350"
 				style="float: left; margin-right: 20px; margin-left: 5px;"></img>
 			<div class="navbar-header">
 				<a href="<c:url value='/home'/>" class="navbar-brand"

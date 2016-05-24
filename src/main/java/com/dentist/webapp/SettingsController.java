@@ -59,7 +59,7 @@ public class SettingsController {
 	@Qualifier("encryptableProps")
 	private Properties encryptableProps;
 
-	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_USER')")
 	@RequestMapping(value = "/updatepassword", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, String>> changePassword(@RequestParam(name = "oldPwd") String oldPwd,
 			@RequestParam(name = "newPwd") String newPwd) {
@@ -76,8 +76,8 @@ public class SettingsController {
 				// Prepare and send Welcome Email
 
 				Map<String, Object> map1 = new HashMap<String, Object>();
-				map.put("username", authentication.getUserEmail());
-				map.put("password", authentication.getUserPwd());
+				map1.put("username", authentication.getUserEmail());
+				map1.put("password", authentication.getUserPwd());
 				if (user.getUserRole().equals(Role.ROLE_USER)) {
 					Patient patient = userServiceInterface.getBasicPatientDetails(user.getUserID());
 					map1.put("user", patient.getFirstName() + " " + patient.getLastName());
@@ -88,7 +88,35 @@ public class SettingsController {
 					emailStructure.addRecipient(patient.getEmail());
 					emailSender.sendEmail(emailStructure);
 					map.put("Success", "Success");
-				} else if (user.getUserRole().equals(Role.ROLE_ADMIN)) {
+				}
+
+			}
+		} else {
+			map.put("error", "Please enter your old password correctly");
+		}
+		return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
+	}
+
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/updateadminpassword", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, String>> changeAdminPassword(@RequestParam(name = "oldPwd") String oldPwd,
+			@RequestParam(name = "newPwd") String newPwd) {
+		Map<String, String> map = new HashMap<>();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		UserAuthentication authentication = userServiceInterface.getUserAuthenticationInfoById(user.getUserID());
+
+		if (authentication.getUserPwd().equals(oldPwd)) {
+			boolean validPassword = ServerSideValidations.validatePassword(newPwd, null, map, "error",
+					"New password should contain atleast one upper case,one lowercase,on number and the length between 6");
+			if (validPassword) {
+				authentication.setUserPwd(newPwd);
+				// Prepare and send Welcome Email
+
+				Map<String, Object> map1 = new HashMap<String, Object>();
+				map1.put("username", authentication.getUserEmail());
+				map1.put("password", authentication.getUserPwd());
+				if (user.getUserRole().equals(Role.ROLE_ADMIN)) {
 					map1.put("user", "Admin");
 					String body1 = emailSender.prepareBody(EmailTemplate.PASSWORD_CHANGED, map1);
 					emailStructure.setBody(body1);

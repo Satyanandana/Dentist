@@ -81,10 +81,7 @@
     
     
     
-<div class="form-group">
-  <label class="control-label" for="disabledInput">Insurance Provider ID </label>&nbsp;&nbsp;{{insuranceProviderID}}
-  
-</div>
+
 <div class="form-group">
   <label class="control-label" for="disabledInput">Insurance Provider Name</label>&nbsp;&nbsp;{{insuranceProviderName}}
   
@@ -93,14 +90,20 @@
   <label class="control-label" for="disabledInput">Subscriber ID</label>&nbsp;&nbsp;{{subscriberID}}
   
 </div>
+
 <div class="form-group">
-  <label class="control-label" for="disabledInput">Subscriber Name</label>&nbsp;&nbsp;{{subscriberFullName}}
+  <label class="control-label" for="disabledInput">Insurance Group ID </label>&nbsp;&nbsp;{{insuranceGroupID}}
   
 </div>
 <div class="form-group">
-  <label class="control-label" for="disabledInput">Patient Name</label>&nbsp;&nbsp;{{patientID}}
+  <label class="control-label" for="disabledInput">Insurance Group Name </label>&nbsp;&nbsp;{{insuranceGroupName}}
   
 </div>
+<div class="form-group">
+  <label class="control-label" for="disabledInput">Subscriber Full Name</label>&nbsp;&nbsp;{{subscriberFullName}}
+  
+</div>
+
 <div class="form-group">
   <label class="control-label" for="disabledInput">Date Of Birth</label>&nbsp;&nbsp;{{dateOfBirth}}
   

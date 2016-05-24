@@ -17,6 +17,10 @@
 	<%@include file="dynamicheader.jsp"%>
 <div class="container-fluid">
 		<br />
+		<br />
+		<br />
+		<br />
+		<br />
 		<h1>Admin Panel <a data-toggle="modal" data-target="#changePasswordModal"><small>(Change Password)</small></a></h1>
 		<br />
 <div class="row">
@@ -141,7 +145,7 @@
 
 
 <%@include file="footer.jsp"%>
-<script type="text/javascript" src="<c:url value='/resources/js/jquery.min.js'/>"></script>
+<%-- <script type="text/javascript" src="<c:url value='/resources/js/jquery.min.js'/>"></script> --%>
 <script type="text/javascript" src="<c:url value='https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/mustache.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/admin.js'/>"></script>
@@ -189,6 +193,11 @@ $(document).ready(function() {
 					<h4 class="modal-title">Change Your Password (Atleast one upper case,one lowercase,one number and the length between 6 to 10)</h4>
 				</div>
 				<div class="modal-body">
+				<div class="alert alert-dismissible alert-danger" id="errorMessage" style="display: none;">
+  
+  
+</div>
+				
 					<form name="changePasswordAdmin" id="changePasswordAdmin">
 							<div class="form-group">
 										<label for="first-name">Your Old Password</label> <input
@@ -213,7 +222,7 @@ $(document).ready(function() {
 				<div class="modal-footer">
 						<div class="form-group">
 					<button type="submit" class="btn btn-primary"
-									onclick="settings.postNewPassword('../settings/updatepassword')">Change
+									onclick="settings.postNewPassword('../settings/updateadminpassword')">Change
 									Password</button>
 									</div>
 				</div>

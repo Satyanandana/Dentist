@@ -17,7 +17,7 @@
 
 	<%@include file="dynamicheader.jsp"%>
 
-	<!-- carousal images bootstrap -->
+<%-- 	<!-- carousal images bootstrap -->
 	<div id="carousel-example-generic" class="carousel slide"
 		data-ride="carousel">
 		<!-- Indicators -->
@@ -93,7 +93,7 @@
 			class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 			<span class="sr-only">Next</span>
 		</a>
-	</div>
+	</div> --%>
 	<br />
 
 

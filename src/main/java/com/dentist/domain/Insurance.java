@@ -52,7 +52,10 @@ public class Insurance implements Serializable {
 	private Patient insurancePatient;
 	@Column(nullable = false)
 	// @Type(type = "encryptedString")
-	private String insuranceProviderID;
+	private String insuranceGroupID;
+	@Column(nullable = false)
+	// @Type(type = "encryptedString")
+	private String insuranceGroupName;
 	@Column(nullable = false)
 	// @Type(type = "encryptedString")
 	private String insuranceProviderName;
@@ -99,12 +102,20 @@ public class Insurance implements Serializable {
 		this.insurancePatient = insurancePatient;
 	}
 
-	public String getInsuranceProviderID() {
-		return insuranceProviderID;
+	public String getInsuranceGroupID() {
+		return insuranceGroupID;
 	}
 
-	public void setInsuranceProviderID(String insuranceProviderID) {
-		this.insuranceProviderID = insuranceProviderID;
+	public void setInsuranceGroupID(String insuranceGroupID) {
+		this.insuranceGroupID = insuranceGroupID;
+	}
+
+	public String getInsuranceGroupName() {
+		return insuranceGroupName;
+	}
+
+	public void setInsuranceGroupName(String insuranceGroupName) {
+		this.insuranceGroupName = insuranceGroupName;
 	}
 
 	public String getInsuranceProviderName() {
