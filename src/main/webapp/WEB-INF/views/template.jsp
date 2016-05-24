@@ -115,7 +115,7 @@
 </div>
 
  
-        <button type="submit" class="btn btn-primary btn-sm" onclick="editInsurance({{insuranceID}},'{{insuranceProviderID}}','{{insuranceProviderName}}','{{subscriberID}}','{{subscriberFullName}}',{{patientID}},'{{dateOfBirth}}','{{status}}')">Edit</button>
+        <button type="submit" class="btn btn-primary btn-sm" onclick="editInsurance({{insuranceID}},'{{insuranceGroupID}}','{{insuranceGroupName}}','{{insuranceProviderID}}','{{insuranceProviderName}}','{{subscriberID}}','{{subscriberFullName}}',{{patientID}},'{{dateOfBirth}}','{{status}}')">Edit</button>
      
      
     </li> 
