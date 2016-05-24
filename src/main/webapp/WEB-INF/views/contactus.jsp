@@ -142,6 +142,8 @@
 			</div>
 		</div>
 	</div>
+	
+ <%@include file="footer.jsp"%>
 	<script type="text/javascript">
 	$(document).ready(function(){
 		 
@@ -159,7 +161,7 @@
 	});
 	</script>
 
-	<%@include file="footer.jsp"%>
+
 	
 	
 

@@ -14,7 +14,7 @@ public enum EmailTemplate {
 			"forgotpassword.vm"), PASSWORD_CHANGED("passwordchanged.vm"), NEW_MESSAGE_NOTIFICATION("newmessage.vm"), NEW_DOCUMENT_NOTIFICATION(
 					"newdocument.vm"), APPOINTMENTREQUEST_CREATED("appointmentrequestcreated.vm"), APPOINTMENT_REMIENDER(
 							"appointmentreminder.vm"), APPOINTMENT_CONFIRMED("appointmentconfirmed.vm"), APPOINTMENT_DECLINED(
-									"appointmentdeclined.vm"), APPOINTMENT_CANCELLED("appointmentcancelled.vm");
+									"appointmentdeclined.vm"), APPOINTMENT_CANCELLED("appointmentcancelled.vm"), CONTACT_US("contactus.vm");
 
 	private String name;
 

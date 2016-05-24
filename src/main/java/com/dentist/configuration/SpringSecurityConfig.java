@@ -36,7 +36,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/resources/**", "/signup/*", "/aboutme", "/askme", "/gallery", "/services", "/contactus", "/login/*", "/", "/home")
+				.antMatchers("/resources/**", "/signup/*", "/aboutme", "/askme", "/gallery", "/services", "/contactus", "/login/*", "/", "/home",
+						"/visitor/*")
 				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/login/form").permitAll().and().logout()
 				.invalidateHttpSession(true).clearAuthentication(true)
 				// instead of using .deleteCookies("JSESSIONID","USER")
