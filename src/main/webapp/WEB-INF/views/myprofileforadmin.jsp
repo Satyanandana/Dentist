@@ -875,25 +875,35 @@
 					<form name="addNewInsurance" id="addNewInsurance"
 						class="addNewInsurance">
 
+						
+
+
+					
 						<div class="form-group">
 							<label class="control-label" for="disabledInput">Insurance
 								Provider Name</label> <input class="form-control"
 								id="insuranceProviderName" name="insuranceProviderName"
 								type="text"
-								placeholder="Enter Insurance Provider Name With State Name ">
+								placeholder="Enter Insurance Provider Name With State Name " required="required">
 							<span class="help-block">eg : Aetna MA</span>
 						</div>
 						<div class="form-group">
 							<label class="control-label" for="disabledInput">Subscriber
 								ID</label> <input class="form-control" id="subscriberID"
 								name="subscriberID" type="text"
-								placeholder="Enter Subscriber ID Here ">
+								placeholder="Enter Subscriber ID Here " required="required">
 						</div>
 						<div class="form-group">
 							<label class="control-label" for="disabledInput">Insurance
-								Group Name</label> <input class="form-control" id="insuranceProviderID"
-								name="insuranceProviderID" type="text"
-								placeholder="Enter Insurance Group Name Here ">
+								Group ID</label> <input class="form-control" id="insuranceGroupID"
+								name="insuranceGroupID" type="text"
+								placeholder="Enter Insurance Group ID Here " required="required">
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="disabledInput">Insurance
+								Group Name</label> <input class="form-control" id="insuranceGroupName"
+								name="insuranceGroupName" type="text"
+								placeholder="Enter Insurance Group Name Here " required="required">
 
 
 						</div>
@@ -902,7 +912,7 @@
 							<label class="control-label" for="disabledInput">Subscriber
 								Full Name</label> <input class="form-control" id="subscriberFullName"
 								name="subscriberFullName" type="text"
-								placeholder="Enter Subscriber Full Name Here">
+								placeholder="Enter Subscriber Full Name Here" required="required">
 
 						</div>
 
@@ -911,7 +921,7 @@
 							<label class="control-label" for="disabledInput">Date Of
 								Birth</label> <input class="form-control" id="dob" name="dob"
 								type="text"
-								placeholder="Enter Date Of Birth in mm/dd/yyyy format">
+								placeholder="Enter Date Of Birth in mm/dd/yyyy format" required="required" pattern="\d{1,2}/\d{1,2}/\d{4}" name="dob" required="required" title="date should be in mm/dd/yyyy format">
 						</div>
 
 						<div class="form-group">
@@ -925,7 +935,12 @@
 
 							</div>
 						</div>
-						<input type="hidden" name="${_csrf.parameterName}"
+						
+
+						
+						
+						
+												<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
 
 					</form>
@@ -955,36 +970,48 @@
 					<form name="updateInsurance" id="updateInsurance"
 						class="updateInsurance">
 						<div class="form-group">
-
-
-							<input type="hidden" name="insuranceID" id="insuranceID" value="">
-							<label class="control-label" for="disabledInput">Insurance
-								Provider ID</label> <input class="form-control" id="insuranceProviderID"
-								name="insuranceProviderID" type="text"
-								placeholder="912902100 1 3" value="">
-						</div>
-						<div class="form-group">
 							<label class="control-label" for="disabledInput">Insurance
 								Provider Name</label> <input class="form-control"
 								id="insuranceProviderName" name="insuranceProviderName"
-								type="text" placeholder="Aetna" value="">
+								type="text"
+								placeholder="Enter Insurance Provider Name With State Name " required="required">
+							<span class="help-block">eg : Aetna MA</span>
 						</div>
 						<div class="form-group">
 							<label class="control-label" for="disabledInput">Subscriber
 								ID</label> <input class="form-control" id="subscriberID"
-								name="subscriberID" type="text" placeholder="920329309209309"
-								value="">
+								name="subscriberID" type="text"
+								placeholder="Enter Subscriber ID Here " required="required">
 						</div>
+						<div class="form-group">
+							<label class="control-label" for="disabledInput">Insurance
+								Group ID</label> <input class="form-control" id="insuranceGroupID"
+								name="insuranceGroupID" type="text"
+								placeholder="Enter Insurance Group ID Here " required="required">
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="disabledInput">Insurance
+								Group Name</label> <input class="form-control" id="insuranceGroupName"
+								name="insuranceGroupName" type="text"
+								placeholder="Enter Insurance Group Name Here " required="required">
+
+
+						</div>
+
 						<div class="form-group">
 							<label class="control-label" for="disabledInput">Subscriber
 								Full Name</label> <input class="form-control" id="subscriberFullName"
-								name="subscriberFullName" type="text" placeholder="" value="">
+								name="subscriberFullName" type="text"
+								placeholder="Enter Subscriber Full Name Here" required="required">
+
 						</div>
+
 
 						<div class="form-group">
 							<label class="control-label" for="disabledInput">Date Of
 								Birth</label> <input class="form-control" id="dob" name="dob"
-								type="text" placeholder="mm/dd/yyyy" value="">
+								type="text"
+								placeholder="Enter Date Of Birth in mm/dd/yyyy format" required="required" pattern="\d{1,2}/\d{1,2}/\d{4}" name="dob" required="required" title="date should be in mm/dd/yyyy format">
 						</div>
 
 						<div class="form-group">
@@ -998,8 +1025,10 @@
 
 							</div>
 						</div>
-						<input type="hidden" name="${_csrf.parameterName}"
+						
+												<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
+
 
 					</form>
 

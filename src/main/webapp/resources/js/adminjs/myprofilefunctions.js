@@ -208,11 +208,14 @@ function addNewTreatmentOnTeeth(teethID) {
 	$('#treatmentModal').modal('show');
 
 }
-function editInsurance(insuranceID, insuranceProviderID, insuranceProviderName,
+function editInsurance(insuranceID,groupdID,groupName,insuranceProviderID, insuranceProviderName,
 		subscriberID, subscriberFullName, patientID, dateOfBirth, status) {
 
 	$('#insuranceID').attr("value", insuranceID);
+	
 	$('#updateInsurance #insuranceProviderID').val(insuranceProviderID);
+	$('#updateInsurance #insuranceGroupID').val(groupdID);
+	$('#updateInsurance #insuranceGroupName').val(groupName);
 	$('#updateInsurance #insuranceProviderName').val(insuranceProviderName);
 	$('#updateInsurance #subscriberID').val(subscriberID);
 	$('#updateInsurance #subscriberFullName').val(subscriberFullName);
