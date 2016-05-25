@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <title>Dr. Kang's Clinic</title>
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- <meta http-equiv="X-UA-Compatible" content="IE=edge" /> -->
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -42,13 +42,14 @@
 
 
 	<div class="container-fluid">
+	
 		<div class="navbar navbar-default navbar-fixed-top">
-			<img src="<c:url value='/resources/img/logo_1.gif'/>" height="148"
-				width="350"
-				style="float: left; margin-right: 20px; margin-left: 5px;"></img>
+			<img src="<c:url value='/resources/img/logo_12.gif'/>" 
+				style="float: left; margin-right: 20px; margin-left: 5px" align="middle"></img>
+				<br/>
 			<div class="navbar-header">
 				<a href="<c:url value='/home'/>" class="navbar-brand"
-					data-toggle="tooltip" title="Go Back To Homepage"> Dr Kang's
+					data-toggle="tooltip" title="Go Back To Homepage" style="font-size: large;"> Dr Kang's
 					Dental</a>
 				<button class="navbar-toggle" type="button" data-toggle="collapse"
 					data-target="#navbar-main">
@@ -57,6 +58,7 @@
 				</button>
 			</div>
 			<!--  <div class="navbar-collapse collapse" id="navbar-main"-->
+			
 			<div class="navbar-collapse collapse" id="navbar-main"
 				style="font-size: large;">
 				<ul class="nav navbar-nav">
@@ -93,6 +95,9 @@
 						title="Frequently asked questions">FAQ's</a></li>
 					<li><a href="<c:url value='/contactus'/>"
 						data-toggle="tooltip" title="Contact us/Help">Contact Us</a></li>
+						
+						<li><a href="tel:(617)%20244-8087"><u><i>CALL NOW : (617) 244-8087</i></u></a></li>
+						
 				</ul>
 
 				<!-- dynamic profile menu  -->
@@ -105,6 +110,7 @@
 									class="glyphicon glyphicon-log-in"
 									style="font-size: 13px !important; display: inline !important;"></i>
 									Sign-In/Sign-Up</a></li>
+									
 						</c:when>
 						<c:otherwise>
 							<li class="dropdown dropdown-user" id="userprofile"><a
@@ -185,14 +191,16 @@
 								</ul></li>
 						</c:otherwise>
 					</c:choose>
-
+ 
 
 				</ul>
 
 			</div>
+			
 		</div>
 
 	</div>
+	
 
 
 
@@ -234,6 +242,10 @@ function submitLogout()
 	}
 </script>
 
+<br/>
+<br/>
+<br/>
+<br/>
 
 </body>
 </html>

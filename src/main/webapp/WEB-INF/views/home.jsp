@@ -11,13 +11,97 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 
+<style type="text/css">
+.image {
+	position: relative;
+	width: 100%; /* for IE 6 */
+}
+
+h2 {
+	position: absolute;
+	top: 0px;
+	left: 0;
+	width: 100%;
+}
+
+h2 span {
+	color: white;
+	font: bold 24px/45px Helvetica, Sans-Serif;
+	letter-spacing: -1px;
+	background: rgb(0, 0, 0); /* fallback color */
+	background: rgba(0, 8, 29, 0.68);
+	padding: 10px;
+	float: right;
+}
+
+h2 span.spacer {
+	padding: 0 5px;
+	float: left;
+}
+</style>
+
+
 </head>
 
 <body>
 
 	<%@include file="dynamicheader.jsp"%>
 
-<%-- 	<!-- carousal images bootstrap -->
+
+	<div class="row">
+		<div class="col-xs-4">
+			<img src="<c:url value='/resources/img/t1.jpg'/>"
+				class="img-thumbnail" alt="">
+		</div>
+		<div class="col-xs-4">
+			<img src="<c:url value='/resources/img/t2.jpg'/>"
+				class="img-thumbnail" alt="">
+		</div>
+		<div class="image">
+			<div class="col-xs-4">
+				<img src="<c:url value='/resources/img/t3.jpg'/>"
+					class="img-thumbnail" alt="">
+
+
+				<h2>
+					<span> <span class='spacer'><u>PROFESSIONAL
+								LISTINGS</u></span> <br/><span class='spacer'><a
+							href="https://www.facebook.com/ykangdmd" data-toggle="tooltip"
+							title="FACEBOOK" target="\blank"><img
+								src="<c:url value='/resources/img/facebook.png'/>"
+								style="height: 30px;" /></a></span><br /> <span
+						class='spacer'><a
+							href="https://plus.google.com/+Ykangdmd/about?gl=US&hl=en-US" target="\blank"
+							data-toggle="tooltip" title="GOOGLE"><img
+								src="<c:url value='/resources/img/plus.png'/>"
+								style="height: 30px;" /></a></span><br /> <span
+						class='spacer'><a
+							href="https://www.yelp.com/biz/dr-kangs-dental-newton-centre" target="\blank"
+							data-toggle="tooltip" title="YELP"><img
+								src="<c:url value='/resources/img/yelp.png'/>"
+								style="height: 30px;" /></a></span><br /> <span
+						class='spacer'><a
+							href="http://www.wellness.com/dir/4153468/dentist/ma/newton-center/yoon-kang-yoon-h-kang-dmd-phd-llc-dmd-phd" target="\blank"><img
+								src="<c:url value='/resources/img/wellness.jpg'/>"
+								style="height: 30px;" /></a></span>
+					<br /> <span class='spacer'><a
+							href="http://www.healthgrades.com/dentist/dr-yoon-kang-ynrd4" target="\blank"><img
+								src="<c:url value='/resources/img/health.png'/>"
+								style="height: 30px;" /></a></span></span>
+
+				</h2>
+				<br />
+
+				<!-- <h2><span>A Movie in the Park:</h2><br/>
+	<h2><span>A Movie in the Park:<span class='spacer'></span></span></h2><br/>
+	<h2><span>A Movie in the Park:<span class='spacer'></span></span></h2> <br/> -->
+			</div>
+		</div>
+
+
+	</div>
+
+	<%-- 	<!-- carousal images bootstrap -->
 	<div id="carousel-example-generic" class="carousel slide"
 		data-ride="carousel">
 		<!-- Indicators -->
@@ -102,52 +186,64 @@
 
 		<!-- Thumbnail  -->
 		<div class="row">
-			<div class="col-sm-6 col-md-4">
+
+			<div class="col-xs-6 col-md-4">
 				<div class="thumbnail">
 					<center>
 						<div class="caption">
 							<h3>Register With Us</h3>
 							<a class="fa fa-lock" style="font-size: 160px; color: lightblue;"
-								href="login.jsp"></a>
+								href="login/form"></a>
 
 						</div>
 					</center>
 				</div>
 			</div>
 
-			<div class="col-sm-6 col-md-4">
+			<div class="col-xs-6 col-md-4">
 				<div class="thumbnail">
 					<center>
 						<div class="caption">
 							<h3>Schedule An Appointment</h3>
 
 							<a class="fa fa-clock-o"
-								style="font-size: 160px; color: lightblue;" href="events.jsp"></a>
+								style="font-size: 160px; color: lightblue;" href="profile/scheduleappointment"></a>
 
 
 						</div>
 					</center>
 				</div>
 			</div>
-			<div class="col-sm-6 col-md-4">
+			<div class="col-xs-6 col-md-4">
 				<div class="thumbnail">
 					<center>
 						<div class="caption">
 							<h3>Wait for confirmation</h3>
 
 							<a class="fa fa-envelope"
-								style="font-size: 160px; color: lightblue;" href="contactus.jsp"></a>
+								style="font-size: 160px; color: lightblue;" href="contactus"></a>
 
 						</div>
 					</center>
 				</div>
 			</div>
+
 		</div>
 
 
 	</div>
 
 	<%@include file="footer.jsp"%>
+	<script type="text/javascript">
+		$(function() {
 
+			$("h2").wrapInner("<span>")
+
+			$("h2 br").before("<span class='spacer'>").after(
+					"<span class='spacer'>");
+
+		});
+	</script>
 </body>
+
 </html>
