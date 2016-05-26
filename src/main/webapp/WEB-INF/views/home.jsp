@@ -28,17 +28,29 @@ h2 span {
 	color: white;
 	font: bold 24px/45px Helvetica, Sans-Serif;
 	letter-spacing: -1px;
-	background: rgb(0, 0, 0); /* fallback color */
-	background: rgba(0, 8, 29, 0.68);
-	padding: 10px;
+   /*background: rgb(0, 0, 0); /* fallback color */
+	/*background: rgba(30, 30, 30, 0.4);*/
+/*	padding: 10px;*/
 	float: right;
 }
 
 h2 span.spacer {
 	padding: 0 5px;
 	float: left;
+	
 }
-</style>
+
+.intro-header {
+    
+    background: no-repeat center center;
+    background-attachment: scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    margin-bottom: 50px;
+}
+</style> 
 
 
 </head>
@@ -48,58 +60,42 @@ h2 span.spacer {
 	<%@include file="dynamicheader.jsp"%>
 
 
-	<div class="row">
-		<div class="col-xs-4">
-			<img src="<c:url value='/resources/img/t1.jpg'/>"
-				class="img-thumbnail" alt="">
-		</div>
-		<div class="col-xs-4">
-			<img src="<c:url value='/resources/img/t2.jpg'/>"
-				class="img-thumbnail" alt="">
-		</div>
-		<div class="image">
-			<div class="col-xs-4">
-				<img src="<c:url value='/resources/img/t3.jpg'/>"
-					class="img-thumbnail" alt="">
-
-
-				<h2>
-					<span> <span class='spacer'><u>PROFESSIONAL
-								LISTINGS</u></span> <br/><span class='spacer'><a
+	<div class="row" >
+		<div class="col-xs-12 intro-header" style="background-image: url('resources/img/home.png');height:900px ;width:100% ; 
+    " >
+		<div class="site-heading">
+		  <h2>
+					<span> <span class='spacer'><u><font size="80px;">View Us On</font></u></span> <br/><br/><span class='spacer'><a
 							href="https://www.facebook.com/ykangdmd" data-toggle="tooltip"
-							title="FACEBOOK" target="\blank"><img
-								src="<c:url value='/resources/img/facebook.png'/>"
-								style="height: 30px;" /></a></span><br /> <span
+							title="FACEBOOK" target="\blank"><i
+								class="fa fa-facebook-official"
+								style="font-size: 60px; color: #3b5998">&nbsp;<font size="40px;">Facebook</font></i></a></span><br /><br /> <span
 						class='spacer'><a
 							href="https://plus.google.com/+Ykangdmd/about?gl=US&hl=en-US" target="\blank"
-							data-toggle="tooltip" title="GOOGLE"><img
-								src="<c:url value='/resources/img/plus.png'/>"
-								style="height: 30px;" /></a></span><br /> <span
+							data-toggle="tooltip" title="GOOGLE"><i class="fa fa-google-plus-square"
+								style="font-size: 60px; color: red">&nbsp;<font size="40px;">Google</font></i></a></span><br /><br /> <span
 						class='spacer'><a
 							href="https://www.yelp.com/biz/dr-kangs-dental-newton-centre" target="\blank"
-							data-toggle="tooltip" title="YELP"><img
-								src="<c:url value='/resources/img/yelp.png'/>"
-								style="height: 30px;" /></a></span><br /> <span
+							data-toggle="tooltip" title="YELP"><i class="fa fa-yelp"
+								style="font-size: 60px; color: #c41200">&nbsp;<font size="40px;">Yelp</font></i></a></span><br /><br /> <span
 						class='spacer'><a
 							href="http://www.wellness.com/dir/4153468/dentist/ma/newton-center/yoon-kang-yoon-h-kang-dmd-phd-llc-dmd-phd" target="\blank"><img
 								src="<c:url value='/resources/img/wellness.jpg'/>"
-								style="height: 30px;" /></a></span>
-					<br /> <span class='spacer'><a
+								style="height: 50px;" /></a></span>
+					<br /><br /> <span class='spacer'><a
 							href="http://www.healthgrades.com/dentist/dr-yoon-kang-ynrd4" target="\blank"><img
 								src="<c:url value='/resources/img/health.png'/>"
-								style="height: 30px;" /></a></span></span>
+								style="height: 45px;" /></a></span></span>
 
 				</h2>
-				<br />
-
-				<!-- <h2><span>A Movie in the Park:</h2><br/>
-	<h2><span>A Movie in the Park:<span class='spacer'></span></span></h2><br/>
-	<h2><span>A Movie in the Park:<span class='spacer'></span></span></h2> <br/> -->
-			</div>
+		</div>
+			
 		</div>
 
 
 	</div>
+
+
 
 	<%-- 	<!-- carousal images bootstrap -->
 	<div id="carousel-example-generic" class="carousel slide"
@@ -207,7 +203,8 @@ h2 span.spacer {
 							<h3>Schedule An Appointment</h3>
 
 							<a class="fa fa-clock-o"
-								style="font-size: 160px; color: lightblue;" href="profile/scheduleappointment"></a>
+								style="font-size: 160px; color: lightblue;"
+								href="profile/scheduleappointment"></a>
 
 
 						</div>
@@ -227,6 +224,20 @@ h2 span.spacer {
 					</center>
 				</div>
 			</div>
+
+		</div>
+		<div class="row">
+			<center>
+
+				<p>
+				<h4 style="letter-spacing: 2px;">I offer all types of dental
+					treatments within the scope of general dentistry with your best
+					dental health as the top priority. In addition to the traditional
+					general family dentistry, I offer the latest concepts of biomedical
+					approach to preventive, restorative and cosmetic dentistry to
+					communities of Newton and neighboring towns.</h4>
+				</p>
+			</center>
 
 		</div>
 

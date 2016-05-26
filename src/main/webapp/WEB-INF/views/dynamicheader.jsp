@@ -41,15 +41,29 @@
 
 
 
-	<div class="container-fluid">
+	<div class="container-fluid" style="margin-bottom: 20px;">
 	
-		<div class="navbar navbar-default navbar-fixed-top">
-			<img src="<c:url value='/resources/img/logo_12.gif'/>" 
+	<div class="navbar navbar-default navbar-fixed-top">
+	<div class="row">
+	<div class="col-xs-3">
+	<img src="<c:url value='/resources/img/logoTmp.png'/>" 
 				style="float: left; margin-right: 20px; margin-left: 5px" align="middle"></img>
 				<br/>
-			<div class="navbar-header">
+		
+	
+	</div>
+				<!--  <div class="navbar-collapse collapse" id="navbar-main"-->
+			<div class="col-xs-9">
+			<div class="row">
+				<ul class="nav navbar-nav" style="float: right;margin-right: 10px;font-size: large;">
+			<li><a href="tel:(617)%20244-8087"><u><i>CALL NOW : (617) 244-8087</i></u></a></li>
+			</ul>
+			</div>
+			
+			<div class="row">
+				<div class="navbar-header">
 				<a href="<c:url value='/home'/>" class="navbar-brand"
-					data-toggle="tooltip" title="Go Back To Homepage" style="font-size: large;"> Dr Kang's
+					data-toggle="tooltip" title="Go Back To Homepage" style="font-size: x-large;"> Dr Kang's
 					Dental</a>
 				<button class="navbar-toggle" type="button" data-toggle="collapse"
 					data-target="#navbar-main">
@@ -57,10 +71,9 @@
 						class="icon-bar"></span>
 				</button>
 			</div>
-			<!--  <div class="navbar-collapse collapse" id="navbar-main"-->
 			
-			<div class="navbar-collapse collapse" id="navbar-main"
-				style="font-size: large;">
+			<div class="navbar-collapse collapse" id="navbar-main" style="font-size: large;">
+			
 				<ul class="nav navbar-nav">
 					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#" id="aboutus">About Us<span
@@ -96,7 +109,7 @@
 					<li><a href="<c:url value='/contactus'/>"
 						data-toggle="tooltip" title="Contact us/Help">Contact Us</a></li>
 						
-						<li><a href="tel:(617)%20244-8087"><u><i>CALL NOW : (617) 244-8087</i></u></a></li>
+						
 						
 				</ul>
 
@@ -196,10 +209,19 @@
 				</ul>
 
 			</div>
+			</div>
+			
+			</div>
+	
+	</div>
+	
+			
+
+			
 			
 		</div>
-
-	</div>
+</div>
+	
 	
 
 
@@ -245,7 +267,7 @@ function submitLogout()
 <br/>
 <br/>
 <br/>
-<br/>
+
 
 </body>
 </html>
