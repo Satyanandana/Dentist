@@ -50,13 +50,13 @@ public class SentDocument implements Serializable {
 	@JoinColumn(name = "senderID", nullable = false)
 	private Patient sender;
 	@Column(nullable = false)
-	// @Type(type = "encryptedString")
+	@Type(type = "encryptedString")
 	private String fileName;
 	@Column(nullable = false)
-	// @Type(type = "encryptedString")
+	@Type(type = "encryptedString")
 	private String fileExt;
 	@Column(nullable = false)
-	// @Type(type = "encryptedString")
+	@Type(type = "encryptedString")
 	private String path;
 	@Column(nullable = false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")

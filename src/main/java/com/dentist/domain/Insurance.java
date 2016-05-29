@@ -51,19 +51,19 @@ public class Insurance implements Serializable {
 	@JoinColumn(name = "patientID", nullable = false, updatable = false)
 	private Patient insurancePatient;
 	@Column(nullable = false)
-	// @Type(type = "encryptedString")
+	@Type(type = "encryptedString")
 	private String insuranceGroupID;
 	@Column(nullable = false)
-	// @Type(type = "encryptedString")
+	@Type(type = "encryptedString")
 	private String insuranceGroupName;
 	@Column(nullable = false)
-	// @Type(type = "encryptedString")
+	@Type(type = "encryptedString")
 	private String insuranceProviderName;
 	@Column(nullable = false)
-	// @Type(type = "encryptedString")
+	@Type(type = "encryptedString")
 	private String subscriberID;
 	@Column(nullable = false, length = 500)
-	// @Type(type = "encryptedString")
+	@Type(type = "encryptedString")
 	private String subscriberFullName;
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate dateOfBirth;

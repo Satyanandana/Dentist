@@ -49,13 +49,13 @@ public class ReceivedDocument implements Serializable {
 	@JoinColumn(name = "receiverID", nullable = false, updatable = false)
 	private Patient receiver;
 	@Column(nullable = false)
-	// @Type(type = "encryptedString")
+	@Type(type = "encryptedString")
 	private String fileName;
 	@Column(nullable = false)
-	// @Type(type = "encryptedString")
+	@Type(type = "encryptedString")
 	private String fileExt;
 	@Column(nullable = false)
-	// @Type(type = "encryptedString")
+	@Type(type = "encryptedString")
 	private String path;
 	@Column(nullable = false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")

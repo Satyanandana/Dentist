@@ -273,7 +273,7 @@ public class LoginController {
 			}
 		} catch (Exception e) {
 			LOGGER.error("", e);
-			model.addAttribute("error", "unable to activate your account.Please try again");
+			model.addAttribute("success", "unable to activate your account.Please try again");
 		}
 		return "verifyemail";
 	}

@@ -22,7 +22,7 @@ public class ServerSideValidations {
 	// to 10
 	private static final String PASSWORD_PATTERN = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{6,10}";
 	// Should contain only alphabets.
-	private static final String NAME_PATTERN = "^[a-zA-Z]+$";
+	private static final String NAME_PATTERN = "^[a-zA-Z ]+$";
 	private static final String ADDRESS_PATTERN = "^[A-Za-z0-9 _\\.]*[A-Za-z0-9 _\\.][A-Za-z0-9 _\\.]+$";
 	private static final String CITY_PATTERN = "^[a-z A-Z]{3,30}$";
 	private static final String ZIPCODE_PATTERN = "^[0-9]{5}$";

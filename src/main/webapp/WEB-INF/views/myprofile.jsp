@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Dr Kang's Dental</title>
 <script type="text/javascript"
 	src="<c:url value='/resources/js/mustache.js'/>"></script>
 
@@ -1056,6 +1056,9 @@
 						
 												<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
+							
+							<input type="hidden" name="insuranceID" id="#insuranceID"
+							 />
 
 					</form>
 
@@ -1063,7 +1066,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary"
-						onclick="insurances.updateInsurance('/insurances/update')">Update</button>
+						onclick="insurances.updateInsurance('../insurances/update')">Update</button>
 				</div>
 			</div>
 

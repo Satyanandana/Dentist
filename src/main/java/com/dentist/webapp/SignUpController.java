@@ -196,11 +196,12 @@ public class SignUpController {
 				 */
 
 				LOGGER.debug("Sent welcome and account verification emails");
-				return null;
+				return "home";
 			}
 		}
 
-		return "signup";
+		model.addAttribute("action", "signup");
+		return "login";
 	}
 
 }

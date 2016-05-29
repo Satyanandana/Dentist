@@ -52,7 +52,7 @@ public class AppointmentRequest implements Serializable {
 	@JoinColumn(name = "patientID", nullable = false, updatable = false)
 	private Patient appointmentPatient;
 	@Column(nullable = false, length = 6000)
-	// @Type(type = "encryptedString")
+	@Type(type = "encryptedString")
 	private String note;
 	@Column(nullable = false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")

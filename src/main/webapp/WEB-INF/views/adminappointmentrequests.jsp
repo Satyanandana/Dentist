@@ -10,7 +10,7 @@
 	href="<c:url value='https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css'/>" media="screen">
 	
 
-<title>Insert title here</title>
+<title>Dr Kang's Dental</title>
 <script type="text/javascript" src="<c:url value='/resources/js/adminjs/changestatus.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/adminjs/requestedappointments.js'/>"></script>
 </head>

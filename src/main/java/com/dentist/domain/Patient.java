@@ -52,17 +52,20 @@ public class Patient implements Serializable {
 	@JoinColumn(name = "userID")
 	private UserAuthentication userAuth;
 	@Column(nullable = false)
+	@Type(type = "encryptedString")
 	private String firstName;
 	@Column(nullable = false)
+	@Type(type = "encryptedString")
 	private String lastName;
 	@Column(nullable = false)
+	@Type(type = "encryptedString")
 	private String middleName;
 	@Column(nullable = false)
 	@DateTimeFormat(pattern = "MM-dd-yyyy")
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate dateOfBirth;
 	@Column(nullable = false, length = 255)
-	// @Type(type = "encryptedString")
+	@Type(type = "encryptedString")
 	private String phoneNumber;
 	@Column(unique = true, nullable = false)
 	private String email;

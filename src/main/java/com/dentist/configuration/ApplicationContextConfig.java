@@ -201,7 +201,7 @@ public class ApplicationContextConfig {
 		String serverAccountEmail = environment.getRequiredProperty("google.servertoserver.account.email");
 		ArrayList<String> OuthScopes = new ArrayList<String>();
 		OuthScopes.add(CalendarScopes.CALENDAR);
-		File privateKeyFileP12 = resourceLoader.getResource("classpath:DentalCalKey.p12").getFile();
+		File privateKeyFileP12 = resourceLoader.getResource("classpath:DentistCalKey.p12").getFile();
 		GoogleCredential credential = GoogleServerToServer.getGoogleCredential(serverAccountEmail, privateKeyFileP12, OuthScopes);
 		return credential;
 	}

@@ -58,7 +58,7 @@ public class Treatment implements Serializable {
 	@JoinColumn(name = "teethID", nullable = false, updatable = false)
 	private Teeth teeth;
 	@Column(nullable = false, length = 6000)
-	// @Type(type = "encryptedString")
+	@Type(type = "encryptedString")
 	private String note;
 	@Column(nullable = false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")

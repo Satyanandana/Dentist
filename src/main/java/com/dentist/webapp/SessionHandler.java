@@ -61,7 +61,7 @@ public class SessionHandler {
 		LOGGER.debug("added user to the spring security context holder");
 		request.getSession().setAttribute("user", user.getUserEmail());
 		request.getSession().setAttribute("role", user.getUserRole());
-		request.getSession().setAttribute("name", patient.getFirstName() + " " + patient.getLastName());
+		request.getSession().setAttribute("name", patient.getFirstName().toUpperCase());
 		LOGGER.debug("added user to the http servlet session");
 		Cookie cookieUserId = new Cookie("USER", encryptor.encrypt(user.getUserEmail() + "-" + request.getSession().getId()));
 		cookieUserId.setMaxAge(24 * 60 * 60); // 24 hours.

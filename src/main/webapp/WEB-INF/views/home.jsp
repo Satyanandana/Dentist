@@ -9,7 +9,7 @@
 </div>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Dr Kang's Dental</title>
 
 <style type="text/css">
 .image {
@@ -61,33 +61,29 @@ h2 span.spacer {
 
 
 	<div class="row" >
-		<div class="col-xs-12 intro-header" style="background-image: url('resources/img/home.png');height:900px ;width:100% ; 
-    " >
-		<div class="site-heading">
+		<div class="col-xs-12 intro-header" class="img-responsive" style="background-image: url('resources/img/home.jpg');background-size:100% auto;height:531px;width:100% ;padding:5px;" >
+		<div class="visible-lg site-heading">
 		  <h2>
-					<span> <span class='spacer'><u><font size="80px;">View Us On</font></u></span> <br/><br/><span class='spacer'><a
-							href="https://www.facebook.com/ykangdmd" data-toggle="tooltip"
-							title="FACEBOOK" target="\blank"><i
-								class="fa fa-facebook-official"
-								style="font-size: 60px; color: #3b5998">&nbsp;<font size="40px;">Facebook</font></i></a></span><br /><br /> <span
-						class='spacer'><a
-							href="https://plus.google.com/+Ykangdmd/about?gl=US&hl=en-US" target="\blank"
-							data-toggle="tooltip" title="GOOGLE"><i class="fa fa-google-plus-square"
-								style="font-size: 60px; color: red">&nbsp;<font size="40px;">Google</font></i></a></span><br /><br /> <span
-						class='spacer'><a
-							href="https://www.yelp.com/biz/dr-kangs-dental-newton-centre" target="\blank"
-							data-toggle="tooltip" title="YELP"><i class="fa fa-yelp"
-								style="font-size: 60px; color: #c41200">&nbsp;<font size="40px;">Yelp</font></i></a></span><br /><br /> <span
-						class='spacer'><a
-							href="http://www.wellness.com/dir/4153468/dentist/ma/newton-center/yoon-kang-yoon-h-kang-dmd-phd-llc-dmd-phd" target="\blank"><img
-								src="<c:url value='/resources/img/wellness.jpg'/>"
-								style="height: 50px;" /></a></span>
-					<br /><br /> <span class='spacer'><a
-							href="http://www.healthgrades.com/dentist/dr-yoon-kang-ynrd4" target="\blank"><img
-								src="<c:url value='/resources/img/health.png'/>"
-								style="height: 45px;" /></a></span></span>
-
-				</h2>
+					<span>  <br/>
+					<span class='spacer'><a	href="https://www.facebook.com/ykangdmd" data-toggle="tooltip"	title="FACEBOOK" target="\blank">
+					<i	class="fa fa-facebook-official"	style="font-size: 40px; color: #3b5998">&nbsp;<font size="30px;">Facebook</font></i></a></span>
+					
+					<br /><br /> 
+					<span class='spacer'><a	href="https://plus.google.com/+Ykangdmd/about?gl=US&hl=en-US" target="\blank" data-toggle="tooltip" title="GOOGLE"><i class="fa fa-google-plus-square"
+								style="font-size: 40px; color: red">&nbsp;<font size="30px;">Google</font></i></a></span>
+								
+								
+					<br /><br />
+					 <span class='spacer'><a href="https://www.yelp.com/biz/dr-kangs-dental-newton-centre" target="\blank" data-toggle="tooltip" title="YELP">
+					 <i class="fa fa-yelp"	style="font-size: 40px; color: #c41200">&nbsp;<font size="30px;">Yelp</font></i></a></span>
+					 
+					 <br /><br />
+					 <span class='spacer'><a href="http://www.wellness.com/dir/4153468/dentist/ma/newton-center/yoon-kang-yoon-h-kang-dmd-phd-llc-dmd-phd" target="\blank">
+					 <img src="<c:url value='/resources/img/wellness.jpg'/>" style="height: 50px;" /></a></span>
+					<br /><br />
+					 <span class='spacer'><a href="http://www.healthgrades.com/dentist/dr-yoon-kang-ynrd4" target="\blank">
+					 <img src="<c:url value='/resources/img/health.png'/>"	style="height: 45px;" /></a></span></span>
+</h2>
 		</div>
 			
 		</div>
@@ -95,7 +91,32 @@ h2 span.spacer {
 
 	</div>
 
+<div class="hidden-lg row" style="    margin-top: -21px;
+    margin-left: 39px;">
 
+		  <div class="col-xs-12 col-sm-6 col-md-4"><span>  <br/>
+					<span class=''><a	href="https://www.facebook.com/ykangdmd" data-toggle="tooltip"	title="FACEBOOK" target="\blank">
+					<i	class="fa fa-facebook-official"	style="font-size: 40px; color: #3b5998">&nbsp;<font size="30px;">Facebook</font></i></a></span>
+					 </div>
+		  <div class="col-xs-12 col-sm-6 col-md-4"><br /><br /> 
+					<span class=''><a	href="https://plus.google.com/+Ykangdmd/about?gl=US&hl=en-US" target="\blank" data-toggle="tooltip" title="GOOGLE"><i class="fa fa-google-plus-square"
+								style="font-size: 40px; color: red">&nbsp;<font size="30px;">Google</font></i></a></span>
+							 </div>
+		  <div class="col-xs-12 col-sm-6 col-md-4"><br /><br />
+					 <span class=''><a href="https://www.yelp.com/biz/dr-kangs-dental-newton-centre" target="\blank" data-toggle="tooltip" title="YELP">
+					 <i class="fa fa-yelp"	style="font-size: 40px; color: #c41200">&nbsp;<font size="30px;">Yelp</font></i></a></span>
+					  </div>
+		  <div class="col-xs-12 col-sm-6 col-md-4"> <br /><br />
+					 <span class=''><a href="http://www.wellness.com/dir/4153468/dentist/ma/newton-center/yoon-kang-yoon-h-kang-dmd-phd-llc-dmd-phd" target="\blank">
+					 <img src="<c:url value='/resources/img/wellness.jpg'/>" style="height: 50px;" /></a></span> </div>
+		  <div class="col-xs-12 col-sm-6 col-md-4"><br /><br />
+					 <span class=''><a href="http://www.healthgrades.com/dentist/dr-yoon-kang-ynrd4" target="\blank">
+					 <img src="<c:url value='/resources/img/health.png'/>"	style="height: 45px;" /></a></span></span>
+
+		   </div>	
+			
+
+</div>
 
 	<%-- 	<!-- carousal images bootstrap -->
 	<div id="carousel-example-generic" class="carousel slide"
@@ -183,7 +204,7 @@ h2 span.spacer {
 		<!-- Thumbnail  -->
 		<div class="row">
 
-			<div class="col-xs-6 col-md-4">
+			<div class="col-xs-12 col-md-4">
 				<div class="thumbnail">
 					<center>
 						<div class="caption">
@@ -196,7 +217,7 @@ h2 span.spacer {
 				</div>
 			</div>
 
-			<div class="col-xs-6 col-md-4">
+			<div class="col-xs-12 col-md-4">
 				<div class="thumbnail">
 					<center>
 						<div class="caption">
@@ -211,7 +232,7 @@ h2 span.spacer {
 					</center>
 				</div>
 			</div>
-			<div class="col-xs-6 col-md-4">
+			<div class="col-xs-12 col-md-4">
 				<div class="thumbnail">
 					<center>
 						<div class="caption">
@@ -230,7 +251,7 @@ h2 span.spacer {
 			<center>
 
 				<p>
-				<h4 style="letter-spacing: 2px;">I offer all types of dental
+				<h4 >I offer all types of dental
 					treatments within the scope of general dentistry with your best
 					dental health as the top priority. In addition to the traditional
 					general family dentistry, I offer the latest concepts of biomedical

@@ -5,9 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Dr Kang's Dental</title>
 <link rel="stylesheet"
-	href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 <script type="text/javascript"
 	src="<c:url value='/resources/js/jquery.js'/>"></script>
 <script type="text/javascript"
@@ -92,7 +92,7 @@
 	<br />
 		<br />
 		<br />
-		<h1>My Appointments</h1>
+		<h1>Check for available slots</h1>
 		<br />
 		<div class="row">
 
@@ -101,7 +101,7 @@
 				<div class="responsive-iframe-container big-container">
 
 					
-						<iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=2f3p9ogajhpfcp9gdquecmh0uk%40group.calendar.google.com&amp;color=%23711616&amp;ctz=America%2FNew_York" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+						<iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=pc68i4tn04q5ajdk4b421h40sg%40group.calendar.google.com&amp;color=%23711616&amp;ctz=America%2FNew_York" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
 				</div>
 
 				<div class="responsive-iframe-container small-container">
@@ -128,15 +128,11 @@
 
 							<tr>
 								<td><i class="fa fa-circle"
-									style="font-size: 30px; color: #000080;"></i></td>
-								<td>Time Slot is Full</td>
+									style="font-size: 30px; color: red;"></i></td>
+								<td>Time slot is not available</td>
 							</tr>
 
-							<tr>
-								<td><i class="fa fa-circle"
-									style="font-size: 30px; color: lightblue;"></i></td>
-								<td>Available Slot(Book Your Appointment)</td>
-							</tr>
+							
 
 
 						</table>
@@ -212,8 +208,8 @@
 
 											<option value="9">9.00 AM to 11.00 AM</option>
 											<option value="11">11.00 AM to 1.00 PM</option>
-											<option value="1">1.00 PM to 3.00 PM</option>
-											<option value="3">3.00 PM to 5.00 PM</option>
+											<option value="13">1.00 PM to 3.00 PM</option>
+											<option value="15">3.00 PM to 5.00 PM</option>
 										</select>
 
 
@@ -242,8 +238,7 @@
 							<div class="col-lg-10 col-lg-offset-2">
 								<button type="reset" class="btn btn-default">Cancel</button>
 								<button class="btn btn-primary"
-									>Book
-									Appointment</button>
+									>Request an appointment</button>
 							</div>
 						</div>
 						</form>
@@ -276,8 +271,10 @@
 									appointment with the doctor is to contact our Newton
 									Massachusetts office at (617) 244-8087.</p></li>
 
-							<li><p>Another easy way is via internet. Please fill the
-									form on your screen to request an appointment.</p></li>
+							<li><p>Or please fill the form on your screen to request an appointment.</p></li>
+							<br />
+							
+							<li><p>You can check whether the slot is available or not before placing a request by checking on the google calendar.</p></li>
 							<br />
 							<br />
 							<p>

@@ -50,7 +50,7 @@ public class SentMessage implements Serializable {
 	@JoinColumn(name = "senderID", nullable = false)
 	private Patient sender;
 	@Column(nullable = false, length = 6000)
-	// @Type(type = "encryptedString")
+	@Type(type = "encryptedString")
 	private String msg;
 	@Column(nullable = false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")

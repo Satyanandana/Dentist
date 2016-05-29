@@ -8,7 +8,7 @@
 	<c:url value="/" var="root" />
 </div>
 <head>
-
+<title>Dr Kang's Dental</title>
 <link rel="stylesheet" media="screen"
 	href=" <c:url value='/resources/css/business-frontpage.css'/>">
 

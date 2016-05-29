@@ -5,6 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<title>Dr Kang's Dental</title>
 <link rel="stylesheet"
 	href="<c:url value='/resources/css/font/flaticonteeth12.css'/>">
 

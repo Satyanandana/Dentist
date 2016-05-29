@@ -54,7 +54,7 @@ public class EmailScheduleTask {
 	 * weekdays "0 0 0 25 12 ?" = every Christmas Day at midnight
 	 */
 
-	@Scheduled(cron = "0 30 21 * * *")
+	@Scheduled(cron = "0 30 7 * * *")
 	public void reportCurrentTime() {
 
 		List<Appointment> appointments = userServiceInterface.getAllAppointments();
