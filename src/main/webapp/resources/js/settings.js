@@ -5,6 +5,9 @@ var settings = (function() {
    
     var postNewPassword = function(path) {
     	 //$('#newPasswordForm').serialize());
+    	$('#successDiv').hide();
+    	$('#errorDiv').hide();
+    	
        $.ajax({
             url: path,
             method: 'POST',

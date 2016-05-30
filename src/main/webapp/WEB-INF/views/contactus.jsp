@@ -61,11 +61,11 @@
 
 
 						<div class="form-group">
-							<div class="alert alert-dismissible alert-success" style="display: none;"  id="success">
+							<div class="alert alert-dismissible alert-success" style="display: none;"  id="successContactDiv" name="successContactDiv">
 
 								<strong>Well done!</strong> Your message has been sent.</a>.
 							</div>
-							<div class="alert alert-dismissible alert-danger" style="display: none;" id="error">
+							<div class="alert alert-dismissible alert-danger" style="display: none;" id="error" name="error">
   
  Something Went Wrong ! Send it again .
 </div>

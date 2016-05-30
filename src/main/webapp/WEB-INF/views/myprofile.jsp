@@ -997,6 +997,7 @@
 				<div class="modal-body">
 					<form name="updateInsurance" id="updateInsurance"
 						class="updateInsurance">
+						<input type="hidden" name="insuranceID" id="insuranceID" value="">
 						<div class="form-group">
 							<label class="control-label" for="disabledInput">Insurance
 								Provider Name</label> <input class="form-control"
