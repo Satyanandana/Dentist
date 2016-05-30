@@ -92,6 +92,7 @@ var treatments = (function() {
         	    
         	   $('#treatmentModal').modal('toggle');
         	   showTreatments();
+        	   showMyTeethDetails($('#addNewTreatment #teethID').val());
                 
            });
     }

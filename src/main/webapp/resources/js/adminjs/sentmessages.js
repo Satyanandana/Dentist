@@ -48,7 +48,7 @@ var sentmessages = (function() {
 			contentType : "application/x-www-form-urlencoded; charset=UTF-8"
 		}).then(function(data) {
 			$('#messageModal').modal('toggle');
-			sentmessages.getMessages("../patient/sentmessages");
+			showMessages();
 
 		});
 	}
