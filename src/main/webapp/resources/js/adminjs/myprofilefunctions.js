@@ -210,8 +210,8 @@ function addNewTreatmentOnTeeth(teethID) {
 }
 function editInsurance(insuranceID,groupdID,groupName,insuranceProviderID, insuranceProviderName,
 		subscriberID, subscriberFullName, patientID, dateOfBirth, status) {
-
-	$('#insuranceID').attr("value", insuranceID);
+	
+	$('#updateInsurance #insuranceID').attr("value", insuranceID);
 	
 	$('#updateInsurance #insuranceProviderID').val(insuranceProviderID);
 	$('#updateInsurance #insuranceGroupID').val(groupdID);

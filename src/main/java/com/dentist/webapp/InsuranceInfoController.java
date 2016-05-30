@@ -160,7 +160,7 @@ public class InsuranceInfoController {
 
 			Patient patient = userServiceInterface.getPatientInfoById(patientID);
 			Insurance insurance = new Insurance();
-			if (status.equals(InsuranceStatus.ACTIVE)) {
+			if (status.equals(InsuranceStatus.ACTIVE.toString())) {
 				insurance.setStatus(InsuranceStatus.ACTIVE);
 			} else {
 				insurance.setStatus(InsuranceStatus.EXPIRED);
@@ -169,7 +169,7 @@ public class InsuranceInfoController {
 			insurance.setInsuranceGroupName(insuranceGroupName);
 			insurance.setInsuranceProviderName(insuranceProviderName);
 			insurance.setSubscriberFullName(subscriberFullName);
-			insurance.setSubscriberFullName(subscriberFullName);
+			insurance.setSubscriberID(subscriberID);
 			insurance.setDateOfBirth(dateOfBirth);
 			insurance.setInsertedDate(new DateTime());
 			insurance.setInsurancePatient(patient);
@@ -183,9 +183,8 @@ public class InsuranceInfoController {
 		return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('ROLE_ROLE_ADMIN')")
-	@RequestMapping(value = "/update/{patientID}", method = RequestMethod.POST, params = {
-			"status=Cancel"}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/update/{patientID}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, String>> updateInsuranceByDoc(@PathVariable("patientID") long patientID,
 			@RequestParam("insuranceGroupID") String insuranceGroupID, @RequestParam("insuranceGroupName") String insuranceGroupName,
 			@RequestParam("insuranceProviderName") String insuranceProviderName, @RequestParam("subscriberID") String subscriberID,
@@ -204,7 +203,7 @@ public class InsuranceInfoController {
 				insurance.setInsuranceProviderName(insuranceProviderName);
 				insurance.setSubscriberFullName(subscriberFullName);
 				insurance.setSubscriberID(subscriberID);
-				if (status.equals(InsuranceStatus.ACTIVE)) {
+				if (status.equals(InsuranceStatus.ACTIVE.toString())) {
 					insurance.setStatus(InsuranceStatus.ACTIVE);
 				} else {
 					insurance.setStatus(InsuranceStatus.EXPIRED);

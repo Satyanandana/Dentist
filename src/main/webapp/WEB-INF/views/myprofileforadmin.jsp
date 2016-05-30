@@ -949,7 +949,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary"
-						onclick="insurances.addInsurance('../insurances/create')">Add</button>
+						onclick="insurances.addInsurance('../../insurances/create/'+ $('#patientID').html())">Add</button>
 				</div>
 			</div>
 
@@ -969,6 +969,7 @@
 				<div class="modal-body">
 					<form name="updateInsurance" id="updateInsurance"
 						class="updateInsurance">
+						<input type="hidden" name="insuranceID" id="insuranceID" value="">
 						<div class="form-group">
 							<label class="control-label" for="disabledInput">Insurance
 								Provider Name</label> <input class="form-control"
@@ -1036,7 +1037,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary"
-						onclick="insurances.updateInsurance('/insurances/update')">Update</button>
+						onclick="insurances.updateInsurance('../../insurances/update/'+ $('#patientID').html())">Update</button>
 				</div>
 			</div>
 
