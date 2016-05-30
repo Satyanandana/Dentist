@@ -125,13 +125,13 @@
 
 
 								<form:input type="password" class="form-control"
-									path="userAuth.userPwd" id="userpassword" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,10}" title="Atleast one upper case,one lowercase,on number and the length between 6 to 10" required="required" />
+									path="userAuth.userPwd" id="userpassword" name="userpassword" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,10}" title="Atleast one upper case,one lowercase,on number and the length between 6 to 10" required="required" value=""/>
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="password">Re-enter Password</label> <input
-									type="password"  class="form-control" name="repassword" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,10}" title="Atleast one upper case,one lowercase,on number and the length between 6 to 10" required="required">
+									type="password" id="reuserpassword" name="reuserpassword" class="form-control" name="repassword" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,10}" title="Atleast one upper case,one lowercase,on number and the length between 6 to 10" required="required" value="">
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -284,6 +284,15 @@
 				    e.preventDefault();
 				    forgotPassword.sendEmailPassword('../login/forgotpassword');
 				});
+				$("#signupForm").on("submit", function (e) {
+					
+					if($('#signupForm #userpassword').val() != $('#signupForm #reuserpassword').val()) {
+			            alert("Password and Confirm Password don't match");
+			            // Prevent form submission
+			            e.preventDefault();
+			        }
+				});
+				
 
 				$(".signuplink").on('click', signup);
 				$(".loginlink").on('click', login);
