@@ -215,7 +215,7 @@
 								<div class="form-group">
 									<label class="control-label" for="disabledInput">Date
 										Of Birth</label> <input class="form-control" id="dob" type="text"
-										placeholder="mm/dd/yyyy" name="dob" required="required" pattern="\d{1,2}/\d{1,2}/\d{4}" title="date should be in mm/dd/yyyy format">
+										placeholder="mm/dd/yyyy" name="dob" required="required" pattern="\d{1,2}[-/]\d{1,2}[-/]\d{4}" title="date should be in mm/dd/yyyy format">
 								</div>
 
 
@@ -1101,7 +1101,7 @@
 							<label class="control-label" for="disabledInput">Treatment
 								Expected Date</label> <input class="form-control"
 								id="treatmentExpectedTime" name="treatmentExpectedTime"
-								type="text" placeholder="mm/dd/yyyy">
+								type="text" placeholder="mm/dd/yyyy" required="required" pattern="\d{1,2}[-/]\d{1,2}[-/]\d{4}" title="date should be in mm/dd/yyyy format">
 						</div>
 						<!-- <div class="form-group">
   <label class="control-label" for="disabledInput">Treatment Done Time</label>

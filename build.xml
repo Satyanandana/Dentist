@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Dentist"  basedir="." >
+	
+    <property environment="env" />
+			
+	<property name="javaresources.dir" value="src\main\resources" />
+	<property name="webapp.dir" value="src\main\webapp" />
+			
+	
+	
+	<target name="local" description="Copy the local version of application.properties file to java resources  and deleting .htaccess from webapps">
+		<copy file="properties/local/application.properties" todir="${javaresources.dir}" overwrite="true" />
+		<delete file="${webapp.dir}/htaccess"/>
+	</target>
+	
+	
+	<target name="server" description="Copy the production version of application.properties file to java resources and htaccess file to webapps ">
+		<copy file="properties/server/application.properties" todir="${javaresources.dir}" overwrite="true" />
+		<copy file="htaccess" todir="${webapp.dir}" overwrite="true" />
+	</target>
+	
+	
+
+</project>

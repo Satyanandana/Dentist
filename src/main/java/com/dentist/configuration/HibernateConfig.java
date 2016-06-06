@@ -104,10 +104,11 @@ public class HibernateConfig {
 		properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
 		properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
 		properties.put("hibernate.current_session_context_class", environment.getRequiredProperty("hibernate.current_session_context_class"));
-		// properties.put("hibernate.hbm2ddl.auto",
-		// environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
-		// properties.put("hibernate.hbm2ddl.import_files",
-		// environment.getRequiredProperty("hibernate.hbm2ddl.import_files"));
+
+		//*****Important : next two lines should be commented in production otherwise previous data may be lost. *******
+
+		/* properties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
+		   properties.put("hibernate.hbm2ddl.import_files", environment.getRequiredProperty("hibernate.hbm2ddl.import_files")); */
 		return properties;
 	}
 

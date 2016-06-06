@@ -8,6 +8,7 @@
 	<c:url value="/" var="root" />
 </div>
 <head>
+<meta name="google-site-verification" content="gNGRp9Tf8KTXCX8wlMHvUbHbYg2ywlJm4I63F0_KEA4" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Dr Kang's Dental</title>
 
@@ -195,12 +196,27 @@ h2 span.spacer {
 			<span class="sr-only">Next</span>
 		</a>
 	</div> --%>
-	<br />
+	
 
 
 	<div id="howitworks" class="container">
 
+<br />
+	<div class="row">
+			
 
+				<p>
+				<h4 >I offer all types of dental treatments within the scope of general 
+				    dentistry with your best dental health as the top priority. In addition
+				    to the traditional general family dentistry, I offer the latest concepts 
+				    of biomedical approach to preventive, restorative and cosmetic dentistry 
+				    to communities of Newton and neighboring towns.</h4>
+				</p>
+			
+
+		</div>
+	<br />
+	
 		<!-- Thumbnail  -->
 		<div class="row">
 
@@ -247,20 +263,7 @@ h2 span.spacer {
 			</div>
 
 		</div>
-		<div class="row">
-			<center>
-
-				<p>
-				<h4 >I offer all types of dental
-					treatments within the scope of general dentistry with your best
-					dental health as the top priority. In addition to the traditional
-					general family dentistry, I offer the latest concepts of biomedical
-					approach to preventive, restorative and cosmetic dentistry to
-					communities of Newton and neighboring towns.</h4>
-				</p>
-			</center>
-
-		</div>
+		
 
 
 	</div>

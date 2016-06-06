@@ -50,12 +50,12 @@ public class FileUploadDownloadHandler {
 				if (!fullname.matches("[.]{2}")) {
 
 					int index_ext_seperator = fullname.lastIndexOf(".");
-					// String filename = fullname.substring(0,
-					// index_ext_seperator - 1).toLowerCase();
 					String fileExtension = fullname.substring(index_ext_seperator + 1).toLowerCase();
 
 					// Creating new directory in Java, if it doesn't exists
-					if (fileExtension.equals("pdf") || fileExtension.equals("doc") || fileExtension.equals("docx") || fileExtension.equals("csv")) {
+					if (fileExtension.equals("jpg") || fileExtension.equals("png") || fileExtension.equals("txt") || fileExtension.equals("xlsx")
+							|| fileExtension.equals("pdf") || fileExtension.equals("doc") || fileExtension.equals("docx")
+							|| fileExtension.equals("csv")) {
 
 						map.put("extension", fileExtension);
 						File folder = new File(dir);
@@ -87,12 +87,6 @@ public class FileUploadDownloadHandler {
 						FileCopyUtils.copy(file.getInputStream(), stream);
 						stream.close();
 						done = true;
-						/*
-						 * File doc = new File(dir, file_name); Path path =
-						 * Paths.get(doc.getPath()); InputStream fileStream =
-						 * file.getInputStream(); Files.copy(fileStream, path);
-						 * done = true;
-						 */
 
 					}
 
@@ -139,14 +133,6 @@ public class FileUploadDownloadHandler {
 			 * save as popup, based on your browser setting.]
 			 */
 			response.setHeader("Content-Disposition", String.format("inline; filename=\"" + fileName + "\""));
-
-			/*
-			 * "Content-Disposition : attachment" will be directly download, may
-			 * provide save as popup, based on your browser setting
-			 */
-			// response.setHeader("Content-Disposition",
-			// String.format("attachment;
-			// filename=\"%s\"", file.getName()));
 
 			response.setContentLength((int) file.length());
 

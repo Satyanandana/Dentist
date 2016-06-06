@@ -111,7 +111,8 @@ public class DocumentController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
 		String currentDirectory = new File("").getAbsolutePath();
-		String dir = currentDirectory + File.separator + "user_" + user.getUserID() + File.separator + "sent";
+		String dir = currentDirectory + File.separator + "dentistwebsitedocuments" + File.separator + "user_" + user.getUserID() + File.separator
+				+ "sent";
 		boolean done = FileUploadDownloadHandler.uploadFile(map, file, "File", dir);
 		if (done) {
 			SentDocument sentDocument = new SentDocument();
@@ -220,7 +221,8 @@ public class DocumentController {
 		Map<String, String> map = new HashMap<>();
 
 		String currentDirectory = new File("").getAbsolutePath();
-		String dir = currentDirectory + File.separator + "user_" + patientID + File.separator + "received";
+		String dir = currentDirectory + File.separator + "dentistwebsitedocuments" + File.separator + "user_" + patientID + File.separator
+				+ "received";
 		boolean done = FileUploadDownloadHandler.uploadFile(map, file, "File", dir);
 		if (done) {
 
