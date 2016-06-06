@@ -2,6 +2,7 @@
 Spring (MVC + Security) + Hibernate 4
 
 Project Stack
+
 	Framework            : Spring 4
 
 	ORM                    : Hibernate 4
